@@ -42,7 +42,7 @@ public class DependencyImplementation : IDependency
         //if exist in the list
         if (DataSource.Dependencies.Any(dependency => dependency.Id == item.Id))
         {
-            Delete(item.Id); //delete it and add a new
+            Delete(item.Id); //delete it and add a new item
             DataSource.Dependencies.Add(item);
         }
         else
