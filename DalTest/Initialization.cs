@@ -82,7 +82,6 @@ public static class Initialization
         TimeSpan sevenDays = new TimeSpan(7, 0, 0, 0);
         for (int i = 0; i < 25; i++)
         {
-            int id = i;
             string alias = engineeringTasks[i];
             string descriptions = taskDescriptions[i];
             DateTime? createTask = DateTime.Now;
@@ -96,7 +95,7 @@ public static class Initialization
             string? deliverables = taskDeliverables[i];
             string? remarks = taskRemarks[i];
             int engineerId = idForEngineer[taskLevels[i] - 1];
-            DO.Task task = new DO.Task(id, alias, descriptions, createTask, requiredEffortTime, isMilestone,
+            DO.Task task = new DO.Task(i, alias, descriptions, createTask, requiredEffortTime, isMilestone,
             level, startDate, scheduledDate, deadlineDate, completeDate, deliverables, remarks, engineerId);
             s_dalTask!.Create(task);
         }
