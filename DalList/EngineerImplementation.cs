@@ -9,7 +9,7 @@ internal class EngineerImplementation : IEngineer
     {
         //We will check if there is an engineer
         if (DataSource.Engineers.Any(engineer => engineer.Id == item.Id))//if exist in the list
-            throw new Exception($"Engineer with ID={item.Id} already exists");
+            throw new DalAlreadyExistsException($"Engineer with ID={item.Id} already exists");
 
         else
             DataSource.Engineers.Add(item);
@@ -23,7 +23,7 @@ internal class EngineerImplementation : IEngineer
             DataSource.Engineers.RemoveAll(E => E.Id == id);
         }
         else
-            throw new Exception($"ID: {id}, not exist");
+            throw new DalDoesNotExistException($"ID: {id}, not exist");
         
     }
 
@@ -65,7 +65,7 @@ internal class EngineerImplementation : IEngineer
             DataSource.Engineers.Add(item);
         }
         else
-            throw new Exception($"Engineer with ID={item.Id} is not exists");
+            throw new DalDoesNotExistException($"Engineer with ID={item.Id} is not exists");
 
     }
 }

@@ -38,7 +38,7 @@ public class Program
                                 case 2:
                                     Console.WriteLine("Enter the Task's ID:");
                                     id = int.Parse(Console.ReadLine()!);
-                                    PrintTheReadFunctionOfTask(s_dal!.Task.Read(id)); // Display a specific Task
+                                    PrintTheReadFunctionOfTask(s_dal.Task.Read(id)); // Display a specific Task
                                     break;
                                 case 3:
                                     PrintTheReadAllFunctionOfTask(s_dal!.Task.ReadAll()); // Display all Tasks
@@ -337,7 +337,7 @@ public class Program
     }
 
     // Prints details of each Task object in the provided list
-    public static void PrintTheReadAllFunctionOfTask(List<DO.Task> toPrint)
+    public static void PrintTheReadAllFunctionOfTask(IEnumerable<DO.Task> toPrint)
     {
         foreach (DO.Task task in toPrint)
         {
@@ -346,7 +346,7 @@ public class Program
     }
 
     // Prints details of each Dependency object in the provided list
-    public static void PrintTheReadAllFunctionOfDependency(List<DO.Dependency> toPrint)
+    public static void PrintTheReadAllFunctionOfDependency(IEnumerable<DO.Dependency> toPrint)
     {
         foreach (DO.Dependency dependency in toPrint)
         {
@@ -355,7 +355,7 @@ public class Program
     }
 
     // Prints details of each Engineer object in the provided list
-    public static void PrintTheReadAllFunctionOfEngineer(List<DO.Engineer> toPrint)
+    public static void PrintTheReadAllFunctionOfEngineer(IEnumerable<DO.Engineer> toPrint)
     {
         foreach (DO.Engineer engineer in toPrint)
         {

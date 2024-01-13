@@ -19,7 +19,7 @@ internal class TaskImplementation : ITask
             DataSource.Tasks.RemoveAll(T => T.Id == id);
         }
         else
-            throw new Exception($"ID: {id}, not exist");
+            throw new DalDoesNotExistException($"ID: {id}, not exist");
     }
 
     public Task? Read(int id)
@@ -60,7 +60,7 @@ internal class TaskImplementation : ITask
             DataSource.Tasks.Add(item);
         }
         else
-            throw new Exception($"Task with ID={item.Id} is not exists");
+            throw new DalDoesNotExistException($"Task with ID={item.Id} is not exists");
 
     }
 

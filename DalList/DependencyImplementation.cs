@@ -20,7 +20,7 @@ internal class DependencyImplementation : IDependency
             DataSource.Dependencies.RemoveAll(D => D.Id == id);
         }
         else
-            throw new Exception($"ID: {id}, not exist");
+            throw new DalDoesNotExistException($"ID: {id}, not exist");
     }
 
     public Dependency? Read(int id)
@@ -61,7 +61,7 @@ internal class DependencyImplementation : IDependency
             DataSource.Dependencies.Add(item);
         }
         else
-            throw new Exception($"Dependency with ID={item.Id} is not exists");
+            throw new DalDoesNotExistException($"Dependency with ID={item.Id} is not exists");
 
     }
 }

@@ -120,7 +120,7 @@ public static class Initialization
 
     public static void Do(IDal dal)//Check that it doesn't return anything
     {
-        s_dal = dal?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
+        s_dal = dal?? throw new DalCanNotBeNULL("DAL object can not be null!"); //stage 2
 
 
         //Calling the methods
