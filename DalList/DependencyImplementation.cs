@@ -25,16 +25,13 @@ internal class DependencyImplementation : IDependency
 
     public Dependency? Read(int id)
     {
-        Dependency? find = DataSource.Dependencies.Find(D => D.Id == id);
-        if (find != null)
-            return find;
-
-        return null;
+        return DataSource.Dependencies.FirstOrDefault(D => D.Id == id);
     }
 
     public List<Dependency> ReadAll()
     {
         return new List<Dependency>(DataSource.Dependencies);
+        //return DataSource.Dependencies.Select(D => D);
     }
 
     public void Update(Dependency item)
