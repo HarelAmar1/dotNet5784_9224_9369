@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 //Initialization class
 public static class Initialization
 {
-    private static ITask? s_dalTask;
-    private static IEngineer? s_dalEngineer;
-    private static IDependency? s_dalDependency;
+    private static IDal? s_dal;     
 
     private static readonly Random s_rand = new();
     private static void createEngineer()
@@ -30,7 +28,7 @@ public static class Initialization
             Engineer engineer = new Engineer(id, email, cost, name, level, active);
 
             // Add engineer to your collection or process them as needed
-            s_dalEngineer!.Create(engineer);
+            s_dal!.Engineer.Create(engineer);
         }
     }
     private static void createTask()
@@ -97,7 +95,7 @@ public static class Initialization
             int engineerId = idForEngineer[taskLevels[i] - 1];
             DO.Task task = new DO.Task(i, alias, descriptions, createTask, requiredEffortTime, isMilestone,
             level, startDate, scheduledDate, deadlineDate, completeDate, deliverables, remarks, engineerId);
-            s_dalTask!.Create(task);
+            s_dal!.Task.Create(task);
         }
     }
     private static void createDependency()
@@ -115,16 +113,14 @@ public static class Initialization
              17, 19, 21, 7, 13, 23, 7, 12, 10, 6, 5, 4, 15, 14, 11, 18, 17, 20, 19, 22, 21 };
 
             Dependency dependency = new Dependency(id, arrayOfDependentTask[i], arrayOfDependsOnTask[i]);
-            s_dalDependency!.Create(dependency);
+            s_dal!.Dependency.Create(dependency);
         }
 
     }
 
-    public static void Do(IDependency? dalDependency, IEngineer? dalEngineer, ITask? dalTask)//Check that it doesn't return anything
+    public static void Do(IDal dal)//Check that it doesn't return anything
     {
-        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        s_dal = dal?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
 
 
         //Calling the methods

@@ -7,10 +7,7 @@ using System.Collections.Specialized;
 
 public class Program
 {
-    // Static instances for Dependency, Engineer, and Task services
-    private static IDependency? s_dalDependency = new DependencyImplementation();
-    private static IEngineer? s_dalEngineer = new EngineerImplementation();
-    private static ITask? s_dalTask = new TaskImplementation();
+    static readonly IDal s_dal = new DalList(); //stage 2
 
     // Main method - the entry point of the application
     private static void Main(string[] args)
@@ -18,7 +15,7 @@ public class Program
         try
         {
             // Initialize the services with required dependencies
-            Initialization.Do(s_dalDependency, s_dalEngineer, s_dalTask);
+            Initialization.Do(s_dal);
 
             // Get user input from the main menu
             int userInput = menu();
@@ -41,18 +38,18 @@ public class Program
                                 case 2:
                                     Console.WriteLine("Enter the Task's ID:");
                                     id = int.Parse(Console.ReadLine()!);
-                                    PrintTheReadFunctionOfTask(s_dalTask!.Read(id)); // Display a specific Task
+                                    PrintTheReadFunctionOfTask(s_dal!.Task.Read(id)); // Display a specific Task
                                     break;
                                 case 3:
-                                    PrintTheReadAllFunctionOfTask(s_dalTask!.ReadAll()); // Display all Tasks
+                                    PrintTheReadAllFunctionOfTask(s_dal!.Task.ReadAll()); // Display all Tasks
                                     break;
                                 case 4:
-                                    s_dalTask!.Update(UpdateHelperTask()); // Update a Task
+                                    s_dal!.Task.Update(UpdateHelperTask()); // Update a Task
                                     break;
                                 case 5:
                                     Console.WriteLine("Enter the ID of the Task you want to delete:");
                                     id = int.Parse(Console.ReadLine()!);
-                                    s_dalTask!.Delete(id); // Delete a Task
+                                    s_dal!.Task.Delete(id); // Delete a Task
                                     break;
                                 case 0:
                                     OpForTask = 0; // Exit Task operations
@@ -73,18 +70,18 @@ public class Program
                                 case 2:
                                     Console.WriteLine("Enter the Dependency's ID:");
                                     id = int.Parse(Console.ReadLine()!);
-                                    PrintTheReadfunctionOfDependency(s_dalDependency!.Read(id)); // Display a specific Dependency
+                                    PrintTheReadfunctionOfDependency(s_dal!.Dependency.Read(id)); // Display a specific Dependency
                                     break;
                                 case 3:
-                                    PrintTheReadAllFunctionOfDependency(s_dalDependency!.ReadAll()); // Display all Dependencies
+                                    PrintTheReadAllFunctionOfDependency(s_dal!.Dependency.ReadAll()); // Display all Dependencies
                                     break;
                                 case 4:
-                                    s_dalDependency!.Update(UpdateHelperForDepend()); // Update a Dependency
+                                    s_dal!.Dependency.Update(UpdateHelperForDepend()); // Update a Dependency
                                     break;
                                 case 5:
                                     Console.WriteLine("Enter the ID of the Dependency you want to delete:");
                                     id = int.Parse(Console.ReadLine()!);
-                                    s_dalDependency!.Delete(id); // Delete a Dependency
+                                    s_dal!.Dependency.Delete(id); // Delete a Dependency
                                     break;
                                 case 0:
                                     OpForDependency = 0; // Exit Dependency operations
@@ -105,18 +102,18 @@ public class Program
                                 case 2:
                                     Console.WriteLine("Enter the engineer's ID:");
                                     id = int.Parse(Console.ReadLine()!);
-                                    PrintTheReadfunctionOfEngineer(s_dalEngineer!.Read(id)); // Display a specific Engineer
+                                    PrintTheReadfunctionOfEngineer(s_dal!.Engineer.Read(id)); // Display a specific Engineer
                                     break;
                                 case 3:
-                                    PrintTheReadAllFunctionOfEngineer(s_dalEngineer!.ReadAll()); // Display all Engineers
+                                    PrintTheReadAllFunctionOfEngineer(s_dal!.Engineer.ReadAll()); // Display all Engineers
                                     break;
                                 case 4:
-                                    s_dalEngineer!.Update(UpdateHelperForEngineer()); // Update an Engineer
+                                    s_dal!.Engineer.Update(UpdateHelperForEngineer()); // Update an Engineer
                                     break;
                                 case 5:
                                     Console.WriteLine("Enter the ID of the Engineer you want to delete:");
                                     id = int.Parse(Console.ReadLine()!);
-                                    s_dalEngineer!.Delete(id); // Delete an Engineer
+                                    s_dal!.Engineer.Delete(id); // Delete an Engineer
                                     break;
                                 default:
                                     OpForEngineer = 0; // Exit Engineer operations
@@ -185,7 +182,7 @@ public class Program
         Console.WriteLine("Please enter your ID of most previose Depenency");
         int dependencyDep = int.Parse(Console.ReadLine()!);
         Dependency dependency = new Dependency(0, dependencyNow, dependencyDep);
-        s_dalDependency!.Create(dependency);
+        s_dal!.Dependency.Create(dependency);
     }
 
     // Function to create a new Engineer
@@ -203,7 +200,7 @@ public class Program
         int l = int.Parse(Console.ReadLine()!);
         DO.EngineerExperience level = (EngineerExperience)l;
         Engineer engineer = new Engineer(id, email, cost, name, level, true);
-        s_dalEngineer!.Create(engineer);
+        s_dal!.Engineer.Create(engineer);
     }
 
     // Function to create a new Task
@@ -227,7 +224,7 @@ public class Program
         Console.WriteLine("Please enter the Engineer ID:");
         int engineerId = int.Parse(Console.ReadLine()!);
         Task task = new Task(0, alias, description, createdAtDate, null, isMilestone, complexity, null, null, null, null, deliverables, remarks, engineerId);
-        s_dalTask!.Create(task);
+        s_dal!.Task.Create(task);
     }
     public static DO.Task UpdateHelperTask()//func to create item for Update Task
     {
