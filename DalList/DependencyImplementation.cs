@@ -28,6 +28,18 @@ internal class DependencyImplementation : IDependency
         return DataSource.Dependencies.FirstOrDefault(D => D.Id == id);
     }
 
+    public Dependency? Read(Func<Dependency, bool> filter)
+    {
+        if (filter != null)
+        {
+            return (Dependency?)(from item in DataSource.Dependencies
+                   where filter(item)
+                   select item);
+        }
+        //if filet == null
+        return null;
+    }
+
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
         if (filter != null)

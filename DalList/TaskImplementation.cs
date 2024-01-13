@@ -27,6 +27,18 @@ internal class TaskImplementation : ITask
         return DataSource.Tasks.FirstOrDefault(T => T.Id == id);
     }
 
+    public Task? Read(Func<Task, bool> filter)
+    {
+        if (filter != null)
+        {
+            return (Task?)(from item in DataSource.Tasks
+                   where filter(item)
+                     select item);
+        }
+        //if filet == null
+        return null;
+    }
+
     public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null)
     {
         if (filter != null)
