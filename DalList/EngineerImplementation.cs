@@ -29,11 +29,7 @@ internal class EngineerImplementation : IEngineer
 
     public Engineer? Read(int id)
     {
-        Engineer? find = DataSource.Engineers.Find(E => E.Id == id);
-        if (find != null)
-            return find;
-
-        return null;
+        return DataSource.Engineers.FirstOrDefault(E => E.Id == id);
     }
 
     public List<Engineer> ReadAll()

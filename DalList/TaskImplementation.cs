@@ -24,11 +24,7 @@ internal class TaskImplementation : ITask
 
     public Task? Read(int id)
     {
-        Task? find = DataSource.Tasks.Find(T => T.Id == id); 
-        if (find != null)
-            return find;
-
-        return null;
+        return DataSource.Tasks.FirstOrDefault(T => T.Id == id);
     }
 
     public List<Task> ReadAll()

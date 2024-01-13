@@ -27,11 +27,10 @@ internal class DependencyImplementation : IDependency
     {
         return DataSource.Dependencies.FirstOrDefault(D => D.Id == id);
     }
-
+    
     public List<Dependency> ReadAll()
     {
         return new List<Dependency>(DataSource.Dependencies);
-        //return DataSource.Dependencies.Select(D => D);
     }
 
     public void Update(Dependency item)
