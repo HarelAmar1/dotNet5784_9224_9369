@@ -7,7 +7,7 @@ using System.Collections.Specialized;
 
 public class Program
 {
-    static readonly IDal s_dal = new DalList(); //stage 2
+    static readonly IDal s_dal = new DalList();
 
     // Main method - the entry point of the application
     private static void Main(string[] args)
@@ -16,13 +16,21 @@ public class Program
         {
             // Initialize the services with required dependencies
             Initialization.Do(s_dal);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message); // Exception handling
+        }
 
-            // Get user input from the main menu
-            int userInput = menu();
-            int id; // Variable to store IDs entered by the user
+        // Get user input from the main menu
+        int userInput = menu();
+        int id; // Variable to store IDs entered by the user
 
-            // Main loop to handle user choices
-            while (userInput != 0)
+
+        // Main loop to handle user choices
+        while (userInput != 0)
+        {
+            try
             {
                 switch (userInput)
                 {
@@ -126,13 +134,17 @@ public class Program
                         Console.WriteLine("Enter a Valid value"); // Handle invalid input
                         break;
                 } // End of switch statement
-                userInput = menu(); // Display the main menu again
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message); // Exception handling
-        }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message); // Exception handling
+            }
+
+            userInput = menu(); // Display the main menu again
+        }//End while
+
+
     }
 
 
@@ -145,12 +157,6 @@ public class Program
         Console.WriteLine("3 - Choose Engineer");
         Console.WriteLine("0 - exit");
         int firstmenu = int.Parse(Console.ReadLine()!);
-        // Validating user input
-        while (firstmenu < 0 || firstmenu > 3)
-        {
-            Console.WriteLine("ERROR\nEnter number again please");
-            firstmenu = int.Parse(Console.ReadLine()!);
-        }
         return firstmenu;
     }
     // Function to display a submenu for CRUD operations and capture user's choice
@@ -164,13 +170,7 @@ public class Program
         Console.WriteLine("4 - Update");
         Console.WriteLine("5 - Delete");
         Console.WriteLine("0 - Back");
-
         int op = int.Parse(Console.ReadLine()!);
-        while (op < 0 || op > 5)
-        {
-            Console.WriteLine("ERROR\nEnter number again please");
-            op = int.Parse(Console.ReadLine()!);
-        }
         return op;
     }
 
