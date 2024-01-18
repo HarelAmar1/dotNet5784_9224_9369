@@ -30,16 +30,14 @@ internal class DependencyImplementation : IDependency
     public Dependency? Read(int id)
     {
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
-        (from depend in rootDependency.Elements()
-         where (int?)depend.Element("ID") == id
-         select new Dependency()
-         {
-             Id = (int)(depend.Element("ID") ?? throw new DalCanNotBeNULL("Dal Can Not Be NULL"),
-            DependentTask = (int?)(depend.Element("DependentTask") ?? throw new DalCanNotBeNULL("Dal Can Not Be NULL"),
-            DependsOnTask = (int?)(depend.Element("DependsOnTask") ??throw new DalCanNotBeNULL("Dal Can Not Be NULL")
-         }
-         ).FirstOrDefault()?.Remove();
-        throw new NotImplementedException();
+        return (from depend in rootDependency.Elements()
+                where (int?)depend.Element("ID") == id
+                select new Dependency() 
+                { 
+                    Id = (int)(depend.Element("ID")),
+                    DependentTask= (int?)depend.Element("DependentTask"),
+                    DependsOnTask= (int?)depend.Element("DependsOnTask")
+                }).FirstOrDefault() ?? throw new DalDoesNotExistException($"ID: {id}, not exist");                 
     }
 
     public Dependency? Read(Func<Dependency, bool> filter)
