@@ -15,7 +15,7 @@ internal class TaskImplementation :ITask
         DO.Task updatedTask = item with { Id = newId };//נעדכן את האידי
         listTask.Add(updatedTask);//נכניס לרשימה
         XMLTools.SaveListToXMLSerializer<DO.Task>(listTask, s_tasks_xml); //return to XML file
-        return item.Id;
+        return newId;
     }
 
     public void Delete(int id)
