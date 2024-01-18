@@ -178,7 +178,7 @@ public class Program
     public static void createDependency()
     {
         Console.WriteLine("Please enter your ID of Depenency");
-        int dependencyNow = Console.Read();
+        int dependencyNow = int.Parse(Console.ReadLine()!);
         Console.WriteLine("Please enter your ID of most previose Depenency");
         int dependencyDep = int.Parse(Console.ReadLine()!);
         Dependency dependency = new Dependency(0, dependencyNow, dependencyDep);
