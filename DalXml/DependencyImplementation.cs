@@ -1,5 +1,7 @@
 ﻿using DalApi;
 using DO;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace Dal;
 
@@ -9,17 +11,34 @@ internal class DependencyImplementation : IDependency
 
     public int Create(Dependency item)
     {
-     List<Dependency> listDependency=XMLTools.LoadListFromXMLElement();
+        XElement xElementDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
 
+        int newId = XMLTools.GetAndIncreaseNextId(s_dependencies_xml, "ID");    //לבדוק !! שאכן כתוב אידי כמו כאן או לשנות
+        Dependency updatedDependency = item with { Id = newId };
+        xElementDependency.Add(updatedDependency);  //לבדוק אם נכנס טוב לאלמנט?
+        return newId;
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
+        (from depend in rootDependency.Elements()
+         where (int?)depend.Element("ID") == id
+         select depend).FirstOrDefault()?.Remove(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11?? throw new DalDoesNotExistException($"ID: {id}, not exist");
     }
 
     public Dependency? Read(int id)
     {
+        XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
+        (from depend in rootDependency.Elements()
+         where (int?)depend.Element("ID") == id
+         select new Dependency()
+         {
+             Id = (int)(depend.Element("ID") ?? throw new DalCanNotBeNULL("Dal Can Not Be NULL"),
+            DependentTask = (int?)(depend.Element("DependentTask") ?? throw new DalCanNotBeNULL("Dal Can Not Be NULL"),
+            DependsOnTask = (int?)(depend.Element("DependsOnTask") ??throw new DalCanNotBeNULL("Dal Can Not Be NULL")
+         }
+         ).FirstOrDefault()?.Remove();
         throw new NotImplementedException();
     }
 
