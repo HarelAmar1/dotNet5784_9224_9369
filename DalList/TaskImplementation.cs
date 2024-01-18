@@ -35,7 +35,7 @@ internal class TaskImplementation : ITask
                    where filter(item)
                      select item);
         }
-        //if filet == null
+        
         return null;
     }
 

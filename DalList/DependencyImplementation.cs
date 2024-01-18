@@ -36,7 +36,6 @@ internal class DependencyImplementation : IDependency
                    where filter(item)
                    select item);
         }
-        //if filet == null
         return null;
     }
 

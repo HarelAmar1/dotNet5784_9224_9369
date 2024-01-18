@@ -40,7 +40,6 @@ internal class EngineerImplementation : IEngineer
                    where filter(item)
                    select item);
         }
-        //if filet == null
         return null;
     }
 
