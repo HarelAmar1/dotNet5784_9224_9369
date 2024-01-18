@@ -9,7 +9,8 @@ internal class DependencyImplementation : IDependency
 
     public int Create(Dependency item)
     {
-        throw new NotImplementedException();
+     List<Dependency> listDependency=XMLTools.LoadListFromXMLElement();
+
     }
 
     public void Delete(int id)

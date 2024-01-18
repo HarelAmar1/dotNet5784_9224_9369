@@ -50,11 +50,26 @@ internal class EngineerImplementation : IEngineer
     public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null)
     {
         List<Engineer> listEngineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
-
+        if (filter != null)
+        {
+            return from item in listEngineers
+                   where filter(item)
+                   select item;
+        }
+        return from item in listEngineers
+               select item;
     }
 
     public void Update(Engineer item)
     {
-        throw new NotImplementedException();
+        List<Engineer> listEngineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+        if (listEngineers.Any(engineers => engineers.Id == item.Id))
+        {
+            Delete(item.Id);
+            listEngineers.Add(item);
+            XMLTools.SaveListToXMLSerializer<Engineer>(listEngineers, s_engineers_xml);
+        }
+        else
+            throw new DalDoesNotExistException($"Engineer with ID={item.Id} is not exists");
     }
 }
