@@ -25,7 +25,7 @@ internal class DependencyImplementation : IDependency
     {
         //check if ID exist by Read func AND if not exist the Read func throw Exception
         if (Read(id) == null) ;
-
+       
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
         (from depend in rootDependency.Elements()
          where (int?)depend.Element("ID") == id
@@ -45,38 +45,21 @@ internal class DependencyImplementation : IDependency
                 }).FirstOrDefault() ?? throw new DalDoesNotExistException($"ID: {id}, not exist");
     }
 
-    public Dependency? Read(Func<XElement, bool> filter)
+    public Dependency? Read(Func<Dependency, bool> filter)
     {
-        XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
-        if (filter != null)
-        {
-            XElement dependFromXML = rootDependency.Elements().FirstOrDefault(filter);
-            if (dependFromXML != null)
-            {
-                Dependency newDependency = new Dependency()
-                {
-                    Id = (int)(dependFromXML.Element("ID")),
-                    DependentTask = (int?)dependFromXML.Element("DependentTask"),
-                    DependsOnTask = (int?)dependFromXML.Element("DependsOnTask")
-                };
-                return newDependency;
-            }
-        }
-        return null;
+        if (filter == null)
+            return null;
+
+        IEnumerable<Dependency?> dependencies = ReadAll(filter);
+        return dependencies.FirstOrDefault();
+
+
     }
-    public IEnumerable<Dependency?> ReadAll(Func<XElement, bool>? filter = null)
+    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is roo
+        List<XElement> dependFromXMLList = rootDependency.Elements().ToList();//להעביר את כל ה אקסמל לרשימה
         List<Dependency?> depends = new List<Dependency?>();//רשימה ששומרת את המשימות
-
-        List<XElement> dependFromXMLList;
-
-        if (filter != null)
-            dependFromXMLList = rootDependency.Elements().Where(filter).ToList();//רשימה ששומרת את האלמנטים
-        else
-            dependFromXMLList = rootDependency.Elements().ToList();
-
-
         foreach (var dependFromXML in dependFromXMLList)
         {
             depends.Add(new Dependency()
@@ -86,8 +69,11 @@ internal class DependencyImplementation : IDependency
                 DependsOnTask = (int?)dependFromXML.Element("DependsOnTask")
             });
         }
+        if (filter == null)
+            return depends;
 
-        return depends;
+        List<Dependency> filterDependencies = depends.Where(filter).ToList();
+        return filterDependencies;
     }
 
 
