@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -22,24 +23,18 @@ internal class DependencyImplementation : IDependency
     public void Delete(int id)
     {
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
-        (from depend in rootDependency.Elements()
-         where (int?)depend.Element("ID") == id
-         select depend).FirstOrDefault()?.Remove(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11?? throw new DalDoesNotExistException($"ID: {id}, not exist");
+        XName nameOfTheId = 
+        XElement a = rootDependency.Element(nameOfTheId);
+        if (a != null)
+            a.Remove();
+        else
+            throw new DalDoesNotExistException($"ID: {id}, not exist");
     }
 
     public Dependency? Read(int id)
     {
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
-        (from depend in rootDependency.Elements()
-         where (int?)depend.Element("ID") == id
-         select new Dependency()
-         {
-             Id = (int)(depend.Element("ID") ?? throw new DalCanNotBeNULL("Dal Can Not Be NULL"),
-            DependentTask = (int?)(depend.Element("DependentTask") ?? throw new DalCanNotBeNULL("Dal Can Not Be NULL"),
-            DependsOnTask = (int?)(depend.Element("DependsOnTask") ??throw new DalCanNotBeNULL("Dal Can Not Be NULL")
-         }
-         ).FirstOrDefault()?.Remove();
-        throw new NotImplementedException();
+        XElement = 
     }
 
     public Dependency? Read(Func<Dependency, bool> filter)
