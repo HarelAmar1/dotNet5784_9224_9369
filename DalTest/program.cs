@@ -7,7 +7,7 @@ using System.Collections.Specialized;
 
 public class Program
 {
-    static readonly IDal s_dal = new DalList();
+    static readonly IDal s_dal = new DalXml();
 
     // Main method - the entry point of the application
     private static void Main(string[] args)
