@@ -22,13 +22,13 @@ internal class DependencyImplementation : IDependency
 
     public void Delete(int id)
     {
+        //check if ID exist by Read func AND if not exist the Read func throw Exception
+        if (Read(id) == null) ;
+
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
-        XName nameOfTheId = 
-        XElement a = rootDependency.Element(nameOfTheId);
-        if (a != null)
-            a.Remove();
-        else
-            throw new DalDoesNotExistException($"ID: {id}, not exist");
+        (from depend in rootDependency.Elements()
+         where (int?)depend.Element("ID") == id
+         select depend).FirstOrDefault()?.Remove();
     }
 
     public Dependency? Read(int id)
@@ -36,26 +36,43 @@ internal class DependencyImplementation : IDependency
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
         return (from depend in rootDependency.Elements()
                 where (int?)depend.Element("ID") == id
-                select new Dependency() 
-                { 
+                select new Dependency()
+                {
                     Id = (int)(depend.Element("ID")),
-                    DependentTask= (int?)depend.Element("DependentTask"),
-                    DependsOnTask= (int?)depend.Element("DependsOnTask")
-                }).FirstOrDefault() ?? throw new DalDoesNotExistException($"ID: {id}, not exist");                 
+                    DependentTask = (int?)depend.Element("DependentTask"),
+                    DependsOnTask = (int?)depend.Element("DependsOnTask")
+                }).FirstOrDefault() ?? throw new DalDoesNotExistException($"ID: {id}, not exist");
     }
 
-    public Dependency? Read(Func<Dependency, bool> filter)
+    public Dependency? Read(Func<XElement, bool> filter)
     {
-        throw new NotImplementedException();
+        XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
+        if (filter != null)
+        {
+            XElement dependFromXML = rootDependency.Elements().FirstOrDefault(filter);
+            if (dependFromXML != null)
+            {
+                Dependency newDependency = new Dependency()
+                {
+                    Id = (int)(dependFromXML.Element("ID")),
+                    DependentTask = (int?)dependFromXML.Element("DependentTask"),
+                    DependsOnTask = (int?)dependFromXML.Element("DependsOnTask")
+                };
+                return newDependency;
+            }
+        }
+        return null;
     }
-
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
         throw new NotImplementedException();
     }
 
-    public void Update(Dependency item)
+    public void Update(Dependency dependency)
     {
-        throw new NotImplementedException();
+        //if ID not exist the Delete func Athrow Exception 
+        //AND if exist we will delete it and bring it back
+        Delete(dependency.Id);
+        Create(dependency);
     }
 }
