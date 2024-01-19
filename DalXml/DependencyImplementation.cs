@@ -1,6 +1,6 @@
 ﻿using DalApi;
 using DO;
-using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -64,14 +64,41 @@ internal class DependencyImplementation : IDependency
         }
         return null;
     }
-    public IEnumerable<Dependency?> ReadAll(Func<XElement, bool> filter = null)
+    public IEnumerable<Dependency?> ReadAll(Func<XElement, bool>? filter = null)
     {
-        XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
+        XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is roo
+        List<Dependency?> depends = new List<Dependency?>();//רשימה ששומרת את המשימות
+        
+
         if (filter != null)
         {
-            XElement dependFromXML = rootDependency.Elements().FirstOrDefault(filter);
+            List<XElement> dependFromXMLList = rootDependency.Elements().Where(filter).ToList();//רשימה ששומרת את האלמנטים
+            foreach (var dependFromXML in dependFromXMLList)
+            {
+                depends.Add(new Dependency()
+                {
+                    Id = (int)dependFromXML.Element("ID"),
+                    DependentTask = (int?)dependFromXML.Element("DependentTask"),
+                    DependsOnTask = (int?)dependFromXML.Element("DependsOnTask")
+                });
+            }
         }
+        else
+        {
+            List<XElement> dependFromXMLList = rootDependency.Elements().ToList();
+            foreach (var dependFromXML in dependFromXMLList)
+            {
+                depends.Add(new Dependency()
+                {
+                    Id = (int)dependFromXML.Element("ID"),
+                    DependentTask = (int?)dependFromXML.Element("DependentTask"),
+                    DependsOnTask = (int?)dependFromXML.Element("DependsOnTask")
+                });
+            }
+        }
+        return depends;
     }
+
 
     public void Update(Dependency dependency)
     {
