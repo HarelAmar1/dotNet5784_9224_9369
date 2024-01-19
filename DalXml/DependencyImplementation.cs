@@ -45,7 +45,7 @@ internal class DependencyImplementation : IDependency
                 }).FirstOrDefault() ?? throw new DalDoesNotExistException($"ID: {id}, not exist");
     }
 
-    public Dependency? Read(Func<XElement, bool> filter)
+    public Dependency? Read(Func<Dependency, bool> filter)
     {
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
         if (filter != null)
@@ -64,7 +64,7 @@ internal class DependencyImplementation : IDependency
         }
         return null;
     }
-    public IEnumerable<Dependency?> ReadAll(Func<XElement, bool>? filter = null)
+    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is roo
         List<Dependency?> depends = new List<Dependency?>();//רשימה ששומרת את המשימות
@@ -93,8 +93,9 @@ internal class DependencyImplementation : IDependency
 
     public void Update(Dependency dependency)
     {
-        //if ID not exist the Delete func Athrow Exception 
-        //AND if exist we will delete it and bring it back
+       /* if ID not exist the Delete func throw Exception 
+        AND if exist we will delete it and bring it back*/
+
         Delete(dependency.Id);
         Create(dependency);
     }
