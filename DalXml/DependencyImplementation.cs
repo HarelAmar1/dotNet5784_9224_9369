@@ -68,34 +68,25 @@ internal class DependencyImplementation : IDependency
     {
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is roo
         List<Dependency?> depends = new List<Dependency?>();//רשימה ששומרת את המשימות
-        
+
+        List<XElement> dependFromXMLList;
 
         if (filter != null)
-        {
-            List<XElement> dependFromXMLList = rootDependency.Elements().Where(filter).ToList();//רשימה ששומרת את האלמנטים
-            foreach (var dependFromXML in dependFromXMLList)
-            {
-                depends.Add(new Dependency()
-                {
-                    Id = (int)dependFromXML.Element("ID"),
-                    DependentTask = (int?)dependFromXML.Element("DependentTask"),
-                    DependsOnTask = (int?)dependFromXML.Element("DependsOnTask")
-                });
-            }
-        }
+            dependFromXMLList = rootDependency.Elements().Where(filter).ToList();//רשימה ששומרת את האלמנטים
         else
+            dependFromXMLList = rootDependency.Elements().ToList();
+
+
+        foreach (var dependFromXML in dependFromXMLList)
         {
-            List<XElement> dependFromXMLList = rootDependency.Elements().ToList();
-            foreach (var dependFromXML in dependFromXMLList)
+            depends.Add(new Dependency()
             {
-                depends.Add(new Dependency()
-                {
-                    Id = (int)dependFromXML.Element("ID"),
-                    DependentTask = (int?)dependFromXML.Element("DependentTask"),
-                    DependsOnTask = (int?)dependFromXML.Element("DependsOnTask")
-                });
-            }
+                Id = (int)dependFromXML.Element("ID"),
+                DependentTask = (int?)dependFromXML.Element("DependentTask"),
+                DependsOnTask = (int?)dependFromXML.Element("DependsOnTask")
+            });
         }
+
         return depends;
     }
 
