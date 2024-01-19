@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -63,9 +64,13 @@ internal class DependencyImplementation : IDependency
         }
         return null;
     }
-    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
+    public IEnumerable<Dependency?> ReadAll(Func<XElement, bool> filter = null)
     {
-        throw new NotImplementedException();
+        XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
+        if (filter != null)
+        {
+            XElement dependFromXML = rootDependency.Elements().FirstOrDefault(filter);
+        }
     }
 
     public void Update(Dependency dependency)
