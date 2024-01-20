@@ -15,7 +15,7 @@ internal class DependencyImplementation : IDependency
     {
         XElement xElementDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
 
-        int newId = XMLTools.GetAndIncreaseNextId(s_dependencies_xml, "ID");    //לבדוק !! שאכן כתוב אידי כמו כאן או לשנות
+        int newId = XMLTools.GetAndIncreaseNextId("data-config", "NextDependencyId");    //לבדוק !! שאכן כתוב אידי כמו כאן או לשנות
         Dependency updatedDependency = item with { Id = newId };
         xElementDependency.Add(updatedDependency);  //לבדוק אם נכנס טוב לאלמנט?
         XMLTools.SaveListToXMLElement(xElementDependency, s_dependencies_xml);
@@ -28,7 +28,6 @@ internal class DependencyImplementation : IDependency
     {
         //check if ID exist by Read func AND if not exist the Read func throw Exception
         if (Read(id) == null) ;
-       
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
         (from depend in rootDependency.Elements()
          where (int?)depend.Element("ID") == id
