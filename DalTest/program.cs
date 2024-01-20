@@ -12,16 +12,7 @@ public class Program
     // Main method - the entry point of the application
     private static void Main(string[] args)
     {
-        try
-        {
-            // Initialize the services with required dependencies
-            Initialization.Do(s_dal);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message); // Exception handling
-        }
-
+        
         // Get user input from the main menu
         int userInput = menu();
         int id; // Variable to store IDs entered by the user
@@ -156,7 +147,17 @@ public class Program
         Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
         string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
         if (ans == "Y") //stage 3
-            Initialization.Do(s_dal); //stage 2
+        {
+            try
+            {
+                Initialization.Do(s_dal); //stage 2
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message); // Exception handling
+            }
+        }
+            
     }
     // Menu function to display the main menu and capture user's choice
     public static int menu()
