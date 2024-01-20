@@ -11,7 +11,7 @@ internal class TaskImplementation :ITask
     public int Create(DO.Task item)
     {
         List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);
-        int newId = XMLTools.GetAndIncreaseNextId(s_tasks_xml, "ID");//לבדוק !! שאכן כתוב אידי כמו כאן או לשנות
+        int newId = XMLTools.GetAndIncreaseNextId("data-config", "NextTaskId");//לבדוק !! שאכן כתוב אידי כמו כאן או לשנות
         DO.Task updatedTask = item with { Id = newId };//נעדכן את האידי
         listTask.Add(updatedTask);//נכניס לרשימה
         XMLTools.SaveListToXMLSerializer<DO.Task>(listTask, s_tasks_xml); //return to XML file

@@ -124,9 +124,9 @@ public static class Initialization
 
 
         //Calling the methods
-        createDependency();
-        createEngineer();
         createTask();
+        createEngineer();
+        createDependency();
     }
 
 }
