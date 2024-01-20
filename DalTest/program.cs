@@ -130,6 +130,9 @@ public class Program
                             OpForEngineer = options(); // Show Engineer options again
                         }
                         break;
+                    case 4:
+                        initTheXml(); // Init the data
+                        break;
                     default:
                         Console.WriteLine("Enter a Valid value"); // Handle invalid input
                         break;
@@ -148,16 +151,24 @@ public class Program
     }
 
 
+    public static void initTheXml()
+    {
+        Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
+        string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+        if (ans == "Y") //stage 3
+            Initialization.Do(s_dal); //stage 2
+    }
     // Menu function to display the main menu and capture user's choice
     public static int menu()
     {
-        Console.WriteLine("choose from next list");
+        Console.WriteLine("Choose from next list");
         Console.WriteLine("1 - Choose Task");
         Console.WriteLine("2 - Choose Dependency");
         Console.WriteLine("3 - Choose Engineer");
+        Console.WriteLine("4 - Choose Initial Data");//if the user want initial data from Stage 3
         Console.WriteLine("0 - exit");
-        int firstmenu = int.Parse(Console.ReadLine()!);
-        return firstmenu;
+        int firstMenu = int.Parse(Console.ReadLine()!);
+        return firstMenu;
     }
     // Function to display a submenu for CRUD operations and capture user's choice
     public static int options()

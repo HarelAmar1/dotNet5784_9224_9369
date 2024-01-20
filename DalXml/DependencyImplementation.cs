@@ -13,12 +13,15 @@ internal class DependencyImplementation : IDependency
 
     public int Create(Dependency item)
     {
-        XElement xElementDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
+        XElement xElementDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
 
         int newId = XMLTools.GetAndIncreaseNextId(s_dependencies_xml, "ID");    //לבדוק !! שאכן כתוב אידי כמו כאן או לשנות
         Dependency updatedDependency = item with { Id = newId };
         xElementDependency.Add(updatedDependency);  //לבדוק אם נכנס טוב לאלמנט?
+        XMLTools.SaveListToXMLElement(xElementDependency, s_dependencies_xml);
+
         return newId;
+
     }
 
     public void Delete(int id)
@@ -30,6 +33,8 @@ internal class DependencyImplementation : IDependency
         (from depend in rootDependency.Elements()
          where (int?)depend.Element("ID") == id
          select depend).FirstOrDefault()?.Remove();
+        XMLTools.SaveListToXMLElement(rootDependency, s_dependencies_xml);
+
     }
 
     public Dependency? Read(int id)
