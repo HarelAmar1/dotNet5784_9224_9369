@@ -12,9 +12,9 @@ internal class TaskImplementation :ITask
     public int Create(DO.Task item)
     {
         List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);
-        int newId = XMLTools.GetAndIncreaseNextId("data-config", "NextTaskId");//לבדוק !! שאכן כתוב אידי כמו כאן או לשנות
-        DO.Task updatedTask = item with { Id = newId };//נעדכן את האידי
-        listTask.Add(updatedTask);//נכניס לרשימה
+        int newId = XMLTools.GetAndIncreaseNextId("data-config", "NextTaskId");
+        DO.Task updatedTask = item with { Id = newId };//update the ID
+        listTask.Add(updatedTask);//insert to list
         XMLTools.SaveListToXMLSerializer<DO.Task>(listTask, s_tasks_xml); //return to XML file
         return newId;
     }

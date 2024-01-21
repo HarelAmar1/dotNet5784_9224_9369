@@ -85,7 +85,7 @@ public static class Initialization
             DateTime? createTask = DateTime.Now;
             DateTime? requiredEffortTime = createTask?.Add(effortDuration);
             bool isMilestone = random.Next(2) == 0 ? true : false;
-            EngineerExperience level = (EngineerExperience)taskLevels[i];
+            EngineerExperience level = (EngineerExperience)(taskLevels[i] - 1);
             DateTime? startDate = createTask?.Add(effortDuration);
             DateTime? scheduledDate = createTask?.Add(sevenDays);
             DateTime? deadlineDate = createTask?.Add(effortDuration);
@@ -121,7 +121,6 @@ public static class Initialization
     public static void Do(IDal dal)//Check that it doesn't return anything
     {
         s_dal = dal?? throw new DalCanNotBeNULL("DAL object can not be null!"); //stage 2
-
 
         //Calling the methods
         createTask();
