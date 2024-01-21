@@ -15,7 +15,7 @@ internal class DependencyImplementation : IDependency
     {
         XElement xElementDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
 
-        int newId = XMLTools.GetAndIncreaseNextId("data-config", "NextDependencyId");    //לבדוק !! שאכן כתוב אידי כמו כאן או לשנות
+        int newId = XMLTools.GetAndIncreaseNextId("data-config", "NextDependencyId");    
         Dependency updatedDependency = item with { Id = newId };
         //מוצאש לבדוק אם למחוק
         XElement id = new XElement("ID", updatedDependency.Id);
@@ -23,7 +23,7 @@ internal class DependencyImplementation : IDependency
         XElement DependsOnTask = new XElement("DependsOnTask", updatedDependency.DependsOnTask);
         XElement newDepend = new XElement("Dependency", id, DependentTask, DependsOnTask);
 
-        xElementDependency.Add(newDepend);  //לבדוק אם נכנס טוב לאלמנט?
+        xElementDependency.Add(newDepend);  
         XMLTools.SaveListToXMLElement(xElementDependency, s_dependencies_xml);
 
         return newId;
@@ -68,8 +68,8 @@ internal class DependencyImplementation : IDependency
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is roo
-        List<XElement> dependFromXMLList = rootDependency.Elements().ToList();//להעביר את כל ה אקסמל לרשימה
-        List<Dependency?> depends = new List<Dependency?>();//רשימה ששומרת את המשימות
+        List<XElement> dependFromXMLList = rootDependency.Elements().ToList();//Transfer all XML to a list
+        List<Dependency?> depends = new List<Dependency?>();//A list that saves the tasks
         foreach (var dependFromXML in dependFromXMLList)
         {
             depends.Add(new Dependency()
