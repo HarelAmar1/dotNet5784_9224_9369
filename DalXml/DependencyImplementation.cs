@@ -17,7 +17,13 @@ internal class DependencyImplementation : IDependency
 
         int newId = XMLTools.GetAndIncreaseNextId("data-config", "NextDependencyId");    //לבדוק !! שאכן כתוב אידי כמו כאן או לשנות
         Dependency updatedDependency = item with { Id = newId };
-        xElementDependency.Add(updatedDependency);  //לבדוק אם נכנס טוב לאלמנט?
+        //מוצאש לבדוק אם למחוק
+        XElement id = new XElement("ID", updatedDependency.Id);
+        XElement DependentTask = new XElement("DependentTask", updatedDependency.DependentTask);
+        XElement DependsOnTask = new XElement("DependsOnTask", updatedDependency.DependsOnTask);
+        XElement newDepend = new XElement("Dependency", id, DependentTask, DependsOnTask);
+
+        xElementDependency.Add(newDepend);  //לבדוק אם נכנס טוב לאלמנט?
         XMLTools.SaveListToXMLElement(xElementDependency, s_dependencies_xml);
 
         return newId;

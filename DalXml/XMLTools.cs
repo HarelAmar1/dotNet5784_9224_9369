@@ -86,7 +86,8 @@ static class XMLTools
         string filePath = $"{s_xml_dir + entity}.xml";
         try
         {
-            if (!File.Exists(filePath)) return new();
+            if (!File.Exists(filePath))
+                return new();
             using FileStream file = new(filePath, FileMode.Open);
             XmlSerializer x = new(typeof(List<T>));
             return x.Deserialize(file) as List<T> ?? new();
