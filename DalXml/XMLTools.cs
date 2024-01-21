@@ -67,14 +67,12 @@ static class XMLTools
     }
     #endregion
 
-    #region SaveLoadWithXMLSerializer
-            static int x = 0;  
+    #region SaveLoadWithXMLSerializer 
     public static void SaveListToXMLSerializer<T>(List<T> list, string entity) where T : class
     {
         string filePath = $"{s_xml_dir + entity}.xml";
         try
         {
-            x++;
             using FileStream file = new(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
             new XmlSerializer(typeof(List<T>)).Serialize(file, list);
         }
