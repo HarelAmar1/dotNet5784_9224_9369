@@ -4,6 +4,7 @@ using System.Runtime.Intrinsics.Arm;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Dal;
 
@@ -14,16 +15,16 @@ internal class DependencyImplementation : IDependency
     public int Create(Dependency item)
     {
         XElement xElementDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
-
+        //craete a Depedency  
         int newId = XMLTools.GetAndIncreaseNextId("data-config", "NextDependencyId");    
         Dependency updatedDependency = item with { Id = newId };
-        //מוצאש לבדוק אם למחוק
         XElement id = new XElement("ID", updatedDependency.Id);
         XElement DependentTask = new XElement("DependentTask", updatedDependency.DependentTask);
         XElement DependsOnTask = new XElement("DependsOnTask", updatedDependency.DependsOnTask);
         XElement newDepend = new XElement("Dependency", id, DependentTask, DependsOnTask);
-
-        xElementDependency.Add(newDepend);  
+        //adds to the list
+        xElementDependency.Add(newDepend);
+        //Returns the list to a file
         XMLTools.SaveListToXMLElement(xElementDependency, s_dependencies_xml);
 
         return newId;
@@ -38,6 +39,7 @@ internal class DependencyImplementation : IDependency
         (from depend in rootDependency.Elements()
          where (int?)depend.Element("ID") == id
          select depend).FirstOrDefault()?.Remove();
+        //Returns the list to a file
         XMLTools.SaveListToXMLElement(rootDependency, s_dependencies_xml);
 
     }
@@ -67,7 +69,7 @@ internal class DependencyImplementation : IDependency
     }
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
-        XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is roo
+        XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
         List<XElement> dependFromXMLList = rootDependency.Elements().ToList();//Transfer all XML to a list
         List<Dependency?> depends = new List<Dependency?>();//A list that saves the tasks
         foreach (var dependFromXML in dependFromXMLList)
@@ -81,7 +83,7 @@ internal class DependencyImplementation : IDependency
         }
         if (filter == null)
             return depends;
-
+        //Returns the list to a file
         List<Dependency> filterDependencies = depends.Where(filter).ToList();
         return filterDependencies;
     }
@@ -89,10 +91,19 @@ internal class DependencyImplementation : IDependency
 
     public void Update(Dependency dependency)
     {
-       /* if ID not exist the Delete func throw Exception 
-        AND if exist we will delete it and bring it back*/
 
+        //We will delete the object we received
         Delete(dependency.Id);
-        Create(dependency);
+
+        //We will recreate it with the same ID but the new data
+        XElement xElementDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
+        XElement id = new XElement("ID", dependency.Id);
+        XElement DependentTask = new XElement("DependentTask", dependency.DependentTask);
+        XElement DependsOnTask = new XElement("DependsOnTask", dependency.DependsOnTask);
+        XElement newDepend = new XElement("Dependency", id, DependentTask, DependsOnTask);
+        //adds to the list
+        xElementDependency.Add(newDepend);
+        //Returns the list to a file
+        XMLTools.SaveListToXMLElement(xElementDependency, s_dependencies_xml);
     }
 }

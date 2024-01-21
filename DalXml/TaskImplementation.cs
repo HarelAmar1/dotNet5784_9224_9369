@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Collections.Generic;
 
 namespace Dal;
 
@@ -20,23 +21,28 @@ internal class TaskImplementation :ITask
 
     public void Delete(int id)
     {
-        List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);
-        if (listTask.Any(task => task.Id == id))
+        List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);// this is root
+        if (listTask.Any(task => task.Id == id))//Looking for the ID to delete
             listTask.RemoveAll(T => T.Id == id);
         else
             throw new DalDoesNotExistException($"ID: {id}, not exist");
+        ////return to XML file
         XMLTools.SaveListToXMLSerializer<DO.Task>(listTask, s_tasks_xml);
     }
 
     public DO.Task? Read(int id)
     {
-        List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);
+        
+        List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);// this is root
+        //Returns the first bargain
         return listTask.FirstOrDefault(T => T.Id == id);
     }
 
     public DO.Task? Read(Func<DO.Task, bool> filter)
     {
-        List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);
+        List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);// this is root
+
+        //Returns the first bargain with a condition
         if (filter != null)
         {
             return (DO.Task?)(from item in listTask
@@ -48,7 +54,9 @@ internal class TaskImplementation :ITask
 
     public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter = null)
     {
-        List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);
+        List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);// this is root
+
+        //Returns the entire list and if a condition exists, it returns only them
         if (filter != null)
         {
             return from item in listTask
@@ -61,11 +69,13 @@ internal class TaskImplementation :ITask
 
     public void Update(DO.Task item)
     {
-        List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);
+        List<DO.Task> listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);// this is root
+        //Looking for someone to update
         if (listTask.Any(task => task.Id == item.Id))
         {
             Delete(item.Id);
             listTask.Add(item);
+            //return to XML file
             XMLTools.SaveListToXMLSerializer<DO.Task>(listTask, s_tasks_xml);
         }
         else

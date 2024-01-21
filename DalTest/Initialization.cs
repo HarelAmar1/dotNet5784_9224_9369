@@ -4,6 +4,7 @@ using DO;
 using System;
 using System.Data;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 //Initialization class
 public static class Initialization
@@ -120,12 +121,36 @@ public static class Initialization
 
     public static void Do(IDal dal)//Check that it doesn't return anything
     {
-        s_dal = dal?? throw new DalCanNotBeNULL("DAL object can not be null!"); //stage 2
+        s_dal = dal?? throw new DalCanNotBeNULL("DAL object can not be null!"); 
 
         //Calling the methods
         createTask();
         createEngineer();
         createDependency();
+    }
+
+
+    // init the all XML file
+    public static void deleteXMLFile()//Check that it doesn't return anything
+    {
+        //init the XML tasks file
+        XElement tasks = new XElement("ArrayOfTask", "");
+        tasks.Save(@"..\xml\tasks.xml");
+
+        //init the XML engineers file
+        XElement engineers = new XElement("ArrayOfEngineer", "");
+        engineers.Save(@"..\xml\engineers.xml");
+
+        //init the XML Dependencies file
+        XElement Dependencies = new XElement("ArrayOfDependency", "");
+        Dependencies.Save(@"..\xml\dependencies.xml");
+
+        //init the XML config file
+        XElement NextTaskId = new XElement("NextTaskId", 0);
+        XElement NextDependencyId = new XElement("NextDependencyId", 0);
+        XElement config = new XElement("config", NextTaskId, NextDependencyId);
+        config.Save(@"..\xml\data-config.xml");
+
     }
 
 }
