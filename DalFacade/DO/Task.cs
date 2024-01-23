@@ -34,7 +34,7 @@ public record Task
     DateTime? CompleteDate = null,
     string? Deliverables = null,
     string? Remarks = null,
-    int EngineerId = 0
+    int? EngineerId = null
 )
 {
     //Empty Ctor

@@ -4,6 +4,7 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Specialized;
+using System.Diagnostics;
 
 public class Program
 {
@@ -192,9 +193,9 @@ public class Program
     public static void createDependency()
     {
         Console.WriteLine("Please enter your ID of Depenency");
-        int dependencyNow = int.Parse(Console.ReadLine()!);
+        int? dependencyNow = int.Parse(Console.ReadLine());
         Console.WriteLine("Please enter your ID of most previose Depenency");
-        int dependencyDep = int.Parse(Console.ReadLine()!);
+        int? dependencyDep = int.Parse(Console.ReadLine());
         Dependency dependency = new Dependency(0, dependencyNow, dependencyDep);
         s_dal!.Dependency.Create(dependency);
     }
@@ -205,15 +206,15 @@ public class Program
         Console.WriteLine("Please enter your ID:");
         int id = int.Parse(Console.ReadLine()!);
         Console.WriteLine("Please enter your email:");
-        string? email = Console.ReadLine();
+        string email = Console.ReadLine()!;
         Console.WriteLine("Please enter your hourly cost:");
         double cost = int.Parse(Console.ReadLine()!);
         Console.WriteLine("Please enter your name:");
-        string? name = Console.ReadLine();
+        string name = Console.ReadLine()!;
         Console.WriteLine("Please enter your experience level (1-5)");
-        int l = int.Parse(Console.ReadLine()!);
-        DO.EngineerExperience level = (EngineerExperience)l;
-        Engineer engineer = new Engineer(id, email, cost, name, level, true);
+        int levelFromUser = int.Parse(Console.ReadLine()!);
+        DO.EngineerExperience level = (EngineerExperience)levelFromUser;
+        Engineer engineer = new Engineer(id, email, cost, name, true,level);
         s_dal!.Engineer.Create(engineer);
     }
 
@@ -224,20 +225,18 @@ public class Program
         string alias = Console.ReadLine()!;
         Console.WriteLine("Please enter a Description");
         string description = Console.ReadLine()!;
-        DateTime? createdAtDate = DateTime.Now;
-
+        DateTime createdAtDate = DateTime.Now;
         Console.WriteLine("Is this task a Milestone? (yes/no):");
         bool isMilestone = Console.ReadLine()!.ToLower() == "yes";
-
         Console.WriteLine("Please enter Complexity Level (0 for Beginner, 1 for AdvancedBeginner, etc.):");
-        EngineerExperience complexity = (EngineerExperience)int.Parse(Console.ReadLine()!);
+        EngineerExperience? complexity = (EngineerExperience)int.Parse(Console.ReadLine());
         Console.WriteLine("Please enter Deliverables");
-        string deliverables = Console.ReadLine()!;
+        string? deliverables = Console.ReadLine();
         Console.WriteLine("Please enter any Remarks");
-        string remarks = Console.ReadLine()!;
+        string? remarks = Console.ReadLine();
         Console.WriteLine("Please enter the Engineer ID:");
-        int engineerId = int.Parse(Console.ReadLine()!);
-        Task task = new Task(0, alias, description, createdAtDate, null, isMilestone, complexity, null, null, null, null, deliverables, remarks, engineerId);
+        int? engineerId = int.Parse(Console.ReadLine());
+        Task task = new Task(0,  description, alias, isMilestone, createdAtDate, null, complexity, null, null, null, null, deliverables, remarks, engineerId);
         s_dal!.Task.Create(task);
     }
     public static DO.Task UpdateHelperTask()//func to create item for Update Task
@@ -248,7 +247,7 @@ public class Program
         string alias = Console.ReadLine()!;
         Console.WriteLine("Please enter a Description");
         string description = Console.ReadLine()!;
-        DateTime? createdAtDate = DateTime.Now;
+        DateTime createdAtDate = DateTime.Now;
 
         Console.WriteLine("Is this task a Milestone? (yes/no):");
         bool isMilestone = Console.ReadLine()!.ToLower() == "yes";
@@ -256,12 +255,12 @@ public class Program
         Console.WriteLine("Please enter Complexity Level (0 for Beginner, 1 for AdvancedBeginner, etc.):");
         EngineerExperience complexity = (EngineerExperience)int.Parse(Console.ReadLine()!);
         Console.WriteLine("Please enter Deliverables");
-        string deliverables = Console.ReadLine()!;
+        string? deliverables = Console.ReadLine()!;
         Console.WriteLine("Please enter any Remarks");
-        string remarks = Console.ReadLine()!;
+        string? remarks = Console.ReadLine()!;
         Console.WriteLine("Please enter the Engineer ID:");
         int engineerId = int.Parse(Console.ReadLine()!);
-        DO.Task temp = new Task(id, alias, description, createdAtDate, null, isMilestone, complexity, null, null, null, null, deliverables, remarks, engineerId);
+        DO.Task temp = new Task(id, description , alias, isMilestone, createdAtDate, null, complexity, null, null, null, null, deliverables, remarks, engineerId);
         return temp;
     }
     public static DO.Dependency UpdateHelperForDepend()//func to create item for Update Dependency
@@ -280,15 +279,15 @@ public class Program
         Console.WriteLine("Please enter your ID:");
         int id = int.Parse(Console.ReadLine()!);
         Console.WriteLine("Please enter your email:");
-        string? email = Console.ReadLine();
+        string email = Console.ReadLine();
         Console.WriteLine("Please enter your hourly cost:");
         double cost = int.Parse(Console.ReadLine()!);
         Console.WriteLine("Please enter your name:");
-        string? name = Console.ReadLine();
+        string name = Console.ReadLine();
         Console.WriteLine("Please enter your experience level (1-5)");
         int l = int.Parse(Console.ReadLine()!);
         DO.EngineerExperience level = (EngineerExperience)l;
-        DO.Engineer temp = new Engineer(id, email, cost, name, level, true);
+        DO.Engineer temp = new Engineer(id, email, cost, name, true, level);
         return temp;
     }
     // Prints detailed information of a single Task object.
