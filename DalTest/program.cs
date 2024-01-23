@@ -70,7 +70,7 @@ public class Program
                                 case 2:
                                     Console.WriteLine("Enter the Dependency's ID:");
                                     id = int.Parse(Console.ReadLine()!);
-                                    PrintTheReadfunctionOfDependency(s_dal!.Dependency.Read(id)); // Display a specific Dependency
+                                    PrintTheReadFunctionOfDependency(s_dal!.Dependency.Read(id)); // Display a specific Dependency
                                     break;
                                 case 3:
                                     PrintTheReadAllFunctionOfDependency(s_dal!.Dependency.ReadAll()); // Display all Dependencies
@@ -102,7 +102,7 @@ public class Program
                                 case 2:
                                     Console.WriteLine("Enter the engineer's ID:");
                                     id = int.Parse(Console.ReadLine()!);
-                                    PrintTheReadfunctionOfEngineer(s_dal!.Engineer.Read(id)); // Display a specific Engineer
+                                    PrintTheReadFunctionOfEngineer(s_dal!.Engineer.Read(id)); // Display a specific Engineer
                                     break;
                                 case 3:
                                     PrintTheReadAllFunctionOfEngineer(s_dal!.Engineer.ReadAll()); // Display all Engineers
@@ -268,9 +268,9 @@ public class Program
     {
         Console.WriteLine("Please enter your ID");
         int id = int.Parse(Console.ReadLine()!);
-        Console.WriteLine("Please enter your ID of Depenency");
-        int dependencyNow = int.Parse(Console.ReadLine());
-        Console.WriteLine("Please enter your ID of most previose Depenency");
+        Console.WriteLine("Please enter your ID of Dependency");
+        int dependencyNow = int.Parse(Console.ReadLine()!);
+        Console.WriteLine("Please enter your ID of most previous Dependency");
         int dependencyDep = int.Parse(Console.ReadLine()!);
         DO.Dependency temp = new Dependency(id, dependencyNow, dependencyDep);
         return temp;
@@ -306,7 +306,7 @@ public class Program
         Console.WriteLine(ToPrint.RequiredEffortTime);
         Console.Write("Is Milestone: ");
         Console.WriteLine(ToPrint.IsMilestone);
-        Console.Write("Copmlexity: ");
+        Console.Write("Complexity: ");
         Console.WriteLine(ToPrint.Copmlexity);
         Console.Write("Start Date: ");
         Console.WriteLine(ToPrint.StartDate);
@@ -324,7 +324,7 @@ public class Program
         Console.WriteLine(ToPrint.EngineerId + "\n");
     }
     // Displays details of a single Dependency object, including its current and dependent tasks.
-    public static void PrintTheReadfunctionOfDependency(DO.Dependency ToPrint)
+    public static void PrintTheReadFunctionOfDependency(DO.Dependency ToPrint)
     {
         Console.Write("ID: ");
         Console.WriteLine(ToPrint.Id);
@@ -334,7 +334,7 @@ public class Program
         Console.WriteLine(ToPrint.DependsOnTask + "\n");
     }
     // Outputs the information of a single Engineer object, including ID, email, cost, name, level, and active status.
-    public static void PrintTheReadfunctionOfEngineer(DO.Engineer ToPrint)
+    public static void PrintTheReadFunctionOfEngineer(DO.Engineer ToPrint)
     {
         Console.Write("ID: ");
         Console.WriteLine(ToPrint.Id);
@@ -364,7 +364,7 @@ public class Program
     {
         foreach (DO.Dependency dependency in toPrint)
         {
-            PrintTheReadfunctionOfDependency(dependency);
+            PrintTheReadFunctionOfDependency(dependency);
         }
     }
 
@@ -373,7 +373,7 @@ public class Program
     {
         foreach (DO.Engineer engineer in toPrint)
         {
-            PrintTheReadfunctionOfEngineer(engineer);
+            PrintTheReadFunctionOfEngineer(engineer);
         }
     }
 
