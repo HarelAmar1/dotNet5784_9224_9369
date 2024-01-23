@@ -34,14 +34,15 @@ internal class DependencyImplementation : IDependency
     public void Delete(int id)
     {
         //check if ID exist by Read func AND if not exist the Read func throw Exception
-        if (Read(id) == null) ;
         XElement rootDependency = XMLTools.LoadListFromXMLElement(s_dependencies_xml);// this is root
-        (from depend in rootDependency.Elements()
-         where (int?)depend.Element("ID") == id
-         select depend).FirstOrDefault()?.Remove();
-        //Returns the list to a file
-        XMLTools.SaveListToXMLElement(rootDependency, s_dependencies_xml);
-
+        XElement elemToDelete =  rootDependency.Elements("Dependency").FirstOrDefault( x => (int?)x.Element("ID") == id);
+        if (elemToDelete != null)
+        {
+            elemToDelete.Remove();
+            XMLTools.SaveListToXMLElement(rootDependency, s_dependencies_xml);
+        }
+        else
+            throw new DalDoesNotExistException($"ID: {id}, not exist");
     }
 
     public Dependency? Read(int id)
