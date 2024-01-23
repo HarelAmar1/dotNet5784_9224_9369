@@ -27,7 +27,7 @@ public record Task
     bool IsMilestone,
     DateTime CreatedAtDate,
     DateTime? RequiredEffortTime = null,
-    EngineerExperience? Copmlexity = null,
+    EngineerExperience? Copmlexity = null, 
     DateTime? StartDate = null,
     DateTime? ScheduledDate = null,
     DateTime? DeadlineDate = null,
