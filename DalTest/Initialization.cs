@@ -26,7 +26,7 @@ public static class Initialization
             double cost = 5 * random.Next(4, 6);
             bool active = true;
 
-            Engineer engineer = new Engineer(id, email, cost, name, level, active);
+            Engineer engineer = new Engineer(id, email, cost, name, active, level);
 
             // Add engineer to your collection or process them as needed
             s_dal!.Engineer.Create(engineer);
@@ -83,18 +83,18 @@ public static class Initialization
         {
             string alias = engineeringTasks[i];
             string descriptions = taskDescriptions[i];
-            DateTime? createTask = DateTime.Now;
-            DateTime? requiredEffortTime = createTask?.Add(effortDuration);
+            DateTime createdAtDate = DateTime.Now;
+            DateTime? requiredEffortTime = createdAtDate.Add(effortDuration);
             bool isMilestone = random.Next(2) == 0 ? true : false;
             EngineerExperience level = (EngineerExperience)(taskLevels[i] - 1);
-            DateTime? startDate = createTask?.Add(effortDuration);
-            DateTime? scheduledDate = createTask?.Add(sevenDays);
-            DateTime? deadlineDate = createTask?.Add(effortDuration);
+            DateTime startDate = createdAtDate.Add(effortDuration);
+            DateTime? scheduledDate = createdAtDate.Add(sevenDays);
+            DateTime? deadlineDate = createdAtDate.Add(effortDuration);
             DateTime? completeDate = null;
             string? deliverables = taskDeliverables[i];
             string? remarks = taskRemarks[i];
-            int engineerId = idForEngineer[taskLevels[i] - 1];
-            DO.Task task = new DO.Task(i, alias, descriptions, createTask, requiredEffortTime, isMilestone,
+            int? engineerId = idForEngineer[taskLevels[i] - 1];
+            DO.Task task = new DO.Task(i, descriptions, alias, isMilestone, createdAtDate, requiredEffortTime,
             level, startDate, scheduledDate, deadlineDate, completeDate, deliverables, remarks, engineerId);
             s_dal!.Task.Create(task);
         }
