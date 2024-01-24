@@ -119,9 +119,9 @@ public static class Initialization
 
     }
 
-    public static void Do(IDal dal)//Check that it doesn't return anything
+    public static void Do()
     {
-        s_dal = dal?? throw new DalCanNotBeNULL("DAL object can not be null!"); 
+        s_dal = Factory.Get;
 
         //Calling the methods
         createTask();

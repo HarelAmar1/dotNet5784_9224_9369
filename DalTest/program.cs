@@ -8,9 +8,10 @@ using System.Diagnostics;
 
 public class Program
 {
-    static readonly IDal s_dal = new DalXml();
+    //static readonly IDal s_dal = new DalXml();
     //static readonly IDal s_dal = new DalList();
-    
+    static readonly IDal s_dal = Factory.Get; //stage 4
+
     // Main method - the entry point of the application
     private static void Main(string[] args)
     {
@@ -153,7 +154,7 @@ public class Program
             try
             {
                 Initialization.deleteXMLFile();
-                Initialization.Do(s_dal); 
+                Initialization.Do(); 
             }
             catch (Exception ex)
             {
