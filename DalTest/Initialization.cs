@@ -5,7 +5,6 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-
 //Initialization class
 public static class Initialization
 {
@@ -119,9 +118,9 @@ public static class Initialization
 
     }
 
-    public static void Do(IDal dal)//Check that it doesn't return anything
+    public static void Do()//Check that it doesn't return anything
     {
-        s_dal = dal?? throw new DalCanNotBeNULL("DAL object can not be null!"); 
+        s_dal = Factory.Get;
 
         //Calling the methods
         createTask();
