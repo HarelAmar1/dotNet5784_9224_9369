@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace BO;
 
-internal class TaskInList
-{
-}
+public record TaskInList
+(
+    int Id,
+    string Description,
+    string Alias,
+    Status? Status
+);
+

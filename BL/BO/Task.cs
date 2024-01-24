@@ -6,6 +6,24 @@ using System.Threading.Tasks;
 
 namespace BO;
 
-internal class Task
-{
-}
+public record Task
+(
+    int Id,
+    string Description,
+    string Alias,
+    DateTime CreatedAtDate,
+    Status? Status,
+    List<BO.TaskInList>? Dependencies,
+    MilestoneInTask? MilestoneInTask,
+    TimeSpan? RequiredEffortTime,
+    DateTime? StartDate,
+    DateTime? ScheduledDate,
+    DateTime? ForecastDate,
+    DateTime? DeadlineDate,
+    DateTime? CompleteDate,
+    string? Deliverables,
+    string? Remarks,
+    EngineerInTask? Engineer,
+    EngineerExperience? Copmlexity
+);
+
