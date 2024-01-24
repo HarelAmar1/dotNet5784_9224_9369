@@ -5,7 +5,6 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-
 //Initialization class
 public static class Initialization
 {

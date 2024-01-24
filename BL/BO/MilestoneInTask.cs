@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
-{
-    internal class MilestoneInTask
-    {
-    }
-}
+namespace BO;
+public record class MilestoneInTask
+(
+    int Id,
+    string Alias
+);

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
-{
-    internal class EngineerInTask
-    {
-    }
-}
+namespace BO;
+
+public record class EngineerInTask
+(
+    int Id,
+    string Name
+);
