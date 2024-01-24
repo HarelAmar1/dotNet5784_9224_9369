@@ -118,7 +118,7 @@ public static class Initialization
 
     }
 
-    public static void Do()//Check that it doesn't return anything
+    public static void Do()
     {
         s_dal = Factory.Get;
 
