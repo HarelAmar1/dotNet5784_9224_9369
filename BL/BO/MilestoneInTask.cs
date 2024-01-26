@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BO;
-public record class MilestoneInTask
-(
-    int Id,
-    string Alias
-);
+public class MilestoneInTask
+{
+    int Id;
+    string Alias;
+};

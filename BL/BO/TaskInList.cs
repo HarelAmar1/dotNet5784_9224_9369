@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BO;
 
-public record TaskInList
-(
-    int Id,
-    string Description,
-    string Alias,
-    Status? Status
-);
+public class TaskInList
+{
+    int Id;
+    string Description;
+    string Alias;
+    Status? Status;
+};
 

@@ -7,12 +7,12 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BO;
 
-public record class Engineer
-(
-    int Id,
-    string Name,
-    string Email,
-    EngineerExperience Level,
-    double Cost,
-    TaskInEngineer Task
-);
+public class Engineer
+{
+    int Id {  get; init; }   
+    string Name;
+    string Email;
+    EngineerExperience Level;
+    double Cost;
+    TaskInEngineer Task;
+};

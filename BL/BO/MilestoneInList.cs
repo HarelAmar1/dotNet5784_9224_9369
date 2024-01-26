@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BO;
 
-public record class MilestoneInList
-(
-    int Id,
-    string Description,
-    string Alias,
-    Status Status,
-    double CompletionPercentage
-);
+public class MilestoneInList
+{
+    int Id;
+    string Description;
+    string Alias;
+    Status Status;
+    double CompletionPercentage;
+};

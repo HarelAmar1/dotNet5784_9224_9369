@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BO;
 
-public record TaskInEngineer
-(
-    int Id,
-    string Alias
-);
+public class TaskInEngineer
+{
+    int Id;
+    string Alia;
+};
