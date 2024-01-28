@@ -8,6 +8,7 @@ namespace BO;
 
 public class TaskInEngineer
 {
-    int Id;
-    string Alia;
+    int Id { get; init; }
+    string Alias { get; set; }
+    //public override string ToString() => this.ToStringProperty();   לבדוק איך לממש
 };
