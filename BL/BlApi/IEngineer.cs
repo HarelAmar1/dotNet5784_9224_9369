@@ -2,13 +2,18 @@
 
 public interface IEngineer
 {
-    public IEnumerable<BO.EngineerInTask> GettingTheListOfEngineer();
+    //(בקשת רשימת מהנדסים (עבור מסך מנהל
+    public IEnumerable<BO.EngineerInTask> getEngineersList(Func<DO.Task?, bool>? func = null);
 
-    public IEnumerable<BO.Engineer> EngineerDetailsRequest(int id);
+    //(בקשת פרטי מהנדס (עבור מסך מהנדס
+    public BO.Engineer getEngineer(int id);
 
-    public void AddingAnEngineer(IEnumerable<BO.Engineer> NeedtoAdd);
+    //(הוספת מהנדס (עבור מסך מנהל
+    public void addEngineer(BO.Engineer engineerToAdd);
 
-    public void DeletingAnEngineer(int id);
+    //(מחיקת מהנדס(עבור מסך מנהל
+    public void deleteEngineer(int id);
 
-    public void UpdatingAnEngineer(IEnumerable<BO.Engineer> NeedToUpdate);
+    //עדכון נתוני מהנדס 
+    public void UpdateEngineer(BO.Engineer engineerToUpdate);
 }
