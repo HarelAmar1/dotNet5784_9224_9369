@@ -8,9 +8,9 @@ namespace BO;
 
 public class MilestoneInList
 {
-    int Id;
-    string Description;
-    string Alias;
-    Status Status;
-    double CompletionPercentage;
+    int Id {  get; init; }
+    string Description {  get; init; }
+    string Alias {  get; init; }
+    Status Status {  get; set; }
+    double CompletionPercentage {  get; set; }
 };

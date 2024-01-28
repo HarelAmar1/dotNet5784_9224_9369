@@ -8,15 +8,15 @@ namespace BO;
 
 public class Milestone
 {
-    int Id;
-    string Description;
-    string Alias;
-    DateTime CreatedAtDate;
-    Status Status;
-    DateTime ForecastDate;
-    DateTime DeadlineDate;
-    DateTime CompleteDate;
-    double CompletionPercentage;
-    string Remarks;
-    List<TaskInList> Dependencies;
+    int Id {  get; init; }
+    string Description {  get; init; }
+    string Alias {  get; init; }
+    DateTime CreatedAtDate {  get; set; }
+    Status Status {  get; set; }
+    DateTime ForecastDate {  get; set; }
+    DateTime DeadlineDate {  get; set; }
+    DateTime CompleteDate {  get; set; }
+    double CompletionPercentage {  get; set; }
+    string Remarks {  get; set; }
+    List<TaskInList> Dependencies {  get; set; }
 };

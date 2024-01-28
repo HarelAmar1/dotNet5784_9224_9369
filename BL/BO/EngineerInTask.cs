@@ -8,6 +8,6 @@ namespace BO;
 
 public class EngineerInTask
 {
-    int Id;
-    string Name;
+    int Id {  get; init; }
+    string Name {  get; init; }
 };

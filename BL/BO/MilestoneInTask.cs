@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace BO;
 public class MilestoneInTask
 {
-    int Id;
-    string Alias;
+    int Id {  get; init; }
+    string Alias {  get; init; }
 };

@@ -10,9 +10,9 @@ namespace BO;
 public class Engineer
 {
     int Id {  get; init; }   
-    string Name;
-    string Email;
-    EngineerExperience Level;
-    double Cost;
-    TaskInEngineer Task;
+    string Name {  get; init; }
+    string Email {  get; init; }
+    EngineerExperience Level {  get; init; }
+    double Cost {  get; set; }
+    TaskInEngineer Task{  get; set; }
 };
