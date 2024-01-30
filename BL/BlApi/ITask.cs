@@ -5,19 +5,19 @@
 public interface ITask
 {
     //בקשת רשימת משימות
-    public IEnumerable<BO.TaskInList> getTasksList(Func<DO.Task?, bool>? func = null);
+    public IEnumerable<BO.TaskInList> ReadAll(Func<DO.Task?, bool>? func = null);
 
     //בקשת פרטי משימה
-    public Task getTask(int idTask);
+    public Task Read(int idTask);
 
     //הוספת משימה
-    public void addTask(BO.Task task);
+    public void Create(BO.Task task);
 
     //עדכון משימה
-    public void updateTask(BO.Task task);
+    public void Update(BO.Task task);
 
     //מחיקת משימה
-    public void deleteTask(int idTask);
+    public void Delete(int idTask);
 
     //עדכון או הוספת תאריך התחלה מתוכנן של  משימה
     public void startDateTimeManagement(BO.Task task);

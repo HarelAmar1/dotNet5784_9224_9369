@@ -83,7 +83,7 @@ public static class Initialization
             string alias = engineeringTasks[i];
             string descriptions = taskDescriptions[i];
             DateTime createdAtDate = DateTime.Now;
-            DateTime? requiredEffortTime = createdAtDate.Add(effortDuration);
+            TimeSpan? requiredEffortTime = effortDuration;
             bool isMilestone = random.Next(2) == 0 ? true : false;
             EngineerExperience level = (EngineerExperience)(taskLevels[i] - 1);
             DateTime startDate = createdAtDate.Add(effortDuration);

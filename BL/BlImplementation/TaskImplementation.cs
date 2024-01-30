@@ -1,28 +1,66 @@
 ﻿using BlApi;
-using BO;
+using System.Security.Cryptography;
+using System.Xml.Linq;
 
 namespace BlImplementation;
 
 internal class TaskImplementation : ITask
 {
-    public void addTask(BO.Task task)
+    private DalApi.IDal _dal = Factory.Get;
+
+    public void Create(BO.Task task)
+    {
+        if (task.Id >= 0 || task.Alias != "")
+            return;
+
+        //לבדוק מה הכוונה להוסיף תלויות
+
+        DO.Task newTask = new DO.Task(task.Id,task.Description,task.Alias,false,DateTime.Now,task.RequiredEffortTime,
+        (DO.EngineerExperience)task.Copmlexity, 
+            );
+        _dal.Task.Create()
+
+    }
+
+    public void Delete(int idTask)
     {
         throw new NotImplementedException();
     }
 
-    public void deleteTask(int idTask)
+    public System.Threading.Tasks.Task Read(int idTask)
     {
         throw new NotImplementedException();
     }
 
-    public System.Threading.Tasks.Task getTask(int idTask)
+    //פונקצית עזר למציאת הסטטסוס של המשימה
+    private BO.Status status(DO.Task task)
     {
-        throw new NotImplementedException();
+        if (task.ScheduledDate == null)
+            return (BO.Status)0;
+        if (task.StartDate == null)
+            return (BO.Status)1;
+        if (task.CompleteDate == null)
+            return (BO.Status)2;
+        if (task.CompleteDate != null) 
+            return (BO.Status)3;
+        //לבדוק איך לבדוק את הסטטוס האחרון
+        return 0;
     }
 
-    public IEnumerable<TaskInList> getTasksList(Func<DO.Task?, bool>? func = null)
+    public IEnumerable<BO.TaskInList> ReadAll(Func<DO.Task?, bool>? func = null)
     {
-        throw new NotImplementedException();
+        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll(func).ToList();
+
+        IEnumerable<BO.TaskInList> boTasks =
+        from task in tasks
+        select new BO.TaskInList()
+        {
+            Id = task.Id,
+            Description = task.Description,
+            Alias = task.Alias
+            //Status = status()
+        };
+        return boTasks;
     }
 
     public void startDateTimeManagement(BO.Task task)
@@ -30,8 +68,15 @@ internal class TaskImplementation : ITask
         throw new NotImplementedException();
     }
 
-    public void updateTask(BO.Task task)
+    public void Update(BO.Task task)
     {
         throw new NotImplementedException();
     }
 }
+
+
+
+
+
+
+
