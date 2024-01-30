@@ -2,18 +2,19 @@
 
 public interface IEngineer
 {
-    //(בקשת רשימת מהנדסים (עבור מסך מנהל
-    public IEnumerable<BO.EngineerInTask> ReadAll(Func<DO.Task?, bool>? func = null);
+
+    //(הוספת מהנדס (עבור מסך מנהל
+    public int Create(BO.Engineer engineerToAdd);
 
     //(בקשת פרטי מהנדס (עבור מסך מהנדס
     public BO.Engineer Read(int id);
 
-    //(הוספת מהנדס (עבור מסך מנהל
-    public void Create(BO.Engineer engineerToAdd);
+    //עדכון נתוני מהנדס 
+    public void Update(BO.Engineer engineerToUpdate);
 
     //(מחיקת מהנדס(עבור מסך מנהל
     public void Delete(int id);
 
-    //עדכון נתוני מהנדס 
-    public void Update(BO.Engineer engineerToUpdate);
+    //(בקשת רשימת מהנדסים (עבור מסך מנהל
+    public IEnumerable<BO.EngineerInTask> ReadAll(Func<DO.Task?, bool>? func = null);
 }

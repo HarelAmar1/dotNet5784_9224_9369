@@ -1,5 +1,4 @@
 ﻿using BlApi;
-using System.Security.Cryptography;
 using System.Xml.Linq;
 
 namespace BlImplementation;
@@ -27,7 +26,7 @@ internal class TaskImplementation : ITask
         throw new NotImplementedException();
     }
 
-    public System.Threading.Tasks.Task Read(int idTask)
+    public Task Read(int idTask)
     {
         throw new NotImplementedException();
     }
@@ -73,10 +72,4 @@ internal class TaskImplementation : ITask
         throw new NotImplementedException();
     }
 }
-
-
-
-
-
-
 
