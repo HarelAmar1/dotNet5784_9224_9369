@@ -7,28 +7,28 @@ internal class EngineerImplementation : IEngineer
 {
 
     
-    private DalApi.IDal _dal = DalApi.Factory.Get();
-    public void addEngineer(BO.Engineer engineerToAdd)
+    private DalApi.IDal _dal = Factory.Get;
+    public void Create(BO.Engineer engineerToAdd)
     {
         throw new NotImplementedException();
     }
 
-    public void deleteEngineer(int id)
+    public void Delete(int id)
     {
         throw new NotImplementedException();
     }
 
-    public BO.Engineer getEngineer(int id)
+    public BO.Engineer Read(int id)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<EngineerInTask> getEngineersList(Func<DO.Task?, bool>? func = null)
+    public IEnumerable<EngineerInTask> ReadAll(Func<DO.Task?, bool>? func = null)
     {
         throw new NotImplementedException();
     }
 
-    public void UpdateEngineer(BO.Engineer engineerToUpdate)
+    public void Update(BO.Engineer engineerToUpdate)
     {
         throw new NotImplementedException();
     }

@@ -26,7 +26,7 @@ public record Task
     string Alias,
     bool IsMilestone,
     DateTime CreatedAtDate,
-    DateTime? RequiredEffortTime = null,
+    TimeSpan? RequiredEffortTime = null,
     EngineerExperience? Copmlexity = null, 
     DateTime? StartDate = null,
     DateTime? ScheduledDate = null,

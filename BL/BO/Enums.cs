@@ -1,7 +1,7 @@
 ﻿namespace BO;
 
 
-enum EngineerExperience
+public enum EngineerExperience
 {
     Beginner,
     AdvancedBeginner,
@@ -11,7 +11,7 @@ enum EngineerExperience
 }
 
 
-enum Status
+public enum Status
 {
     Unscheduled,
     Scheduled,
