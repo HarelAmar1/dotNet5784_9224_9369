@@ -7,10 +7,10 @@ public interface ITask
     public IEnumerable<BO.TaskInList> ReadAll(Func<DO.Task?, bool>? func = null);
 
     //בקשת פרטי משימה
-    public Task Read(int idTask);
+    public BO.Task Read(int idTask);
 
     //הוספת משימה
-    public void Create(BO.Task task);
+    public int Create(BO.Task task);
 
     //עדכון משימה
     public void Update(BO.Task task);
