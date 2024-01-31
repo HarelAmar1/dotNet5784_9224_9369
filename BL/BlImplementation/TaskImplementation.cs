@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 using System.Security.Cryptography;
 
 namespace BlImplementation;
@@ -9,15 +10,20 @@ internal class TaskImplementation : ITask
 
     public int Create(BO.Task task)
     {
+        
+        string error= "";
+        if (task.Id >= 0 || task.Alias != "") error = "Id";
+        else if (task.Alias != "") error = "Alias";
         if (task.Id >= 0 || task.Alias != "")
-            return -1;//לזרוק שגיאה
-        //לבדוק מה הכוונה להוסיף תלויות
+            throw new BlTheInputIsIncorrect($"{error}, incorrect input");
+        
+            //לבדוק מה הכוונה להוסיף תלויות
 
-        //ניצור את המשימה ונעביר אותה לדאל
-        DO.Task newTask = new DO.Task
-        (task.Id, task.Description, task.Alias, false, DateTime.Now, task.RequiredEffortTime,
-        (DO.EngineerExperience)task.Copmlexity!, task.StartDate, task.ScheduledDate, task.DeadlineDate, task.CompleteDate,
-        task.Deliverables, task.Remarks, task.Engineer!.Id);
+            //ניצור את המשימה ונעביר אותה לדאל
+            DO.Task newTask = new DO.Task
+            (task.Id, task.Description, task.Alias, false, DateTime.Now, task.RequiredEffortTime,
+            (DO.EngineerExperience)task.Copmlexity!, task.StartDate, task.ScheduledDate, task.DeadlineDate, task.CompleteDate,
+            task.Deliverables, task.Remarks, task.Engineer!.Id);
         try
         {
             _dal.Task.Create(newTask);
