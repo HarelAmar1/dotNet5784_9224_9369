@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using System.Security.Cryptography;
 
 namespace BlImplementation;
 
@@ -33,7 +34,22 @@ internal class TaskImplementation : ITask
     {
         BO.Task task = Read(idTask);
         //לבדוק שאין משימות שתלויות במשימה זו
-        for (int i = 0;i < task.)
+        List<DO.Dependency> dependlist = (List<DO.Dependency>)_dal.Dependency.ReadAll(null);
+        bool check = true;
+        foreach (DO.Dependency dep in dependlist) 
+        {
+            if (dep.DependsOnTask == task.Id)
+                check = false;
+        }
+        if (check == true) 
+        {
+            //למחוק אותו
+            _dal.Task.Delete(idTask);
+        }
+        else;
+            //לזרוק שגיאה
+        
+
 
     }
     public BO.Task Read(int idTask)
@@ -83,14 +99,47 @@ internal class TaskImplementation : ITask
         return BOTasks;
     }
 
-    public void startDateTimeManagement(BO.Task task)
+    public void startDateTimeManagement(int IdTask, DateTime dateTime)
     {
-        throw new NotImplementedException();
+        //נביא את הרשימה של המשימות מהדל
+        var depenList = _dal.Dependency.ReadAll();
+        foreach (var depen in depenList) 
+        {
+            //נחפש את המשימה הנוכחית ברשימת התלויות
+            if (depen.DependentTask == IdTask) 
+            {
+                //ואחרי שמצאנו אותה נבדוק האם למשימה התלותית בה יש תאריך התחלה
+                if (Read(depen.DependsOnTask.Value).ScheduledDate != null)
+                {
+                    //במידה והתאריך הנתון קטן מהתאריך של המשימה התלותית נזרוק שגיאה
+                    if(dateTime.CompareTo(Read(depen.DependsOnTask.Value).ScheduledDate) == -1)
+                    {
+                        //זרוק שגיאה
+                    }
+                }
+                else
+                {
+                    //זרוק חריגה
+                }
+            }
+        }
+
     }
 
     public void Update(BO.Task task)
     {
-        throw new NotImplementedException();
+        //בדיקת נתונים
+        if (task.Id >= 0 || task.Alias != "")
+            return;//לזרוק שגיאה   
+        //נבדוק אם קיים ברשימה
+        if (Read(task.Id) != null)
+        {
+            Delete(task.Id);
+            Create(task);
+        }
+        //else
+        //{
+        //    //לזרוק שגיאה
     }
 
 

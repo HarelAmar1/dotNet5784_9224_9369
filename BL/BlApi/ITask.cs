@@ -19,5 +19,5 @@ public interface ITask
     public void Delete(int idTask);
 
     //עדכון או הוספת תאריך התחלה מתוכנן של  משימה
-    public void startDateTimeManagement(BO.Task task);
+    public void startDateTimeManagement(int IdTask, DateTime dateTime);
 }
