@@ -31,3 +31,9 @@ public class BlIncorrectInputException : Exception
     public BlIncorrectInputException(string? message) : base(message) { }
     public BlIncorrectInputException(string message, Exception innerException) : base(message, innerException) { }
 }
+
+public class BlInvalidDatesException : Exception  
+{
+    public BlInvalidDatesException(string? message) : base(message) { }
+    public BlInvalidDatesException(string message, Exception innerException) : base(message, innerException) { }
+}
