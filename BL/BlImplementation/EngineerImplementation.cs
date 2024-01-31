@@ -1,14 +1,4 @@
 ﻿using BlApi;
-using BO;
-using DalApi;
-using DO;
-using System;
-using System.Diagnostics.Contracts;
-using System.Net.Security;
-using System.Reflection.Emit;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Xml.Linq;
-
 namespace BlImplementation;
 
 internal class EngineerImplementation : IEngineer
@@ -45,7 +35,7 @@ internal class EngineerImplementation : IEngineer
             }
             else
             {
-                //  throw new DalAlreadyExistsException($"Engineer with ID={engineerToAdd.Id} already exists");
+                // throw new DalAlreadyExistsException($"Engineer with ID={engineerToAdd.Id} already exists");
             }
         }
         else;
@@ -198,19 +188,22 @@ internal class EngineerImplementation : IEngineer
         else;
         //  throw new DalAlreadyExistsException($"Engineer with ID={id} already exists");
     }
-    public IEnumerable<BO.EngineerInTask> ReadAll(Func<DO.Engineer?, bool>? func = null)
+    public IEnumerable<BO.EngineerInTask> ReadAll(Func<DO.Engineer?, bool>? filter = null)
     {
 
         EngineerImplementation toCheckTask = new EngineerImplementation();
 
+        //Converts the list of engineers from DO to BO by filter
 
         IEnumerable<BO.EngineerInTask?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
-                                                     where func(item)
+                                                     where filter(item)
                                                      select new BO.EngineerInTask()
                                                      {
                                                          Id = item.Id,
                                                          Name = item.Name,
+                     
                                                      });
         return engineers;
     }
+    
 }
