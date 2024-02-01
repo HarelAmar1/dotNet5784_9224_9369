@@ -26,13 +26,14 @@ public class BlCanNotBeNULL : Exception
     public BlCanNotBeNULL(string message, Exception innerException) : base(message, innerException) { }
 }
 
-public class BlXMLFileLoadCreateException : Exception
+public class BlIncorrectInputException : Exception
 {
-    public BlXMLFileLoadCreateException(string? message) : base(message) { }
-    public BlXMLFileLoadCreateException(string message, Exception innerException) : base(message, innerException) { }
+    public BlIncorrectInputException(string? message) : base(message) { }
+    public BlIncorrectInputException(string message, Exception innerException) : base(message, innerException) { }
 }
-public class BlTheInputIsIncorrect : Exception
+
+public class BlInvalidDatesException : Exception  
 {
-    public BlTheInputIsIncorrect(string? message) : base(message) { }
-    public BlTheInputIsIncorrect(string message, Exception innerException) : base(message, innerException) { }
+    public BlInvalidDatesException(string? message) : base(message) { }
+    public BlInvalidDatesException(string message, Exception innerException) : base(message, innerException) { }
 }
