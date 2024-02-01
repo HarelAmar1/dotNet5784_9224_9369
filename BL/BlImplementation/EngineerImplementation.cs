@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 namespace BlImplementation;
 
 internal class EngineerImplementation : IEngineer
@@ -19,31 +20,35 @@ internal class EngineerImplementation : IEngineer
 
         //Validity checks that ID is a positive number and that NAME is a non-empty string and that COST is a positive number
 
-        if (engineerToAdd.Id >= 0 && engineerToAdd.Name != "" && engineerToAdd.Cost >= 0)
+        string error = "";
+        if (engineerToAdd.Id >= 0)
+            error = $"Id={engineerToAdd.Id}";
+        else
+             if (engineerToAdd.Name != "")
+            error = $"Name={engineerToAdd.Name}";
+        else
+             if (engineerToAdd.Cost >= 0)
+            error = $"Cost={engineerToAdd.Cost}";
+        else
+        if (engineers.Any(engineer => engineer?.Id == engineerToAdd.Id) != null)
         {
 
-            //  Checks if the ID is already in the list
+            //convert the engineerToAdd from BO to DO
 
-            if (engineers.Any(engineer => engineer?.Id == engineerToAdd.Id) != null)
-            {
-
-                //convert the engineerToAdd from BO to DO
-
-                DO.Engineer becomeDO = new DO.Engineer(engineerToAdd.Id, engineerToAdd.Email, engineerToAdd.Cost, engineerToAdd.Name, false, (DO.EngineerExperience)(int)engineerToAdd.Level);
-                _dal.Engineer.Create(becomeDO);
-                return engineerToAdd.Id;
-            }
-            else
-            {
-                // throw new DalAlreadyExistsException($"Engineer with ID={engineerToAdd.Id} already exists");
-            }
+            DO.Engineer becomeDO = new DO.Engineer(engineerToAdd.Id, engineerToAdd.Email, engineerToAdd.Cost, engineerToAdd.Name, false, (DO.EngineerExperience)(int)engineerToAdd.Level);
+            _dal.Engineer.Create(becomeDO);
         }
-        else;
-        //  throw new DalAlreadyExistsException($"Engineer with ID={engineerToAdd.Id} already exists");
+        else
+            throw new BlDoesNotExistException($"Engineer with ID={engineerToAdd.Id} Does Not exists");
+
+        if (error != "")
+            throw new BlTheInputIsIncorrect($"{error}, is incorrect input");
+
+        return engineerToAdd.Id;
+
     }
     public BO.Engineer Read(int id)
     {
-
         //Converts the list of engineers from DO to BO
 
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
@@ -63,8 +68,8 @@ internal class EngineerImplementation : IEngineer
         // Checks that the engineer is not empty
 
 
-        if (EngineerToGet == null) ;
-        //  throw new DalAlreadyExistsException($"Engineer with ID={engineerToAdd.Id} already exists");
+        if (EngineerToGet == null) 
+          throw new BlDoesNotExistException($"Engineer with ID={EngineerToGet.Id} Does Not exists");
         else
         {
 
@@ -73,12 +78,10 @@ internal class EngineerImplementation : IEngineer
             TaskImplementation ExtractTheTask = new TaskImplementation();
             BO.TaskInEngineer TaskForEngineerToGet = new BO.TaskInEngineer(ExtractTheTask.Read(EngineerToGet.Id).Engineer.Id, ExtractTheTask.Read(EngineerToGet.Id).Engineer.Name);
             EngineerToGet.Task = TaskForEngineerToGet;
-            return EngineerToGet;
         }
+        return EngineerToGet;
+
     }
-
-
-
     public void Update(BO.Engineer AnUpdatedEngineer)
     {
 
@@ -201,9 +204,9 @@ internal class EngineerImplementation : IEngineer
                                                      {
                                                          Id = item.Id,
                                                          Name = item.Name,
-                     
+
                                                      });
         return engineers;
     }
-    
+
 }
