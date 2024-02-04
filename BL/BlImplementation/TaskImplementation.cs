@@ -58,23 +58,38 @@ internal class TaskImplementation : ITask
     public void Delete(int idTask)
     {
         //נמצא את המשימה שאנחנו רוצים למחוק
-        BO.Task task = Read(idTask);
+        BO.Task? task = Read(idTask);
+        if (task == null)
+            throw new BO.BlDoesNotExistException($"Task with ID ={idTask} is not exists");
 
         //נבדוק שאין משימות שתלויות במשימה זו
         List<DO.Dependency> dependlist = (List<DO.Dependency>)_dal.Dependency.ReadAll(null);
         bool check = true;
-        foreach (DO.Dependency dep in dependlist) 
+        foreach (DO.Dependency dep in dependlist)
         {
             if (dep.DependsOnTask == task.Id)
                 check = false;
         }
 
         //למחוק אותו
-        if (check == true)  
+        if (check == true)
+        {
             _dal.Task.Delete(idTask);
+
+            //למחוק מהתלויות שבדל את המשימות הקשורות אליו
+            foreach (DO.Dependency dep in dependlist)
+            {
+                if (dep.DependentTask == task.Id)
+                    _dal.Dependency.Delete(dep.Id);
+            }
+
+        }
         //אחרת נזרוק שגיאה
         else
             throw new BlDeletionImpossible("The task depends on other tasks");
+
+        
+
     }
 
 
