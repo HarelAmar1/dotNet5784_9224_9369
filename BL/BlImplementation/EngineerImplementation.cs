@@ -42,7 +42,7 @@ internal class EngineerImplementation : IEngineer
             throw new BlDoesNotExistException($"Engineer with ID={engineerToAdd.Id} Does Not exists");
 
         if (error != "")
-            throw new BlTheInputIsIncorrect($"{error}, is incorrect input");
+            throw new BlIncorrectInputException($"{error}, is incorrect input");
 
         return engineerToAdd.Id;
 

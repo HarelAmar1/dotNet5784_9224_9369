@@ -248,9 +248,9 @@ internal class TaskImplementation : ITask
     private void checkData(BO.Task task)
     {
         string error = "";
-        if (task.Id >= 0)
+        if (task.Id < 0)
             error = $"Id: {task.Id}";
-        else if (task.Alias != "")
+        else if (task.Alias == "") 
             error = $"Alias: {task.Alias}";
         if (task.Id >= 0 || task.Alias != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
