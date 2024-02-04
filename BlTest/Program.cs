@@ -59,15 +59,11 @@ internal class Program
                                 break;
                             case 5:
                                 break;
-                            case 6:
-                                break;
                         }
                         OpForEngineer = optionsForEngineer(); // Show Task options again
                     }//End While
                     break;
             }
-
-
         }
     }
 
