@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DalApi;
 namespace BlImplementation;
 
 internal class EngineerImplementation : IEngineer
@@ -42,7 +43,7 @@ internal class EngineerImplementation : IEngineer
             throw new BlDoesNotExistException($"Engineer with ID={engineerToAdd.Id} Does Not exists");
 
         if (error != "")
-            throw new BlTheInputIsIncorrect($"{error}, is incorrect input");
+            throw new BlIncorrectInputException($"{error}, is incorrect input");
 
         return engineerToAdd.Id;
 
@@ -68,8 +69,8 @@ internal class EngineerImplementation : IEngineer
         // Checks that the engineer is not empty
 
 
-        if (EngineerToGet == null) 
-          throw new BlDoesNotExistException($"Engineer with ID={EngineerToGet.Id} Does Not exists");
+        if (EngineerToGet == null)
+            throw new BlDoesNotExistException($"Engineer with ID={EngineerToGet.Id} Does Not exists");
         else
         {
 
@@ -85,6 +86,7 @@ internal class EngineerImplementation : IEngineer
     public void Update(BO.Engineer AnUpdatedEngineer)
     {
 
+
         //Converts the list of engineers from DO to BO
 
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
@@ -99,7 +101,16 @@ internal class EngineerImplementation : IEngineer
         //Validity checks that ID is a positive number 
 
 
+        string error = "";
         if (AnUpdatedEngineer.Id >= 0)
+            error = $"Id={AnUpdatedEngineer.Id}";
+        else
+             if (AnUpdatedEngineer.Name != "")
+            error = $"Name={AnUpdatedEngineer.Name}";
+        else
+             if (AnUpdatedEngineer.Cost >= 0)
+            error = $"Cost={AnUpdatedEngineer.Cost}";
+        else
         {
 
             // Brings the engineer with the matching ID
@@ -107,44 +118,38 @@ internal class EngineerImplementation : IEngineer
             BO.Engineer? EngineerToUp = (from item in engineers
                                          where (item.Id == AnUpdatedEngineer.Id)
                                          select item).FirstOrDefault();
-            if (EngineerToUp == null) ;
-            //  throw new DalAlreadyExistsException($"Engineer with ID={engineerToAdd.Id} already exists");
+            if (EngineerToUp == null)
+            {
+                error = $"Id={AnUpdatedEngineer.Id}";
+
+                throw new BlDoesNotExistException(error);
+            }
             else
             {
+                //Uses the TaskImplementation instance to update the task in Dal
+                IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
-                // Validity checks and that NAME is a non - empty string and that COST is a positive number
+                DO.Task taskToUpdate = (from item in tasks
+                                        where item.Id == EngineerToUp.Task.Id
+                                        select item).FirstOrDefault();
 
-                if (AnUpdatedEngineer.Name != "" && AnUpdatedEngineer.Cost >= 0)
-                {
 
-                    //Uses the TaskImplementation instance to update the task in Dal
+                //Checks whether the level of the existing engineer is greater than the updated one
 
-                    TaskImplementation ExtractTheTask = new TaskImplementation();
-                    ExtractTheTask.Update(ExtractTheTask.Read(AnUpdatedEngineer.Id));
+                BO.EngineerExperience changeUpTheLevel = (int)EngineerToUp.Level > (int)AnUpdatedEngineer.Level ? EngineerToUp.Level : AnUpdatedEngineer.Level;
 
-                    //Checks whether the level of the existing engineer is greater than the updated one
+                DO.Engineer becomeDO = new DO.Engineer(AnUpdatedEngineer.Id, AnUpdatedEngineer.Email, AnUpdatedEngineer.Cost, AnUpdatedEngineer.Name, false, (DO.EngineerExperience)(int)changeUpTheLevel);
 
-                    BO.EngineerExperience changeUpTheLevel = (int)EngineerToUp.Level > (int)AnUpdatedEngineer.Level ? EngineerToUp.Level : AnUpdatedEngineer.Level;
+                //Save the updated engineer and task in the DAL layer
 
-                    DO.Engineer becomeDO = new DO.Engineer(AnUpdatedEngineer.Id, AnUpdatedEngineer.Email, AnUpdatedEngineer.Cost, AnUpdatedEngineer.Name, false, (DO.EngineerExperience)(int)changeUpTheLevel);
-
-                    //Save the updated engineer in the DAL layer
-
-                    _dal.Engineer.Update(becomeDO);
-                }
-                else
-                {
-                    //  throw new DalAlreadyExistsException($"Engineer with ID={engineerToAdd.Id} already exists");
-                }
-
+                _dal.Engineer.Update(becomeDO);
+                _dal.Task.Update(taskToUpdate);
             }
-        }
-        else;
-        //  throw new DalAlreadyExistsException($"Engineer with ID={engineerToAdd.Id} already exists");
 
+        }
+        throw new BlIncorrectInputException($"{error}, is incorrect input");
 
     }
-
 
     public void Delete(int id)
     {
@@ -184,8 +189,8 @@ internal class EngineerImplementation : IEngineer
 
                     _dal.Engineer.Delete(toDelete.Id);
                 }
-                else;
-                //  throw new DalAlreadyExistsException($"Engineer with ID={id} already exists");
+                else
+                  throw new Bl;
             }
         }
         else;
