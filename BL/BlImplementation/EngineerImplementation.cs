@@ -1,6 +1,5 @@
 ﻿using BlApi;
 using BO;
-using DalApi;
 namespace BlImplementation;
 
 internal class EngineerImplementation : IEngineer
@@ -162,14 +161,18 @@ internal class EngineerImplementation : IEngineer
                                                    Cost = item.Cost,
                                                    Email = item.Email
                                                });
+
+        string error = "";
+
+
         //Checks if the ID is positive
 
         if (id >= 0)
         {
             //Checks if the engineer with the ID exists
 
-            if (engineers.Any(engineer => engineer?.Id != id)) ;
-            //  throw new DalAlreadyExistsException($"Engineer with ID={id} already exists");
+            if (engineers.Any(engineer => engineer?.Id != id))
+                throw new BlDoesNotExistException($"Engineer with ID={id} already exists");
             else
             {
                 //Brings the engineer with the same ID that I need to delete
@@ -190,11 +193,14 @@ internal class EngineerImplementation : IEngineer
                     _dal.Engineer.Delete(toDelete.Id);
                 }
                 else
-                  throw new Bl;
+                    throw new BlCanNotBeDeletedException($"Id={toDelete.Id}");
             }
         }
-        else;
-        //  throw new DalAlreadyExistsException($"Engineer with ID={id} already exists");
+        else
+            error = $"Id={id}";
+        throw new BlIncorrectInputException($"{error}, is incorrect input");
+
+
     }
     public IEnumerable<BO.EngineerInTask> ReadAll(Func<DO.Engineer?, bool>? filter = null)
     {
