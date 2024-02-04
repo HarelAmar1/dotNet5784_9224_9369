@@ -35,7 +35,7 @@ public class BlInvalidDatesException : Exception
 {
     public BlInvalidDatesException(string? message) : base(message) { }
 }
-public class BlcanNotBeDeletedException : Exception
+public class BlCanNotBeDeletedException : Exception
 {
-    public BlcanNotBeDeletedException(string? message) : base(message) { }
+    public BlCanNotBeDeletedException(string? message) : base(message) { }
 }
