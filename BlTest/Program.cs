@@ -1,4 +1,11 @@
 ﻿using DalApi;
+using BlApi;
+using BlImplementation;
+using BO;
+using System.Reflection.Emit;
+using DO;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BlTest;
 
@@ -50,14 +57,23 @@ internal class Program
                         switch (OpForEngineer)
                         {
                             case 1:
+                                createEngineer(); // Create a new Engineer
                                 break;
                             case 2:
+                                Console.WriteLine("Enter the engineer's ID:");
+                                int id = int.Parse(Console.ReadLine()!);
+                                PrintTheReadFunctionOfEngineer(s_bl.Engineer.Read(id));
                                 break;
                             case 3:
+                                PrintTheReadAllFunctionOfEngineer(s_bl.Engineer.ReadAll()); // Display all Engineers
                                 break;
                             case 4:
+                                s_bl!.Engineer.Update(UpdateHelperForEngineer()); // Update an Engineer
                                 break;
                             case 5:
+                                Console.WriteLine("Enter the ID of the Engineer you want to delete:");
+                                id = int.Parse(Console.ReadLine()!);
+                                s_bl!.Engineer.Delete(id);
                                 break;
                         }
                         OpForEngineer = optionsForEngineer(); // Show Task options again
@@ -103,5 +119,82 @@ internal class Program
         Console.WriteLine("0 - Back");
         int op = int.Parse(Console.ReadLine()!);
         return op;
+    }
+    public static void createEngineer()
+    {
+        Console.WriteLine("Please enter your ID:");
+        int id = int.Parse(Console.ReadLine()!);
+        Console.WriteLine("Please enter your email:");
+        string email = Console.ReadLine()!;
+        Console.WriteLine("Please enter your hourly cost:");
+        double cost = int.Parse(Console.ReadLine()!);
+        Console.WriteLine("Please enter your name:");
+        string name = Console.ReadLine()!;
+        Console.WriteLine("Please enter your experience level (1-5)");
+        int levelFromUser = int.Parse(Console.ReadLine()!);
+        BO.EngineerExperience level = (BO.EngineerExperience)levelFromUser;
+        Console.WriteLine("Please enter your id and alias of the task:");
+        BO.TaskInEngineer task = new BO.TaskInEngineer(int.Parse(Console.ReadLine()!), Console.ReadLine()!);
+        BO.Engineer engineer = new BO.Engineer()
+        {
+            Id = id,
+            Name = name,
+            Email = email,
+            Level = level,
+            Cost = cost,
+            Task = task
+        };
+        s_bl.Engineer.Create(engineer);
+    }
+    public static void PrintTheReadFunctionOfEngineer(BO.Engineer ToPrint)
+    {
+        Console.Write("ID: ");
+        Console.WriteLine(ToPrint.Id);
+        Console.Write("Email: ");
+        Console.WriteLine(ToPrint.Email);
+        Console.Write("Cost: ");
+        Console.WriteLine(ToPrint.Cost);
+        Console.Write("Name: ");
+        Console.WriteLine(ToPrint.Name);
+        Console.Write("level: ");
+        Console.WriteLine(ToPrint.Level);
+        Console.Write("Id for Task: ");
+        Console.WriteLine(ToPrint.Task.Id);
+        Console.Write("Alias for Task: ");
+        Console.WriteLine(ToPrint.Task.Alias);
+    }
+    public static void PrintTheReadAllFunctionOfEngineer(IEnumerable<BO.Engineer> toPrint)
+    {
+        foreach (BO.Engineer engineer in toPrint)
+        {
+            PrintTheReadFunctionOfEngineer(engineer);
+        }
+    }
+    public static BO.Engineer UpdateHelperForEngineer() //func to create item for Update Engineer
+    {
+        Console.WriteLine("Please enter your ID:");
+        int id = int.Parse(Console.ReadLine()!);
+        Console.WriteLine("Please enter your email:");
+        string email = Console.ReadLine();
+        Console.WriteLine("Please enter your hourly cost:");
+        double cost = int.Parse(Console.ReadLine()!);
+        Console.WriteLine("Please enter your name:");
+        string name = Console.ReadLine();
+        Console.WriteLine("Please enter your experience level (1-5)");
+        int levelFromUser = int.Parse(Console.ReadLine()!);
+        BO.EngineerExperience level = (BO.EngineerExperience)levelFromUser;
+        Console.WriteLine("Please enter your id and alias of the task:");
+        BO.TaskInEngineer task = new BO.TaskInEngineer(int.Parse(Console.ReadLine()!), Console.ReadLine()!);
+        BO.Engineer temp = new BO.Engineer()
+        {
+            Id = id,
+            Name = name,
+            Email = email,
+            Level = level,
+            Cost = cost,
+            Task = task
+        };
+        s_bl.Engineer.Update(temp);
+        return temp;
     }
 }

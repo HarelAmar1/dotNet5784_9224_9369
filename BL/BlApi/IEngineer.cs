@@ -16,5 +16,5 @@ public interface IEngineer
     public void Delete(int id);
 
     //(בקשת רשימת מהנדסים (עבור מסך מנהל
-    public IEnumerable<BO.EngineerInTask> ReadAll(Func<DO.Engineer?, bool>? func = null);
-}
+    public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? func = null);
+} 
