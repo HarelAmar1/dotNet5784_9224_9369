@@ -137,7 +137,7 @@ internal class EngineerImplementation : IEngineer
 
                 BO.EngineerExperience changeUpTheLevel = (int)EngineerToUp.Level > (int)AnUpdatedEngineer.Level ? EngineerToUp.Level : AnUpdatedEngineer.Level;
 
-                DO.Engineer becomeDO = new DO.Engineer(AnUpdatedEngineer.Id, AnUpdatedEngineer.Email, AnUpdatedEngineer.Cost, AnUpdatedEngineer.Name, false, (DO.EngineerExperience)(int)changeUpTheLevel);
+                DO.Engineer becomeDO = new DO.Engineer(AnUpdatedEngineer.Id, AnUpdatedEngineer.Email, AnUpdatedEngineer.Cost, AnUpdatedEngineer.Name, true, (DO.EngineerExperience)(int)changeUpTheLevel);
 
                 //Save the updated engineer and task in the DAL layer
 
@@ -202,22 +202,26 @@ internal class EngineerImplementation : IEngineer
 
 
     }
-    public IEnumerable<BO.EngineerInTask> ReadAll(Func<DO.Engineer?, bool>? filter = null)
+    public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? filter = null)
     {
-
-        EngineerImplementation toCheckTask = new EngineerImplementation();
-
         //Converts the list of engineers from DO to BO by filter
 
-        IEnumerable<BO.EngineerInTask?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
-                                                     where filter(item)
-                                                     select new BO.EngineerInTask()
-                                                     {
-                                                         Id = item.Id,
-                                                         Name = item.Name,
+        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
-                                                     });
+        IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
+                                               where filter(item)
+                                               select new BO.Engineer()
+                                               {
+                                                   Id = item.Id,
+                                                   Name = item.Name,
+                                                   Cost = item.Cost,
+                                                   Email = item.Email,
+                                                   Level = (EngineerExperience)(int)item.level,
+                                                   Task = (from task in tasks
+                                                           where (task.EngineerId == item.Id)
+                                                           select new TaskInEngineer(task.Id, task.Alias)
+                                                           ).FirstOrDefault()
+                                               });
         return engineers;
     }
-
 }
