@@ -25,11 +25,18 @@ internal class Program
                 DalTest.Initialization.deleteXMLFile();//נאתחל את קבצי האקסמל
                 DalTest.Initialization.Do();
             }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message); // Exception handling
+        }
 
-            // Get user input from the main menu
-            int userInput = menu();
+        // Get user input from the main menu
+        int userInput = menu();
 
-            while (userInput != 0)
+        while (userInput != 0)
+        {
+            try
             {
                 switch (userInput)
                 {
@@ -61,6 +68,9 @@ internal class Program
                                     break;
                                 case 6:
                                     DateTimeManagement();
+                                    break;
+                                case 0:
+                                    OpForTask = 0; // Exit Task operations
                                     break;
                             }
                             OpForTask = optionsForTask(); // Show Task options again
@@ -96,11 +106,14 @@ internal class Program
                         }//End While
                         break;
                 }
+                userInput = menu();
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message); // Exception handling
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message); // Exception handling
+            }
+
         }
     }
 
@@ -160,9 +173,12 @@ internal class Program
         Console.Write("Status: ");
         Console.WriteLine(toPrint.Status);
         //להדפיס את התלויות
+        if (toPrint.Dependencies.Count != 0) 
+            Console.Write("Dependencies: ");
         foreach (var depen in toPrint.Dependencies)
         {
             Console.Write(depen.Id);
+            Console.Write(" ");
         }
         Console.Write("Required Effort Time: ");
         Console.WriteLine(toPrint.RequiredEffortTime);
@@ -180,7 +196,8 @@ internal class Program
         Console.WriteLine(toPrint.Deliverables);
         Console.Write("Remarks: ");
         Console.WriteLine(toPrint.Remarks);
-        Console.Write($"Engineer - Id: {toPrint.Engineer.Id}, Name: {toPrint.Engineer.Name}");
+        if (toPrint.Engineer != null) //אם אין מהנדס עדיין אז אין מה להדפיס
+            Console.Write($"Engineer - Id: {toPrint.Engineer.Id}, Name: {toPrint.Engineer.Name}");
         Console.Write("Complexity: ");
         Console.WriteLine(toPrint.Copmlexity);
     }
