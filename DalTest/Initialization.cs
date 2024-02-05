@@ -145,8 +145,8 @@ public static class Initialization
         Dependencies.Save(@"..\xml\dependencies.xml");
 
         //init the XML config file
-        XElement NextTaskId = new XElement("NextTaskId", 0);
-        XElement NextDependencyId = new XElement("NextDependencyId", 0);
+        XElement NextTaskId = new XElement("NextTaskId", 1);
+        XElement NextDependencyId = new XElement("NextDependencyId", 1);
         XElement config = new XElement("config", NextTaskId, NextDependencyId);
         config.Save(@"..\xml\data-config.xml");
 

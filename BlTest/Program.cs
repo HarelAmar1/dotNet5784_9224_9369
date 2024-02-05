@@ -15,86 +15,92 @@ internal class Program
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     static void Main(string[] args)
     {
-        //Data Initialization
-        Console.Write("Would you like to create Initial data? (Y/N)");
-        string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
-        if (ans == "Y")
+        try
         {
-            DalTest.Initialization.deleteXMLFile();//נאתחל את קבצי האקסמל
-            DalTest.Initialization.Do();
-        }
-
-
-        // Get user input from the main menu
-        int userInput = menu();
-
-        while (userInput != 0)
-        {
-            switch (userInput)
+            //Data Initialization
+            Console.Write("Would you like to create Initial data? (Y/N)");
+            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
+            if (ans == "Y")
             {
-                case 1: // Task operations
-                    int OpForTask = optionsForTask(); // Display Task options
-                    while (OpForTask != 0)
-                    {
-                        switch (OpForTask)
-                        {
-                            case 1:
-                                createBoTask();
-                                break;
-                            case 2:
-                                Console.WriteLine("Enter the Task's ID:");
-                                int idForReadTask = int.Parse(Console.ReadLine()!);
-                                PrintTheReadFunctionOfTask(s_bl.Task.Read(idForReadTask));
-                                break;
-                            case 3:
-                                PrintTheReadAllFunctionOfTask(s_bl.Task.ReadAll()); // Display all Tasks
-                                break;
-                            case 4:
-                                BO.Task updateTaskTask = UpdateHelperTask();
-                                s_bl!.Task.Update(updateTaskTask); // Update an Task
-                                break;
-                            case 5:
-                                Console.WriteLine("Enter the ID of the Task you want to delete:");
-                                int idForDeleteTask = int.Parse(Console.ReadLine()!);
-                                s_bl!.Task.Delete(idForDeleteTask);
-                                break;
-                            case 6:
-                                DateTimeManagement();
-                                break;
-                        }
-                        OpForTask = optionsForTask(); // Show Task options again
-                    }//End While
-                    break;
-                case 2:
-                    int OpForEngineer = optionsForEngineer(); // Display Engineer options
-                    while (OpForEngineer != 0)
-                    {
-                        switch (OpForEngineer)
-                        {
-                            case 1:
-                                createEngineer(); // Create a new Engineer
-                                break;
-                            case 2:
-                                Console.WriteLine("Enter the engineer's ID:");
-                                int idForReadEngineer = int.Parse(Console.ReadLine()!);
-                                PrintTheReadFunctionOfEngineer(s_bl.Engineer.Read(idForReadEngineer));
-                                break;
-                            case 3:
-                                PrintTheReadAllFunctionOfEngineer(s_bl.Engineer.ReadAll()); // Display all Engineers
-                                break;
-                            case 4:
-                                s_bl!.Engineer.Update(UpdateHelperForEngineer()); // Update an Engineer
-                                break;
-                            case 5:
-                                Console.WriteLine("Enter the ID of the Engineer you want to delete:");
-                                int idForDeleteEngineer = int.Parse(Console.ReadLine()!);
-                                s_bl!.Engineer.Delete(idForDeleteEngineer);
-                                break;
-                        }
-                        OpForEngineer = optionsForEngineer(); // Show Engineer options again
-                    }//End While
-                    break;
+                DalTest.Initialization.deleteXMLFile();//נאתחל את קבצי האקסמל
+                DalTest.Initialization.Do();
             }
+
+            // Get user input from the main menu
+            int userInput = menu();
+
+            while (userInput != 0)
+            {
+                switch (userInput)
+                {
+                    case 1: // Task operations
+                        int OpForTask = optionsForTask(); // Display Task options
+                        while (OpForTask != 0)
+                        {
+                            switch (OpForTask)
+                            {
+                                case 1:
+                                    createBoTask();
+                                    break;
+                                case 2:
+                                    Console.WriteLine("Enter the Task's ID:");
+                                    int idForReadTask = int.Parse(Console.ReadLine()!);
+                                    PrintTheReadFunctionOfTask(s_bl.Task.Read(idForReadTask));
+                                    break;
+                                case 3:
+                                    PrintTheReadAllFunctionOfTask(s_bl.Task.ReadAll()); // Display all Tasks
+                                    break;
+                                case 4:
+                                    BO.Task updateTaskTask = UpdateHelperTask();
+                                    s_bl!.Task.Update(updateTaskTask); // Update an Task
+                                    break;
+                                case 5:
+                                    Console.WriteLine("Enter the ID of the Task you want to delete:");
+                                    int idForDeleteTask = int.Parse(Console.ReadLine()!);
+                                    s_bl!.Task.Delete(idForDeleteTask);
+                                    break;
+                                case 6:
+                                    DateTimeManagement();
+                                    break;
+                            }
+                            OpForTask = optionsForTask(); // Show Task options again
+                        }//End While
+                        break;
+                    case 2:
+                        int OpForEngineer = optionsForEngineer(); // Display Engineer options
+                        while (OpForEngineer != 0)
+                        {
+                            switch (OpForEngineer)
+                            {
+                                case 1:
+                                    createEngineer(); // Create a new Engineer
+                                    break;
+                                case 2:
+                                    Console.WriteLine("Enter the engineer's ID:");
+                                    int idForReadEngineer = int.Parse(Console.ReadLine()!);
+                                    PrintTheReadFunctionOfEngineer(s_bl.Engineer.Read(idForReadEngineer));
+                                    break;
+                                case 3:
+                                    PrintTheReadAllFunctionOfEngineer(s_bl.Engineer.ReadAll()); // Display all Engineers
+                                    break;
+                                case 4:
+                                    s_bl!.Engineer.Update(UpdateHelperForEngineer()); // Update an Engineer
+                                    break;
+                                case 5:
+                                    Console.WriteLine("Enter the ID of the Engineer you want to delete:");
+                                    int idForDeleteEngineer = int.Parse(Console.ReadLine()!);
+                                    s_bl!.Engineer.Delete(idForDeleteEngineer);
+                                    break;
+                            }
+                            OpForEngineer = optionsForEngineer(); // Show Engineer options again
+                        }//End While
+                        break;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message); // Exception handling
         }
     }
 
@@ -154,7 +160,7 @@ internal class Program
         Console.Write("Status: ");
         Console.WriteLine(toPrint.Status);
         //להדפיס את התלויות
-        foreach(var depen in toPrint.Dependencies)
+        foreach (var depen in toPrint.Dependencies)
         {
             Console.Write(depen.Id);
         }
@@ -180,7 +186,7 @@ internal class Program
     }
     public static void PrintTheReadAllFunctionOfTask(IEnumerable<BO.TaskInList> list)
     {
-        foreach(var task in list) 
+        foreach (var task in list)
         {
             Console.Write("ID: ");
             Console.WriteLine(task.Id);
@@ -366,30 +372,4 @@ internal class Program
         s_bl.Engineer.Update(temp);
         return temp;
     }
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
