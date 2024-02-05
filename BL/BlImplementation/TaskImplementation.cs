@@ -91,8 +91,6 @@ internal class TaskImplementation : ITask
 
     }
 
-
-
     //Read
     public BO.Task Read(int idTask)
     {
@@ -242,7 +240,7 @@ internal class TaskImplementation : ITask
         task.CompleteDate,
         task.Deliverables,
         task.Remarks,
-        task.Engineer!.Id);
+        task.Engineer.Id);
 
         //נעדכן בדאל
         _dal.Task.Update(newTask);
@@ -273,7 +271,7 @@ internal class TaskImplementation : ITask
             error = $"Id: {task.Id}";
         else if (task.Alias == "") 
             error = $"Alias: {task.Alias}";
-        if (task.Id >= 0 || task.Alias != "")
+        if (task.Id < 0 || task.Alias == "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
 }

@@ -248,6 +248,7 @@ internal class Program
                 Status = findTask.Status
             };
             dependencies.Add(newTaskInLis);
+            IDOfDependTask = int.Parse(Console.ReadLine()!);
         }
         Console.WriteLine("RequiredEffortTime ");
         int requiredEffortTime = int.Parse(Console.ReadLine()!);

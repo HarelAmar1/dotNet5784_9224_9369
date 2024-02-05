@@ -206,7 +206,7 @@ internal class EngineerImplementation : IEngineer
         IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
-                                               where filter(item)
+                                               //where filter(item)
                                                select new BO.Engineer()
                                                {
                                                    Id = item.Id,
