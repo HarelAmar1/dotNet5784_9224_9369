@@ -98,7 +98,8 @@ internal class TaskImplementation : ITask
         {
             //נוציא את הנתון מהדל
             DO.Task? task = _dal.Task.Read(idTask);
-
+            if(task == null)
+                throw new BO.BlDoesNotExistException($"Task with ID ={idTask} is not exists");
             //ניצור את השדה מהנדס במשימה
             BO.EngineerInTask engineerInTask = null;
             EngineerImplementation lookForNameOfEngineer = new EngineerImplementation();
@@ -240,7 +241,7 @@ internal class TaskImplementation : ITask
         task.CompleteDate,
         task.Deliverables,
         task.Remarks,
-        task.Engineer.Id);
+        task.Engineer!.Id);
 
         //נעדכן בדאל
         _dal.Task.Update(newTask);
