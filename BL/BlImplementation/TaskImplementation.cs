@@ -275,7 +275,7 @@ internal class TaskImplementation : ITask
             error = $"Id: {task.Id}";
         else if (task.Alias == "") 
             error = $"Alias: {task.Alias}";
-        if (task.Id >= 0 || task.Alias != "")
+        if (task.Id < 0 || task.Alias == "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
 }

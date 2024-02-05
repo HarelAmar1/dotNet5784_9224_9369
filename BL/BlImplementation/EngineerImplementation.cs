@@ -9,32 +9,42 @@ internal class EngineerImplementation : IEngineer
     {
         //Converts the list of engineers from DO to BO
 
+        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
+
         IEnumerable<BO.Engineer> engineers = (from item in _dal.Engineer.ReadAll().ToList()
                                               select new BO.Engineer()
                                               {
                                                   Id = item.Id,
                                                   Name = item.Name,
                                                   Cost = item.Cost,
-                                                  Email = item.Email
+                                                  Email = item.Email,
+                                                  Level = (EngineerExperience)(int)item.level,
+                                                  Task = (from task in tasks
+                                                          where (task.EngineerId == item.Id)
+                                                          select new TaskInEngineer(task.Id, task.Alias)
+                                                           ).FirstOrDefault()
                                               });
 
         //Validity checks that ID is a positive number and that NAME is a non-empty string and that COST is a positive number
 
         string error = "";
-        if (engineerToAdd.Id >= 0)
+        if (engineerToAdd.Id < 0)
             error = $"Id={engineerToAdd.Id}";
         else
-             if (engineerToAdd.Name != "")
+             if (engineerToAdd.Name == "")
             error = $"Name={engineerToAdd.Name}";
         else
-             if (engineerToAdd.Cost >= 0)
+             if (engineerToAdd.Cost < 0)
             error = $"Cost={engineerToAdd.Cost}";
         else
         if (engineers.Any(engineer => engineer?.Id == engineerToAdd.Id) != null)
         {
 
             //convert the engineerToAdd from BO to DO
-
+            DO.Task taskToChangeInDal = (from task in tasks
+                                         where (task.Id == engineerToAdd.Task.Id)
+                                         select (task)).FirstOrDefault();
+            _dal.Task.Update(taskToChangeInDal);
             DO.Engineer becomeDO = new DO.Engineer(engineerToAdd.Id, engineerToAdd.Email, engineerToAdd.Cost, engineerToAdd.Name, false, (DO.EngineerExperience)(int)engineerToAdd.Level);
             _dal.Engineer.Create(becomeDO);
         }
@@ -150,13 +160,20 @@ internal class EngineerImplementation : IEngineer
     public void Delete(int id)
     {
         //bring the list of engineers from DO
+        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
+
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
                                                select new BO.Engineer()
                                                {
                                                    Id = item.Id,
                                                    Name = item.Name,
                                                    Cost = item.Cost,
-                                                   Email = item.Email
+                                                   Email = item.Email,
+                                                   Level = (EngineerExperience)(int)item.level,
+                                                   Task = (from task in tasks
+                                                           where (task.EngineerId == item.Id)
+                                                           select new TaskInEngineer(task.Id, task.Alias)
+                                                           ).FirstOrDefault()
                                                });
 
         string error = "";
@@ -205,8 +222,7 @@ internal class EngineerImplementation : IEngineer
 
         IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
-        IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
-                                               where filter(item)
+        IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll(filter).ToList()
                                                select new BO.Engineer()
                                                {
                                                    Id = item.Id,
