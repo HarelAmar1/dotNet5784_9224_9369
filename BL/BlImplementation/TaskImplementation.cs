@@ -12,20 +12,20 @@ internal class TaskImplementation : ITask
 
     //Create
     public int Create(BO.Task task)
-    {   
-        //נבדוק תקינות של האיי די והכינוי
+    {
+        //we will check the correctness of the ID and nickname
         checkData(task);
 
-        //להוסיף תלויות
+        //add dependencies
         foreach (var item in task.Dependencies)
         {
-            //בתלות יש משימה אחת ומשימה שהאחת תלויה בה 
-            //לכן ניצור תלות חדשה עבור כל איבר שברשימה של המשימה הנוכחית ונכניס אותה לרשימת התלויות בנתונים
+            //in a dependency there is one task and a task that that one depends on
+            //therefore we will create a new dependency for each member in the list of the current task and insert it into the list of data dependencies
             Dependency depend = new Dependency(0, task.Id, item.Id);
             _dal.Dependency.Create(depend);
         }
-        
-        //ניצור את המשימה ונעביר אותה לדאל
+
+        //We will create the task and transfer it to Dal
         DO.Task newTask = new DO.Task
         (task.Id,
         task.Description,
@@ -42,7 +42,7 @@ internal class TaskImplementation : ITask
         task.Remarks,
         task.Engineer!.Id);
 
-        //נעשה ניסיון להכניס אותו לנתונים
+        // an attempt will be made to insert it into the data
         try
         {
             _dal.Task.Create(newTask);
@@ -58,12 +58,12 @@ internal class TaskImplementation : ITask
     //Delete
     public void Delete(int idTask)
     {
-        //נמצא את המשימה שאנחנו רוצים למחוק
+        //Find the task we want to delete
         BO.Task? task = Read(idTask);
         if (task == null)
             throw new BO.BlDoesNotExistException($"Task with ID ={idTask} is not exists");
 
-        //נבדוק שאין משימות שתלויות במשימה זו
+        //we will check that there are no tasks that depend on this task
         List<DO.Dependency> dependlist = (List<DO.Dependency>)_dal.Dependency.ReadAll(null);
         bool check = true;
         foreach (DO.Dependency dep in dependlist)
@@ -72,12 +72,12 @@ internal class TaskImplementation : ITask
                 check = false;
         }
 
-        //למחוק אותו
+        //delete it
         if (check == true)
         {
             _dal.Task.Delete(idTask);
 
-            //למחוק מהתלויות שבדל את המשימות הקשורות אליו
+            //delete from the dependencies that separate the tasks related to it
             foreach (DO.Dependency dep in dependlist)
             {
                 if (dep.DependentTask == task.Id)
@@ -85,7 +85,7 @@ internal class TaskImplementation : ITask
             }
 
         }
-        //אחרת נזרוק שגיאה
+        //Otherwise we will throw an error
         else
             throw new BlDeletionImpossible("The task depends on other tasks");
 
@@ -96,11 +96,11 @@ internal class TaskImplementation : ITask
     {
         try
         {
-            //נוציא את הנתון מהדל
+            //get the data from the DAL
             DO.Task? task = _dal.Task.Read(idTask);
             if(task == null)
                 throw new BO.BlDoesNotExistException($"Task with ID ={idTask} is not exists");
-            //ניצור את השדה מהנדס במשימה
+            //we will create the engineer field in the task
             BO.EngineerInTask engineerInTask = null;
             EngineerImplementation lookForNameOfEngineer = new EngineerImplementation();
             IEnumerable<BO.Engineer> engineers = lookForNameOfEngineer.ReadAll();
@@ -112,7 +112,7 @@ internal class TaskImplementation : ITask
                 }
             }
 
-            //ניצור את השדה של כל התלויות של המשימה הנתונה
+            //We will create the field of all dependencies of the given task
             List<DO.Dependency?> depenFromDal = (List<DO.Dependency?>)_dal.Dependency.ReadAll();
             List<BO.TaskInList> newForDepend = new List<BO.TaskInList>();
             foreach (var item in depenFromDal)
@@ -181,25 +181,25 @@ internal class TaskImplementation : ITask
     //startDateTimeManagement
     public void startDateTimeManagement(int idTask, DateTime dateTime)
     {
-        //נביא את הרשימה של המשימות מהדל
+        //get the list of tasks from the DAL
         var depenList = _dal.Dependency.ReadAll();
         foreach (var depen in depenList) 
         {
-            //נחפש את המשימה הנוכחית ברשימת התלויות
+            //we will look for the current task in the dependent list
             if (depen.DependentTask == idTask) 
             {
-                //ואחרי שמצאנו אותה נבדוק האם למשימה התלותית בה יש תאריך התחלה
+                //And after we have found it, we will check whether the task dependent on it has a start date
                 if (Read(depen.DependsOnTask.Value).ScheduledDate != null)
                 {
-                    //במידה והתאריך הנתון קטן מהתאריך של המשימה התלותית נזרוק שגיאה
-                    if(dateTime.CompareTo(Read(depen.DependsOnTask.Value).ScheduledDate) == -1)
+                    //if the given date is less than the date of the dependent task we will throw an error
+                    if (dateTime.CompareTo(Read(depen.DependsOnTask.Value).ScheduledDate) == -1)
                         throw new BlInvalidDatesException("Invalid Dates");   
                 }
                 else
                     throw new BlInvalidDatesException("Invalid Dates");
                 
             }
-            //אין בעיות עם התאריכים ולכן אפשר לעדכן את התאריך התחלה במשימה
+            //There are no problems with the dates, so you can update the start date in the task
             DO.Task taskWithNewDate = _dal.Task.Read(idTask) with { CreatedAtDate = dateTime };
             _dal.Task.Update(taskWithNewDate);
         }
@@ -209,24 +209,24 @@ internal class TaskImplementation : ITask
     //Update
     public void Update(BO.Task task)
     {
-        //נבדוק תקינות של האיי די והכינוי
+        //we will check the correctness of the ID and nickname
         checkData(task);
-           
-        //נמחק את כל התלויות שקשורות למשימה שקיבלנו
-        foreach(var depend in _dal.Dependency.ReadAll())
+
+        // We will delete all the dependencies related to the task we received
+        foreach (var depend in _dal.Dependency.ReadAll())
         {
             if (depend.DependentTask == task.Id)
                 _dal.Dependency.Delete(depend.Id);
         }
 
-        //נוסיף אותם חזרה מעודכנים
+        //we will add them back updated
         foreach (var depend in task.Dependencies)
         {
             DO.Dependency insertUpdate = new DO.Dependency(0, task.Id, depend.Id);
             _dal.Dependency.Create(insertUpdate);
         }
 
-        //נמלא את שאר השדות למשימה של דאל ונחזיר מעודכן
+        //Fill in the rest of the fields for the DAL task and return updated
         DO.Task newTask = new DO.Task
         (task.Id,
         task.Description,
@@ -243,13 +243,13 @@ internal class TaskImplementation : ITask
         task.Remarks,
         task.Engineer!.Id);
 
-        //נעדכן בדאל
+        // We will update the DAL
         _dal.Task.Update(newTask);
     }
 
 
 
-    //פונקצית עזר למציאת הסטטסוס של המשימה מדאל
+    //Helper function to find the status of the task from DAL
     private int status(DO.Task task)
     {
         if (task.ScheduledDate == null)
@@ -260,11 +260,11 @@ internal class TaskImplementation : ITask
             return 2;
         if (task.CompleteDate != null)
             return 3;
-        //לבדוק איך לבדוק את הסטטוס האחרון
+        // check how to check the last status
         return 0;
     }
 
-    //בדיקת תקינות
+    //validity check
     private void checkData(BO.Task task)
     {
         string error = "";

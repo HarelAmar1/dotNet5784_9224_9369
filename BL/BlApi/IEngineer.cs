@@ -3,18 +3,18 @@
 public interface IEngineer
 {
 
-    //(הוספת מהנדס (עבור מסך מנהל
+    //adding engineer (for admin screen)
     public int Create(BO.Engineer engineerToAdd);
 
-    //(בקשת פרטי מהנדס (עבור מסך מהנדס
+    //Engineer details request (for engineer screen)
     public BO.Engineer Read(int id);
 
-    //עדכון נתוני מהנדס 
+    //update engineer data
     public void Update(BO.Engineer engineerToUpdate);
 
-    //(מחיקת מהנדס(עבור מסך מנהל
+    //deleting engineer (for manager screen)
     public void Delete(int id);
 
-    //(בקשת רשימת מהנדסים (עבור מסך מנהל
+    //Engineer list request (for admin screen)
     public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? func = null);
 } 

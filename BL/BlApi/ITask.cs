@@ -3,21 +3,21 @@
 //פעולות על משימה: קובץ תיאור כללי עמוד 17
 public interface ITask
 {
-    //בקשת רשימת משימות
+    //Task list request
     public IEnumerable<BO.TaskInList> ReadAll(Func<DO.Task?, bool>? func = null);
 
-    //בקשת פרטי משימה
+    //Task details request
     public BO.Task Read(int idTask);
 
-    //הוספת משימה
+    //Adding a task
     public int Create(BO.Task task);
 
-    //עדכון משימה
+    //Update task
     public void Update(BO.Task task);
 
-    //מחיקת משימה
+    //Deleting a task
     public void Delete(int idTask);
 
-    //עדכון או הוספת תאריך התחלה מתוכנן של  משימה
+    //Update or add a task's scheduled start date
     public void startDateTimeManagement(int IdTask, DateTime dateTime);
 }

@@ -25,6 +25,10 @@ internal class Program
                 DalTest.Initialization.deleteXMLFile();//נאתחל את קבצי האקסמל
                 DalTest.Initialization.Do();
             }
+            else if (ans == "D")
+            {
+                DalTest.Initialization.deleteXMLFile();//נאתחל את קבצי האקסמל
+            }
         }
         catch (Exception ex)
         {
