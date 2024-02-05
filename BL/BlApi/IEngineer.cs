@@ -9,12 +9,25 @@ public interface IEngineer
     //(בקשת פרטי מהנדס (עבור מסך מהנדס
     public BO.Engineer Read(int id);
 
-    //עדכון נתוני מהנדס 
+    //עדכון נתוני מ
+    //
+    //
+    //
+    //נדס 
     public void Update(BO.Engineer engineerToUpdate);
 
-    //(מחיקת מהנדס(עבור מסך מנהל
+    //(מחיקת מ
+    //
+    //
+    //נדס(עבור מסך מנ
+    //
+    //
+    //ל
     public void Delete(int id);
 
-    //(בקשת רשימת מהנדסים (עבור מסך מנהל
+    //(בקשת רשימת מ
+    //
+    //
+    //נדסים (עבור מסך מנהל
     public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? func = null);
 } 

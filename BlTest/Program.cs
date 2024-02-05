@@ -22,7 +22,7 @@ internal class Program
             string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
             if (ans == "Y")
             {
-                DalTest.Initialization.deleteXMLFile();//נאתחל את קבצי האקסמל
+                DalTest.Initialization.deleteXMLFile();//We will initialize the Xml files
                 DalTest.Initialization.Do();
             }
         }
@@ -156,8 +156,8 @@ internal class Program
     }
     public static void createBoTask()
     {
-        //ניצור את המשימה במחולל משימות 
-        //ונכניס את המשימה לרשימה
+        //We will create the task in the task generator
+        //and put the task in the list
         s_bl.Task.Create(taskGenerator("Create"));
     }
     public static void PrintTheReadFunctionOfTask(BO.Task toPrint)
@@ -172,7 +172,7 @@ internal class Program
         Console.WriteLine(toPrint.CreatedAtDate);
         Console.Write("Status: ");
         Console.WriteLine(toPrint.Status);
-        //להדפיס את התלויות
+        //print the dependencies
         if (toPrint.Dependencies.Count != 0) 
             Console.Write("Dependencies: ");
         foreach (var depen in toPrint.Dependencies)
@@ -196,7 +196,7 @@ internal class Program
         Console.WriteLine(toPrint.Deliverables);
         Console.Write("Remarks: ");
         Console.WriteLine(toPrint.Remarks);
-        if (toPrint.Engineer != null) //אם אין מהנדס עדיין אז אין מה להדפיס
+        if (toPrint.Engineer != null) //If there is no engineer yet then there is nothing to print
             Console.Write($"Engineer - Id: {toPrint.Engineer.Id}, Name: {toPrint.Engineer.Name}");
         Console.Write("Complexity: ");
         Console.WriteLine(toPrint.Copmlexity);
@@ -244,12 +244,12 @@ internal class Program
         Console.WriteLine("Please enter an Alias");
         string alias = Console.ReadLine()!;
         DateTime createdAtDate = DateTime.Now;
-        //Console.WriteLine("Please enter the Task Status - (0-4)");    לבדוק אם צריך את המצב של המשימה
+        //Console.WriteLine("Please enter the Task Status - (0-4)");    
         //int intStatus = int.Parse(Console.ReadLine()!);
         //BO.Status status = (BO.Status)intStatus;
 
-        //למשימה יש רשימה שבה כתובה כל המשימות התלויות שלה
-        //לכן נבקש מהמשתמש את התעודת זהות של המשימה ואז נקח את שאר הנתונים ונכניס אותם לרשימה
+        //A task has a list with all its dependent tasks
+        //therefore we will ask the user for the task's ID and then take the rest of the data and put it in the list
         Console.WriteLine("Insert dependent tasks (end with -1)");
         Console.WriteLine("Please enter the ID of the dependent task");
         List<BO.TaskInList> dependencies = new List<BO.TaskInList>();
@@ -286,7 +286,7 @@ internal class Program
         string? remarks = Console.ReadLine();
         Console.WriteLine("Please enter the ID of the engineer working on this task");
         int engineerInTaskId = int.Parse(Console.ReadLine()!);
-        BO.Engineer findTheEngineer = s_bl.Engineer.Read(engineerInTaskId);//נחפש את המהנדס לפי התעודת זהות וניצור מופע שלו
+        BO.Engineer findTheEngineer = s_bl.Engineer.Read(engineerInTaskId);//We will search for the engineer by ID and create an instance of him
         BO.EngineerInTask? engineerInTask = new EngineerInTask() { Id = findTheEngineer.Id, Name = findTheEngineer.Name };
         Console.WriteLine("Please enter the difficulty level of the task (0-5)");
         BO.EngineerExperience? copmlexity = (BO.EngineerExperience?)int.Parse(Console.ReadLine()!);

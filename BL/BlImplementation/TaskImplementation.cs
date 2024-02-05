@@ -112,7 +112,27 @@ internal class TaskImplementation : ITask
                 }
             }
 
-            //ניצור את השדה של כל התלויות של המשימה הנתונה
+            //ניצור את
+            //
+            //
+            //
+            //שד
+            //
+            //
+            //
+            //של כל
+            //
+            //תלויות של
+            //
+            //
+            //
+            //
+            //משימ
+            //
+            //
+            //
+            //
+            //נתונה
             List<DO.Dependency?> depenFromDal = (List<DO.Dependency?>)_dal.Dependency.ReadAll();
             List<BO.TaskInList> newForDepend = new List<BO.TaskInList>();
             foreach (var item in depenFromDal)

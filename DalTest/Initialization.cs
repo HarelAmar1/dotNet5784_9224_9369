@@ -69,7 +69,7 @@ public static class Initialization
         "Emphasize on safety and productivity","Automate routine tasks","Leverage cutting-edge analytical techniques","Comprehensive testing across all modules"};
 
         //level of engineer
-        int[] taskLevels = { 1, 1, 1, 2, 3, 2, 3, 3, 4, 2, 3, 4, 4, 4, 2, 3, 4, 4, 3, 2, 3, 2, 3, 5, 2 };//כל מספר מסמן את הרמה שצריך באותו האינדקס
+        int[] taskLevels = { 1, 1, 1, 2, 3, 2, 3, 3, 4, 2, 3, 4, 4, 4, 2, 3, 4, 4, 3, 2, 3, 2, 3, 5, 2 };//Each number marks the level needed in that index
 
         //array for engineer id
         int[] idForEngineer = { 987782, 664508, 710873, 158197, 429867 };
