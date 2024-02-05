@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BO;
 using DO;
+using System.Xml.Linq;
 
 namespace BlImplementation;
 
@@ -103,9 +104,16 @@ internal class TaskImplementation : ITask
             DO.Task? task = _dal.Task.Read(idTask);
 
             //ניצור את השדה מהנדס במשימה
+            BO.EngineerInTask engineerInTask = null;
             EngineerImplementation lookForNameOfEngineer = new EngineerImplementation();
-            IEnumerable<BO.Engineer> name = lookForNameOfEngineer.ReadAll();
-            BO.EngineerInTask engineerInTask = new BO.EngineerInTask() { Id = task.Id, Name = name };
+            IEnumerable<BO.Engineer> engineers = lookForNameOfEngineer.ReadAll();
+            foreach(var E in engineers)
+            {
+                if (E.Task.Id == idTask)
+                {
+                    engineerInTask = new BO.EngineerInTask() { Id = E.Id, Name = E.Name };
+                }
+            }
 
             //ניצור את השדה של כל התלויות של המשימה הנתונה
             List<DO.Dependency?> depenFromDal = (List<DO.Dependency?>)_dal.Dependency.ReadAll();
