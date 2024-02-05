@@ -1,6 +1,9 @@
 ﻿namespace BO;
 
-//לא לשכוח לתעד את הכל עם 3 סלשים
+//לא לשכוח לתעד את
+//
+//
+//כל עם 3 סלשים
 public class Task
 {
     public int Id { get; init; }
@@ -9,7 +12,14 @@ public class Task
     public DateTime CreatedAtDate { get; init; }
     public Status? Status { get; set; }
     public List<BO.TaskInList>? Dependencies { get; set; }
-    public MilestoneInTask? MilestoneInTask { get; set; }//רלוונטי רק מי שמוסיף את האבני דרך. ראה פרויקט כללי עמוד 13 (אנחנו ככל הנראה עושים)
+    public MilestoneInTask? MilestoneInTask { get; set; }//רלוונטי רק מי שמוסיף את
+                                                         //
+                                                         //
+                                                         //
+                                                         //אבני דרך. רא
+                                                         //
+                                                         //
+                                                         //פרויקט כללי עמוד 13 (אנחנו ככל הנראה עושים)
     public TimeSpan? RequiredEffortTime { get; set; }
     public DateTime? StartDate { get; init; }
     public DateTime? ScheduledDate { get; set; }
