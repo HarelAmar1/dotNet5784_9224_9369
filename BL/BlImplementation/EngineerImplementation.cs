@@ -199,7 +199,7 @@ internal class EngineerImplementation : IEngineer
             //Checks if the engineer with the ID exists
 
             if (engineers.Any(engineer => engineer?.Id == id) == null)
-                throw new BlDoesNotExistException($"Engineer with ID={id} already exists");
+                throw new BlDoesNotExistException($"Engineer with ID={id} Does Not Exist");
             else
             {
                 //Brings the engineer with the same ID that I need to delete
@@ -212,7 +212,7 @@ internal class EngineerImplementation : IEngineer
 
                 //Checks if the engineer has already finished performing a task or is actively performing a task
 
-                if ((BO.Status)(toCheckStatus.Read(toDelete.Id).Status) != BO.Status.Done && (BO.Status)(toCheckStatus.Read(toDelete.Id).Status) != BO.Status.OnTrack)
+                if ((BO.Status)(toCheckStatus.Read(toDelete.Task.Id).Status) != BO.Status.Done && (BO.Status)(toCheckStatus.Read(toDelete.Task.Id).Status) != BO.Status.OnTrack)
                 {
 
                     //delete from The Dal layer
@@ -220,7 +220,7 @@ internal class EngineerImplementation : IEngineer
                     DO.Task taskToremoveInDal = (from task in tasks
                                                  where (task.EngineerId == id)
                                                  select (task)).FirstOrDefault() with
-                    { EngineerId = null };
+                                                                             { EngineerId = null };
 
                     _dal.Task.Update(taskToremoveInDal);
                     _dal.Engineer.Delete(toDelete.Id);
@@ -233,8 +233,6 @@ internal class EngineerImplementation : IEngineer
             error = $"Id={id}";
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
-
-
     }
     public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? filter = null)
     {

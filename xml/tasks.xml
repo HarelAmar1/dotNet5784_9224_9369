@@ -4,13 +4,13 @@
     <Id>1</Id>
     <Description>Review Settings</Description>
     <Alias>Review Settings</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:58.7358681+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.2101926+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Beginner</Copmlexity>
-    <StartDate>2024-02-25T22:22:58.7358681+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:58.7358681+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:58.7358681+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.2101926+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.2101926+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.2101926+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Project Plan Document</Deliverables>
     <Remarks>Verify with project goals</Remarks>
@@ -20,13 +20,13 @@
     <Id>2</Id>
     <Description>Collect Requirements</Description>
     <Alias>Collect Requirements</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:58.9097198+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.244874+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Beginner</Copmlexity>
-    <StartDate>2024-02-25T22:22:58.9097198+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:58.9097198+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:58.9097198+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.244874+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.244874+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.244874+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Requirements Report</Deliverables>
     <Remarks>Include all stakeholder inputs</Remarks>
@@ -37,12 +37,12 @@
     <Description>Analyze Data</Description>
     <Alias>Analyze Data</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:58.9333736+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-05T22:38:50.2621336+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Beginner</Copmlexity>
-    <StartDate>2024-02-25T22:22:58.9333736+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:58.9333736+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:58.9333736+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.2621336+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.2621336+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.2621336+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Data Analysis Summary</Deliverables>
     <Remarks>Ensure data accuracy</Remarks>
@@ -52,13 +52,13 @@
     <Id>4</Id>
     <Description>Design Seed Robot</Description>
     <Alias>Design Seed Robot</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:58.9529092+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.2802509+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
-    <StartDate>2024-02-25T22:22:58.9529092+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:58.9529092+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:58.9529092+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.2802509+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.2802509+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.2802509+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Seed Robot Design</Deliverables>
     <Remarks>Focus on efficiency and reliability</Remarks>
@@ -68,13 +68,13 @@
     <Id>5</Id>
     <Description>Develop Planting Software</Description>
     <Alias>Develop Planting Software</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:58.9698047+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.2970599+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
-    <StartDate>2024-02-25T22:22:58.9698047+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:58.9698047+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:58.9698047+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.2970599+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.2970599+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.2970599+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Planting Software Code</Deliverables>
     <Remarks>Adhere to coding standards</Remarks>
@@ -84,13 +84,13 @@
     <Id>6</Id>
     <Description>Robot Testing</Description>
     <Alias>Robot Testing</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:58.9870851+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.3151856+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
-    <StartDate>2024-02-25T22:22:58.9870851+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:58.9870851+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:58.9870851+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.3151856+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.3151856+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.3151856+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Robot Test Results</Deliverables>
     <Remarks>Check for robustness under different conditions</Remarks>
@@ -100,13 +100,13 @@
     <Id>7</Id>
     <Description>Plan Management System</Description>
     <Alias>Plan Management System</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.0055089+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.3347747+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.0055089+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.0055089+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.0055089+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.3347747+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.3347747+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.3347747+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Management System Plan</Deliverables>
     <Remarks>Outline clear management objectives</Remarks>
@@ -117,12 +117,12 @@
     <Description>Develop UI</Description>
     <Alias>Develop UI</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.0224017+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-05T22:38:50.3523278+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.0224017+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.0224017+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.0224017+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.3523278+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.3523278+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.3523278+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>UI Design Layout</Deliverables>
     <Remarks>User-friendly and intuitive</Remarks>
@@ -132,13 +132,13 @@
     <Id>9</Id>
     <Description>System-Robot Integration</Description>
     <Alias>System-Robot Integration</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.0426617+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.372443+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.0426617+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.0426617+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.0426617+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.372443+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.372443+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.372443+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Integration Report</Deliverables>
     <Remarks>Ensure seamless integration</Remarks>
@@ -148,13 +148,13 @@
     <Id>10</Id>
     <Description>Field Trials</Description>
     <Alias>Field Trials</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.0620318+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.3888467+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.0620318+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.0620318+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.0620318+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.3888467+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.3888467+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.3888467+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Field Trial Data</Deliverables>
     <Remarks>Analyze and document trial outcomes</Remarks>
@@ -165,12 +165,12 @@
     <Description>Pest Control Robot</Description>
     <Alias>Pest Control Robot</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.0801343+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-05T22:38:50.4036302+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.0801343+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.0801343+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.0801343+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.4036302+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.4036302+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.4036302+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Pest Control Robot Design</Deliverables>
     <Remarks>Innovative design to address common pests</Remarks>
@@ -181,12 +181,12 @@
     <Description>Build Growth Models</Description>
     <Alias>Build Growth Models</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.0923081+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-05T22:38:50.4459733+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.0923081+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.0923081+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.0923081+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.4459733+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.4459733+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.4459733+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Growth Model Algorithms</Deliverables>
     <Remarks>Accuracy and predictive reliability</Remarks>
@@ -197,12 +197,12 @@
     <Description>Integrate Models</Description>
     <Alias>Integrate Models</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.1064112+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-05T22:38:50.4861889+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.1064112+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.1064112+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.1064112+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.4861889+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.4861889+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.4861889+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Model Integration Report</Deliverables>
     <Remarks>Synchronize models with real-time data</Remarks>
@@ -212,13 +212,13 @@
     <Id>14</Id>
     <Description>Pest Monitoring</Description>
     <Alias>Pest Monitoring</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.1201779+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.5207027+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.1201779+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.1201779+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.1201779+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.5207027+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.5207027+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.5207027+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Monitoring System Blueprint</Deliverables>
     <Remarks>Optimize for early detection</Remarks>
@@ -229,12 +229,12 @@
     <Description>Monitoring Tests</Description>
     <Alias>Monitoring Tests</Alias>
     <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.1299052+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-05T22:38:50.5369477+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.1299052+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.1299052+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.1299052+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.5369477+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.5369477+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.5369477+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>System Test Report</Deliverables>
     <Remarks>Document system effectiveness</Remarks>
@@ -244,13 +244,13 @@
     <Id>16</Id>
     <Description>Communication Interfaces</Description>
     <Alias>Communication Interfaces</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.1403697+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.5532292+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.1403697+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.1403697+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.1403697+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.5532292+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.5532292+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.5532292+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Communication Protocol</Deliverables>
     <Remarks>Ensure compatibility and security</Remarks>
@@ -261,12 +261,12 @@
     <Description>Image Analysis Dev</Description>
     <Alias>Image Analysis Dev</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.1605739+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-05T22:38:50.5909997+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.1605739+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.1605739+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.1605739+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.5909997+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.5909997+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.5909997+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Image Processing Software</Deliverables>
     <Remarks>Optimize for speed and accuracy</Remarks>
@@ -276,13 +276,13 @@
     <Id>18</Id>
     <Description>Image-Robot Integration</Description>
     <Alias>Image-Robot Integration</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.1892218+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.6102181+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.1892218+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.1892218+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.1892218+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.6102181+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.6102181+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.6102181+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Integration Test Report</Deliverables>
     <Remarks>Thorough testing with different robot models</Remarks>
@@ -292,13 +292,13 @@
     <Id>19</Id>
     <Description>Water Management Dev</Description>
     <Alias>Water Management Dev</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.2021525+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.6384286+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.2021525+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.2021525+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.2021525+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.6384286+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.6384286+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.6384286+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Water Management System Plan</Deliverables>
     <Remarks>Eco-friendly and cost-effective</Remarks>
@@ -308,13 +308,13 @@
     <Id>20</Id>
     <Description>Water System Tests</Description>
     <Alias>Water System Tests</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.2141168+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.682587+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.2141168+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.2141168+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.2141168+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.682587+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.682587+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.682587+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Field Test Data for Water System</Deliverables>
     <Remarks>Record performance in varying conditions</Remarks>
@@ -324,13 +324,13 @@
     <Id>21</Id>
     <Description>Harvesting Robot Dev</Description>
     <Alias>Harvesting Robot Dev</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.2254932+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.701039+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.2254932+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.2254932+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.2254932+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.701039+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.701039+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.701039+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Harvesting Robot Design</Deliverables>
     <Remarks>Balance efficiency with gentle handling</Remarks>
@@ -340,13 +340,13 @@
     <Id>22</Id>
     <Description>Harvesting Tests</Description>
     <Alias>Harvesting Tests</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.2453825+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.7159102+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.2453825+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.2453825+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.2453825+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.7159102+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.7159102+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.7159102+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Harvesting Field Test Data</Deliverables>
     <Remarks>Emphasize on safety and productivity</Remarks>
@@ -356,13 +356,13 @@
     <Id>23</Id>
     <Description>Automate Management</Description>
     <Alias>Automate Management</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.2653115+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.741271+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.2653115+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.2653115+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.2653115+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.741271+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.741271+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.741271+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Automated Management Workflow</Deliverables>
     <Remarks>Automate routine tasks</Remarks>
@@ -373,12 +373,12 @@
     <Description>Advanced Analysis Impl</Description>
     <Alias>Advanced Analysis Impl</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.2865578+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-05T22:38:50.7660086+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>Expert</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.2865578+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.2865578+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.2865578+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.7660086+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.7660086+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.7660086+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Advanced Analysis Implementation Report</Deliverables>
     <Remarks>Leverage cutting-edge analytical techniques</Remarks>
@@ -386,31 +386,15 @@
   </Task>
   <Task>
     <Id>25</Id>
-    <Description>1</Description>
-    <Alias>1</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-05T20:52:41.1020916+02:00</CreatedAtDate>
-    <RequiredEffortTime>P1D</RequiredEffortTime>
-    <Copmlexity>Beginner</Copmlexity>
-    <StartDate>2012-12-12T00:00:00</StartDate>
-    <ScheduledDate>2012-12-12T00:00:00</ScheduledDate>
-    <DeadlineDate>2012-12-12T00:00:00</DeadlineDate>
-    <CompleteDate>2012-12-12T00:00:00</CompleteDate>
-    <Deliverables>1</Deliverables>
-    <Remarks>1</Remarks>
-    <EngineerId>429867</EngineerId>
-  </Task>
-  <Task>
-    <Id>26</Id>
-    <Description>1</Description>
-    <Alias>1</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-05T22:22:59.3093206+02:00</CreatedAtDate>
-    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <Description>System Field Testing</Description>
+    <Alias>System Field Testing</Alias>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-05T22:38:50.7827961+02:00</CreatedAtDate>
+    <RequiredEffortTime>P11D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
-    <StartDate>2024-02-25T22:22:59.3093206+02:00</StartDate>
-    <ScheduledDate>2024-02-12T22:22:59.3093206+02:00</ScheduledDate>
-    <DeadlineDate>2024-02-25T22:22:59.3093206+02:00</DeadlineDate>
+    <StartDate>2024-02-16T22:38:50.7827961+02:00</StartDate>
+    <ScheduledDate>2024-02-12T22:38:50.7827961+02:00</ScheduledDate>
+    <DeadlineDate>2024-02-16T22:38:50.7827961+02:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
     <Deliverables>Complete System Field Test Report</Deliverables>
     <Remarks>Comprehensive testing across all modules</Remarks>
