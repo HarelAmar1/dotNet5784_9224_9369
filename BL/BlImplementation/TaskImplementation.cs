@@ -104,7 +104,7 @@ internal class TaskImplementation : ITask
 
             //ניצור את השדה מהנדס במשימה
             EngineerImplementation lookForNameOfEngineer = new EngineerImplementation();
-            string name = lookForNameOfEngineer.Read(idTask).Name;
+            IEnumerable<BO.Engineer> name = lookForNameOfEngineer.ReadAll();
             BO.EngineerInTask engineerInTask = new BO.EngineerInTask() { Id = task.Id, Name = name };
 
             //ניצור את השדה של כל התלויות של המשימה הנתונה
