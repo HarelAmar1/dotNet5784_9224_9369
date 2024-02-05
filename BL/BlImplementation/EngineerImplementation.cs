@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DO;
 namespace BlImplementation;
 
 internal class EngineerImplementation : IEngineer
@@ -18,7 +19,7 @@ internal class EngineerImplementation : IEngineer
                                                   Name = item.Name,
                                                   Cost = item.Cost,
                                                   Email = item.Email,
-                                                  Level = (EngineerExperience)(int)item.level,
+                                                  Level = (BO.EngineerExperience)(int)item.level,
                                                   Task = (from task in tasks
                                                           where (task.EngineerId == item.Id)
                                                           select new TaskInEngineer(task.Id, task.Alias)
@@ -44,7 +45,9 @@ internal class EngineerImplementation : IEngineer
             DO.Task taskToChangeInDal = (from task in tasks
                                          where (task.Id == engineerToAdd.Task.Id)
                                          select (task)).FirstOrDefault();
-            _dal.Task.Update(taskToChangeInDal);
+
+            DO.Task taskToChangeInDalrecord = taskToChangeInDal with { EngineerId = engineerToAdd.Id };
+            _dal.Task.Update(taskToChangeInDalrecord);
             DO.Engineer becomeDO = new DO.Engineer(engineerToAdd.Id, engineerToAdd.Email, engineerToAdd.Cost, engineerToAdd.Name, false, (DO.EngineerExperience)(int)engineerToAdd.Level);
             _dal.Engineer.Create(becomeDO);
         }
@@ -69,7 +72,7 @@ internal class EngineerImplementation : IEngineer
                                                    Name = item.Name,
                                                    Cost = item.Cost,
                                                    Email = item.Email,
-                                                   Level = (EngineerExperience)(int)item.level,
+                                                   Level = (BO.EngineerExperience)(int)item.level,
                                                    Task = (from task in tasks
                                                            where (task.EngineerId == item.Id)
                                                            select new TaskInEngineer(task.Id, task.Alias)
@@ -108,13 +111,13 @@ internal class EngineerImplementation : IEngineer
 
 
         string error = "";
-        if (AnUpdatedEngineer.Id >= 0)
+        if (AnUpdatedEngineer.Id < 0)
             error = $"Id={AnUpdatedEngineer.Id}";
         else
-             if (AnUpdatedEngineer.Name != "")
+             if (AnUpdatedEngineer.Name == "")
             error = $"Name={AnUpdatedEngineer.Name}";
         else
-             if (AnUpdatedEngineer.Cost >= 0)
+             if (AnUpdatedEngineer.Cost < 0)
             error = $"Cost={AnUpdatedEngineer.Cost}";
         else
         {
@@ -127,19 +130,30 @@ internal class EngineerImplementation : IEngineer
             if (EngineerToUp == null)
             {
                 error = $"Id={AnUpdatedEngineer.Id}";
-
-                throw new BlDoesNotExistException(error);
+                throw new BlDoesNotExistException($"{error} Does Not Exist");
             }
             else
             {
+
                 //Uses the TaskImplementation instance to update the task in Dal
-                IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
+                if (EngineerToUp.Task != AnUpdatedEngineer.Task)
+                {
+                    IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
-                DO.Task taskToUpdate = (from item in tasks
-                                        where item.Id == EngineerToUp.Task.Id
-                                        select item).FirstOrDefault();
+                    DO.Task taskToremoveInDal = (from task in tasks
+                                                 where (task.EngineerId == AnUpdatedEngineer.Id)
+                                                 select (task)).FirstOrDefault() with
+                                                                                     { EngineerId = null };
 
+                    _dal.Task.Update(taskToremoveInDal);
 
+                    DO.Task taskToChangeInDal = (from task in tasks
+                                                 where (task.Id == AnUpdatedEngineer.Task.Id)
+                                                 select (task)).FirstOrDefault() with
+                                                                                      { EngineerId = AnUpdatedEngineer.Id };
+
+                    _dal.Task.Update(taskToChangeInDal);
+                }
                 //Checks whether the level of the existing engineer is greater than the updated one
 
                 BO.EngineerExperience changeUpTheLevel = (int)EngineerToUp.Level > (int)AnUpdatedEngineer.Level ? EngineerToUp.Level : AnUpdatedEngineer.Level;
@@ -149,12 +163,11 @@ internal class EngineerImplementation : IEngineer
                 //Save the updated engineer and task in the DAL layer
 
                 _dal.Engineer.Update(becomeDO);
-                _dal.Task.Update(taskToUpdate);
             }
 
         }
-        throw new BlIncorrectInputException($"{error}, is incorrect input");
-
+        if (error != "")
+            throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
 
     public void Delete(int id)
@@ -169,7 +182,7 @@ internal class EngineerImplementation : IEngineer
                                                    Name = item.Name,
                                                    Cost = item.Cost,
                                                    Email = item.Email,
-                                                   Level = (EngineerExperience)(int)item.level,
+                                                   Level = (BO.EngineerExperience)(int)item.level,
                                                    Task = (from task in tasks
                                                            where (task.EngineerId == item.Id)
                                                            select new TaskInEngineer(task.Id, task.Alias)
@@ -185,7 +198,7 @@ internal class EngineerImplementation : IEngineer
         {
             //Checks if the engineer with the ID exists
 
-            if (engineers.Any(engineer => engineer?.Id != id))
+            if (engineers.Any(engineer => engineer?.Id == id) == null)
                 throw new BlDoesNotExistException($"Engineer with ID={id} already exists");
             else
             {
@@ -204,15 +217,22 @@ internal class EngineerImplementation : IEngineer
 
                     //delete from The Dal layer
 
+                    DO.Task taskToremoveInDal = (from task in tasks
+                                                 where (task.EngineerId == id)
+                                                 select (task)).FirstOrDefault() with
+                    { EngineerId = null };
+
+                    _dal.Task.Update(taskToremoveInDal);
                     _dal.Engineer.Delete(toDelete.Id);
                 }
                 else
-                    throw new BlCanNotBeDeletedException($"Id={toDelete.Id}");
+                    throw new BlCanNotBeDeletedException($"Id={toDelete.Id} Can Not Be Deleted");
             }
         }
         else
             error = $"Id={id}";
-        throw new BlIncorrectInputException($"{error}, is incorrect input");
+        if (error != "")
+            throw new BlIncorrectInputException($"{error}, is incorrect input");
 
 
     }
@@ -229,7 +249,7 @@ internal class EngineerImplementation : IEngineer
                                                    Name = item.Name,
                                                    Cost = item.Cost,
                                                    Email = item.Email,
-                                                   Level = (EngineerExperience)(int)item.level,
+                                                   Level = (BO.EngineerExperience)(int)item.level,
                                                    Task = (from task in tasks
                                                            where (task.EngineerId == item.Id)
                                                            select new TaskInEngineer(task.Id, task.Alias)
