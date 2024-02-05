@@ -89,8 +89,6 @@ internal class TaskImplementation : ITask
         else
             throw new BlDeletionImpossible("The task depends on other tasks");
 
-        
-
     }
 
 
