@@ -50,6 +50,7 @@ internal class EngineerImplementation : IEngineer
     public BO.Engineer Read(int id)
     {
         //Converts the list of engineers from DO to BO
+        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
                                                select new BO.Engineer()
@@ -57,7 +58,12 @@ internal class EngineerImplementation : IEngineer
                                                    Id = item.Id,
                                                    Name = item.Name,
                                                    Cost = item.Cost,
-                                                   Email = item.Email
+                                                   Email = item.Email,
+                                                   Level = (EngineerExperience)(int)item.level,
+                                                   Task = (from task in tasks
+                                                           where (task.EngineerId == item.Id)
+                                                           select new TaskInEngineer(task.Id, task.Alias)
+                                                           ).FirstOrDefault()
                                                });
 
         // Brings the engineer with the matching ID
@@ -70,15 +76,6 @@ internal class EngineerImplementation : IEngineer
 
         if (EngineerToGet == null)
             throw new BlDoesNotExistException($"Engineer with ID={EngineerToGet.Id} Does Not exists");
-        else
-        {
-
-            //Adds the methods Task
-
-            TaskImplementation ExtractTheTask = new TaskImplementation();
-            BO.TaskInEngineer TaskForEngineerToGet = new BO.TaskInEngineer(ExtractTheTask.Read(EngineerToGet.Id).Engineer.Id, ExtractTheTask.Read(EngineerToGet.Id).Engineer.Name);
-            EngineerToGet.Task = TaskForEngineerToGet;
-        }
         return EngineerToGet;
 
     }
