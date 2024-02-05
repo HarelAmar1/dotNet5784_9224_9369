@@ -1,6 +1,8 @@
 ﻿using DalApi;
 using DO;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Dal;
 
@@ -73,7 +75,8 @@ internal class TaskImplementation :ITask
         //Looking for someone to update
         if (listTask.Any(task => task.Id == item.Id))
         {
-            Delete(item.Id);
+            int index = listTask.FindIndex(e => e.Id == item.Id);
+            listTask.RemoveAt(index);
             listTask.Add(item);
             //return to XML file
             XMLTools.SaveListToXMLSerializer<DO.Task>(listTask, s_tasks_xml);

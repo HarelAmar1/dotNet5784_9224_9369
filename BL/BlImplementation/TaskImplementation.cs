@@ -89,11 +89,7 @@ internal class TaskImplementation : ITask
         else
             throw new BlDeletionImpossible("The task depends on other tasks");
 
-        
-
     }
-
-
 
     //Read
     public BO.Task Read(int idTask)
@@ -244,7 +240,7 @@ internal class TaskImplementation : ITask
         task.CompleteDate,
         task.Deliverables,
         task.Remarks,
-        task.Engineer!.Id);
+        task.Engineer.Id);
 
         //נעדכן בדאל
         _dal.Task.Update(newTask);

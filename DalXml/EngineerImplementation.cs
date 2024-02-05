@@ -69,7 +69,8 @@ internal class EngineerImplementation : IEngineer
         List<Engineer> listEngineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
         if (listEngineers.Any(engineers => engineers.Id == item.Id))
         {
-            Delete(item.Id);
+            int index = listEngineers.FindIndex(e => e.Id == item.Id);
+            listEngineers.RemoveAt(index);
             listEngineers.Add(item);
             //return to XML file
             XMLTools.SaveListToXMLSerializer<Engineer>(listEngineers, s_engineers_xml);
