@@ -1,4 +1,6 @@
-﻿namespace BlApi;
+﻿using System.Reflection.Emit;
+
+namespace BlApi;
 
 //פעולות על משימה: קובץ תיאור כללי עמוד 17
 public interface ITask
@@ -20,4 +22,7 @@ public interface ITask
 
     //Update or add a task's scheduled start date
     public void startDateTimeManagement(int IdTask, DateTime dateTime);
+
+    //A date generator for all tasks, activated in the transition phase
+    public void dateGeneratorOfAllTasks();
 }

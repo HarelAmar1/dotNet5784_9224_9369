@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BO;
 using DO;
+using System;
 using System.Xml.Linq;
 
 namespace BlImplementation;
@@ -48,7 +49,7 @@ internal class TaskImplementation : ITask
             _dal.Task.Create(newTask);
             return task.Id;
         }
-        catch(DO.DalAlreadyExistsException ex)
+        catch (DO.DalAlreadyExistsException ex)
         {
             throw new BO.BlAlreadyExistsException($"Task with ID={task.Id} already exist", ex);
         }
@@ -98,13 +99,13 @@ internal class TaskImplementation : ITask
         {
             //get the data from the DAL
             DO.Task? task = _dal.Task.Read(idTask);
-            if(task == null)
+            if (task == null)
                 throw new BO.BlDoesNotExistException($"Task with ID ={idTask} is not exists");
             //we will create the engineer field in the task
             BO.EngineerInTask engineerInTask = null;
             EngineerImplementation lookForNameOfEngineer = new EngineerImplementation();
             IEnumerable<BO.Engineer> engineers = lookForNameOfEngineer.ReadAll();
-            foreach(var E in engineers)
+            foreach (var E in engineers)
             {
                 if (E.Task.Id == idTask)
                 {
@@ -151,7 +152,7 @@ internal class TaskImplementation : ITask
                 Copmlexity = (BO.EngineerExperience)task.Copmlexity
             };
             return taskToRead;
-            
+
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -183,21 +184,21 @@ internal class TaskImplementation : ITask
     {
         //get the list of tasks from the DAL
         var depenList = _dal.Dependency.ReadAll();
-        foreach (var depen in depenList) 
+        foreach (var depen in depenList)
         {
             //we will look for the current task in the dependent list
-            if (depen.DependentTask == idTask) 
+            if (depen.DependentTask == idTask)
             {
                 //And after we have found it, we will check whether the task dependent on it has a start date
                 if (Read(depen.DependsOnTask.Value).ScheduledDate != null)
                 {
                     //if the given date is less than the date of the dependent task we will throw an error
                     if (dateTime.CompareTo(Read(depen.DependsOnTask.Value).ScheduledDate) == -1)
-                        throw new BlInvalidDatesException("Invalid Dates");   
+                        throw new BlInvalidDatesException("Invalid Dates");
                 }
                 else
                     throw new BlInvalidDatesException("Invalid Dates");
-                
+
             }
             //There are no problems with the dates, so you can update the start date in the task
             DO.Task taskWithNewDate = _dal.Task.Read(idTask) with { CreatedAtDate = dateTime };
@@ -270,10 +271,30 @@ internal class TaskImplementation : ITask
         string error = "";
         if (task.Id < 0)
             error = $"Id: {task.Id}";
-        else if (task.Alias == "") 
+        else if (task.Alias == "")
             error = $"Alias: {task.Alias}";
         if (task.Id < 0 || task.Alias == "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
-}
 
+    public void dateGeneratorOfAllTasks(string dateOfProject)
+    {
+        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
+
+        IEnumerable<DO.Dependency?> dependencies = _dal.Dependency.ReadAll();
+
+        IEnumerable<BO.TaskInList> tasksBO = ReadAll(); //new List<BO.Task>();
+        IEnumerable<BO.TaskInList> tasksWithotDependency = ReadAll(); //new List<BO.Task>();
+        foreach(var task in tasksBO)
+        {
+            if(task.)
+        }
+                                                                           
+                                                                           
+                                                      
+
+
+
+
+    }
+}

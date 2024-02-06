@@ -31,6 +31,9 @@ internal class Program
             Console.WriteLine(ex.Message); // Exception handling
         }
 
+        //Temporary variable of the start date of the entire projectproject
+        DateTime? startProject; 
+
         // Get user input from the main menu
         int userInput = menu();
 
@@ -105,6 +108,15 @@ internal class Program
                             OpForEngineer = optionsForEngineer(); // Show Engineer options again
                         }//End While
                         break;
+                    case 3:
+                        //Ask the manager to enter the project start date
+                        Console.WriteLine("Enter A Project Start Date");
+                        startProject = DateTime.TryParse(Console.ReadLine(), out DateTime result) ? result : (DateTime?)null;
+                        //We will activate the function that generates the start dates of all the tasks
+                        s_bl.Task.dateGeneratorOfAllTasks();
+                        break;
+
+
                 }
                 userInput = menu();
             }
@@ -123,6 +135,7 @@ internal class Program
         Console.WriteLine("Choose from next list");
         Console.WriteLine("1 - Choose Task");
         Console.WriteLine("2 - Choose Engineer");
+        Console.WriteLine("2 - Done, Go from the planning stage to the execution stage - (Inserting a project start date)");
         Console.WriteLine("0 - exit");
         int firstMenu = int.Parse(Console.ReadLine()!);
         return firstMenu;
@@ -244,10 +257,6 @@ internal class Program
         Console.WriteLine("Please enter an Alias");
         string alias = Console.ReadLine()!;
         DateTime createdAtDate = DateTime.Now;
-        //Console.WriteLine("Please enter the Task Status - (0-4)");    
-        //int intStatus = int.Parse(Console.ReadLine()!);
-        //BO.Status status = (BO.Status)intStatus;
-
         //A task has a list with all its dependent tasks
         //therefore we will ask the user for the task's ID and then take the rest of the data and put it in the list
         Console.WriteLine("Insert dependent tasks (end with -1)");
@@ -270,16 +279,6 @@ internal class Program
         Console.WriteLine("RequiredEffortTime ");
         int requiredEffortTime = int.Parse(Console.ReadLine()!);
         TimeSpan days = new TimeSpan(requiredEffortTime, 0, 0, 0);
-        Console.WriteLine("StartDate ");
-        DateTime? startDate = DateTime.TryParse(Console.ReadLine(), out DateTime result) ? result : (DateTime?)null;
-        Console.WriteLine("ScheduledDate ");
-        DateTime? scheduledDate = DateTime.TryParse(Console.ReadLine(), out DateTime result1) ? result1 : (DateTime?)null;
-        Console.WriteLine("ForecastDate ");
-        DateTime? forecastDate = DateTime.TryParse(Console.ReadLine(), out DateTime result2) ? result2 : (DateTime?)null;
-        Console.WriteLine("DeadlineDate ");
-        DateTime? deadlineDate = DateTime.TryParse(Console.ReadLine(), out DateTime result3) ? result3 : (DateTime?)null;
-        Console.WriteLine("CompleteDate ");
-        DateTime? completeDate = DateTime.TryParse(Console.ReadLine(), out DateTime result4) ? result4 : (DateTime?)null;
         Console.WriteLine("Deliverables ");
         string? deliverables = Console.ReadLine();
         Console.WriteLine("Remarks ");
@@ -299,11 +298,11 @@ internal class Program
             CreatedAtDate = createdAtDate,
             Dependencies = dependencies,
             RequiredEffortTime = days,
-            StartDate = startDate,
-            ScheduledDate = scheduledDate,
-            ForecastDate = forecastDate,
-            DeadlineDate = deadlineDate,
-            CompleteDate = completeDate,
+            StartDate = null,
+            ScheduledDate = null,
+            ForecastDate = null,
+            DeadlineDate = null,
+            CompleteDate = null,
             Deliverables = deliverables,
             Remarks = remarks,
             Engineer = engineerInTask,

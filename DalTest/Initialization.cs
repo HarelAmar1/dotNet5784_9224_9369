@@ -93,8 +93,8 @@ public static class Initialization
             string? deliverables = taskDeliverables[i];
             string? remarks = taskRemarks[i];
             int? engineerId = idForEngineer[taskLevels[i] - 1];
-            DO.Task task = new DO.Task(i, descriptions, alias, isMilestone, createdAtDate, requiredEffortTime,
-            level, startDate, scheduledDate, deadlineDate, completeDate, deliverables, remarks, engineerId);
+            DO.Task task = new DO.Task(i, descriptions, alias, isMilestone, createdAtDate, null,
+            level, null, null, null, null, deliverables, remarks, engineerId);
             s_dal!.Task.Create(task);
         }
     }
