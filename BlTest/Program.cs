@@ -50,7 +50,7 @@ internal class Program
                             switch (OpForTask)
                             {
                                 case 1:
-                                    createBoTask();
+                                        createBoTask();
                                     break;
                                 case 2:
                                     Console.WriteLine("Enter the Task's ID:");
@@ -163,6 +163,7 @@ internal class Program
         int op = int.Parse(Console.ReadLine()!);
         return op;
     }
+    
     public static void createBoTask()
     {
         //We will create the task in the task generator
@@ -256,7 +257,7 @@ internal class Program
         DateTime createdAtDate = DateTime.Now;
         //A task has a list with all its dependent tasks
         //therefore we will ask the user for the task's ID and then take the rest of the data and put it in the list
-        Console.WriteLine("Insert dependent tasks (end with -1)");
+        Console.WriteLine("Insert dependent tasks - (click -1 to skip)");
         Console.WriteLine("Please enter the ID of the dependent task");
         List<BO.TaskInList> dependencies = new List<BO.TaskInList>();
         int IDOfDependTask = int.Parse(Console.ReadLine()!);
@@ -280,10 +281,15 @@ internal class Program
         string? deliverables = Console.ReadLine();
         Console.WriteLine("Remarks ");
         string? remarks = Console.ReadLine();
-        Console.WriteLine("Please enter the ID of the engineer working on this task");
+        Console.WriteLine("Enter Engineer's ID - (click -1 to skip)");
         int engineerInTaskId = int.Parse(Console.ReadLine()!);
-        BO.Engineer findTheEngineer = s_bl.Engineer.Read(engineerInTaskId);//We will search for the engineer by ID and create an instance of him
-        BO.EngineerInTask? engineerInTask = new EngineerInTask() { Id = findTheEngineer.Id, Name = findTheEngineer.Name };
+        BO.Engineer findTheEngineer = null;
+        BO.EngineerInTask? engineerInTask = null;
+        if (engineerInTaskId != -1) 
+        {
+            findTheEngineer = s_bl.Engineer.Read(engineerInTaskId);//We will search for the engineer by ID and create an instance of him
+            engineerInTask = new EngineerInTask() { Id = findTheEngineer.Id, Name = findTheEngineer.Name };
+        }
         Console.WriteLine("Please enter the difficulty level of the task (0-5)");
         BO.EngineerExperience? copmlexity = (BO.EngineerExperience?)int.Parse(Console.ReadLine()!);
 

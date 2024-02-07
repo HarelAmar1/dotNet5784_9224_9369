@@ -19,13 +19,6 @@ internal class TaskImplementation : ITask
         //we will check the correctness of the ID and nickname
         checkData(task);
 
-        //add dependencies
-        task.Dependencies.ForEach(item =>
-        {
-            Dependency depend = new Dependency(0, task.Id, item.Id);
-            _dal.Dependency.Create(depend);
-        });
-
         //We will create the task and transfer it to Dal
         DO.Task newTask = new DO.Task
         (task.Id,
@@ -41,13 +34,21 @@ internal class TaskImplementation : ITask
         task.CompleteDate,
         task.Deliverables,
         task.Remarks,
-        task.Engineer!.Id);
+        task.Engineer?.Id);
 
         // an attempt will be made to insert it into the data
         try
         {
-            _dal.Task.Create(newTask);
-            return task.Id;
+            int newTaskId = _dal.Task.Create(newTask);
+
+            //add dependencies in dal
+            task.Dependencies.ForEach(item =>
+            {
+                Dependency depend = new Dependency(0, newTaskId, item.Id);
+                _dal.Dependency.Create(depend);
+            });
+
+            return newTaskId;
         }
         catch (DO.DalAlreadyExistsException ex)
         {
@@ -242,7 +243,12 @@ public BO.Task Read(int idTask)
             error = $"Id: {task.Id}";
         else if (task.Alias == "")
             error = $"Alias: {task.Alias}";
-        if (task.Id < 0 || task.Alias == "")
+        else if (task.Engineer != null) 
+        {
+            if ((int)task.Copmlexity > (int)Read(task.Engineer.Id).Copmlexity)
+                error = "Task Complexity";
+        }
+        if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
 
