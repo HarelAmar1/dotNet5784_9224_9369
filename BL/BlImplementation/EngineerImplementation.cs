@@ -143,14 +143,14 @@ internal class EngineerImplementation : IEngineer
                     DO.Task taskToremoveInDal = (from task in tasks
                                                  where (task.EngineerId == AnUpdatedEngineer.Id)
                                                  select (task)).FirstOrDefault() with
-                                                                                     { EngineerId = null };
+                    { EngineerId = null };
 
                     _dal.Task.Update(taskToremoveInDal);
 
                     DO.Task taskToChangeInDal = (from task in tasks
                                                  where (task.Id == AnUpdatedEngineer.Task.Id)
                                                  select (task)).FirstOrDefault() with
-                                                                                      { EngineerId = AnUpdatedEngineer.Id };
+                    { EngineerId = AnUpdatedEngineer.Id };
 
                     _dal.Task.Update(taskToChangeInDal);
                 }
@@ -220,7 +220,7 @@ internal class EngineerImplementation : IEngineer
                     DO.Task taskToremoveInDal = (from task in tasks
                                                  where (task.EngineerId == id)
                                                  select (task)).FirstOrDefault() with
-                                                                             { EngineerId = null };
+                    { EngineerId = null };
 
                     _dal.Task.Update(taskToremoveInDal);
                     _dal.Engineer.Delete(toDelete.Id);

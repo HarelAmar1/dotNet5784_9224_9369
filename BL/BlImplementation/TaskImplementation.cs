@@ -2,6 +2,7 @@
 using BO;
 using DO;
 using System;
+using System.Diagnostics.Metrics;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -144,7 +145,7 @@ internal class TaskImplementation : ITask
                 RequiredEffortTime = task.RequiredEffortTime,
                 StartDate = task.StartDate,
                 ScheduledDate = task.ScheduledDate,
-                ForecastDate = null,//לבדוק מה להכניס פה
+                ForecastDate = null,
                 DeadlineDate = task.DeadlineDate,
                 CompleteDate = task.CompleteDate,
                 Deliverables = task.Deliverables,
@@ -207,9 +208,9 @@ internal class TaskImplementation : ITask
 
             }
             //There are no problems with the dates, so you can update the ScheduledDate and DeadlineDate in the task
-            if(check == true)
+            if (check == true)
             {
-                
+
             }
         }
 
@@ -288,26 +289,26 @@ internal class TaskImplementation : ITask
     public void dateGeneratorOfAllTasks(DateTime startOfProject)
     {
         IEnumerable<BO.TaskInList> tasksBO = ReadAll();
-        //מוצא את כל מי שבלי תלות
+        //Finds everyone without dependencies
         List<BO.Task> tasksWithOutDependency = new List<BO.Task>();
         foreach (var task in tasksBO)
         {
-            if (Read(task.Id).Dependencies.Count == 0) 
+            if (Read(task.Id).Dependencies.Count == 0)
             {
                 tasksWithOutDependency.Add(Read(task.Id));
             }
         }
-        //מכניס תאריך התחלה וסוף
+        //    Enter a start and end date
         foreach (var task in tasksWithOutDependency)
         {
-            //נכניס את התאריכים בדאל
+            //put the dates in dal
             startDateTimeManagement(task.Id, startOfProject);
-            task.ScheduledDate = startOfProject; //עזר
-            task.DeadlineDate = startOfProject + task.RequiredEffortTime;//עזר
+            task.ScheduledDate = startOfProject; //supporting function
+            task.DeadlineDate = startOfProject + task.RequiredEffortTime;//supporting function
 
         }
 
-        //מוצא את כל מי שעם תלות
+        //Finds everyone who has an addiction
         List<BO.Task> tasksWithDependency = new List<BO.Task>();
         foreach (var task in tasksBO)
         {
@@ -323,30 +324,28 @@ internal class TaskImplementation : ITask
         }
 
     }
-    //פונקצית עזר רקורסיבית
+    //recursive supporting function
     private DateTime? f(BO.Task task)
     {
         if (task.DeadlineDate != null)
             return task.DeadlineDate;
-        foreach(var dep in task.Dependencies)
+        foreach (var dep in task.Dependencies)
         {
             var a = Read(dep.Id);
             DateTime? temp = f(a);
             if (task.ScheduledDate == null)
             {
                 startDateTimeManagement(task.Id, temp.GetValueOrDefault());
-                task.ScheduledDate = temp;//עזר
-                task.DeadlineDate = temp + task.RequiredEffortTime;//עזר
+                task.ScheduledDate = temp;//supporting function
+                task.DeadlineDate = temp + task.RequiredEffortTime;//supporting function
             }
             else
             {
-                task.ScheduledDate = (DateTime.Compare(task.DeadlineDate.GetValueOrDefault(), temp.GetValueOrDefault()) > 0) ? task.ScheduledDate : temp; 
+                task.ScheduledDate = (DateTime.Compare(task.DeadlineDate.GetValueOrDefault(), temp.GetValueOrDefault()) > 0) ? task.ScheduledDate : temp;
                 startDateTimeManagement(task.Id, task.ScheduledDate.GetValueOrDefault());
-                task.DeadlineDate = task.ScheduledDate + task.RequiredEffortTime;//עזר
+                task.DeadlineDate = task.ScheduledDate + task.RequiredEffortTime;//supporting function
             }
         }
         return null;
     }
-
-
 }
