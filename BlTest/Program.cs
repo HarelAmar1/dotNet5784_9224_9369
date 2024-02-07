@@ -111,7 +111,6 @@ internal class Program
                         startProject = DateTime.TryParse(Console.ReadLine(), out DateTime result) ? result : (DateTime?)null;
                         //We will activate the function that generates the start dates of all the tasks
                         s_bl.Task.dateGeneratorOfAllTasks(startProject.GetValueOrDefault());
-                        BO.Tools();
                         break;
 
 
