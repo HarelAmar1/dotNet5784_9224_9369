@@ -111,6 +111,7 @@ internal class Program
                         startProject = DateTime.TryParse(Console.ReadLine(), out DateTime result) ? result : (DateTime?)null;
                         //We will activate the function that generates the start dates of all the tasks
                         s_bl.Task.dateGeneratorOfAllTasks(startProject.GetValueOrDefault());
+                        BO.Tools();
                         break;
 
 
@@ -189,7 +190,7 @@ internal class Program
             Console.Write(depen.Id);
             Console.Write(" ");
         }
-        Console.Write("Required Effort Time: ");
+        Console.Write("\nRequired Effort Time: ");
         Console.WriteLine(toPrint.RequiredEffortTime);
         Console.Write("Start Date: ");
         Console.WriteLine(toPrint.StartDate);
@@ -206,7 +207,7 @@ internal class Program
         Console.Write("Remarks: ");
         Console.WriteLine(toPrint.Remarks);
         if (toPrint.Engineer != null) //If there is no engineer yet then there is nothing to print
-            Console.Write($"Engineer - Id: {toPrint.Engineer.Id}, Name: {toPrint.Engineer.Name}");
+            Console.Write($"Engineer - Id: {toPrint.Engineer.Id}, Name: {toPrint.Engineer.Name}\n");
         Console.Write("Complexity: ");
         Console.WriteLine(toPrint.Copmlexity);
     }
