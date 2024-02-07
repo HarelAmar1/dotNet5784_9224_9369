@@ -3,7 +3,7 @@
   <Engineer>
     <Id>987782</Id>
     <Email>Dan@gmail.com</Email>
-    <Cost>25</Cost>
+    <Cost>20</Cost>
     <Name>Dan</Name>
     <Active>true</Active>
     <level>Beginner</level>
@@ -11,7 +11,7 @@
   <Engineer>
     <Id>664508</Id>
     <Email>Sam@gmail.com</Email>
-    <Cost>25</Cost>
+    <Cost>20</Cost>
     <Name>Sam</Name>
     <Active>true</Active>
     <level>AdvancedBeginner</level>
@@ -35,7 +35,7 @@
   <Engineer>
     <Id>429867</Id>
     <Email>Morgan@gmail.com</Email>
-    <Cost>20</Cost>
+    <Cost>25</Cost>
     <Name>Morgan</Name>
     <Active>true</Active>
     <level>Expert</level>

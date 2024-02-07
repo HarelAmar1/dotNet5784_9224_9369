@@ -302,6 +302,9 @@ internal class TaskImplementation : ITask
         {
             //נכניס את התאריכים בדאל
             startDateTimeManagement(task.Id, startOfProject);
+            task.ScheduledDate = startOfProject; //עזר
+            task.DeadlineDate = startOfProject + task.RequiredEffortTime;//עזר
+
         }
 
         //מוצא את כל מי שעם תלות
@@ -332,12 +335,14 @@ internal class TaskImplementation : ITask
             if (task.ScheduledDate == null)
             {
                 startDateTimeManagement(task.Id, temp.GetValueOrDefault());
-                task.ScheduledDate = temp;
+                task.ScheduledDate = temp;//עזר
+                task.DeadlineDate = temp + task.RequiredEffortTime;//עזר
             }
             else
             {
-                task.ScheduledDate = (DateTime.Compare(task.DeadlineDate.GetValueOrDefault(), temp.GetValueOrDefault()) < 0) ? task.DeadlineDate : temp;
+                task.ScheduledDate = (DateTime.Compare(task.DeadlineDate.GetValueOrDefault(), temp.GetValueOrDefault()) > 0) ? task.ScheduledDate : temp; 
                 startDateTimeManagement(task.Id, task.ScheduledDate.GetValueOrDefault());
+                task.DeadlineDate = task.ScheduledDate + task.RequiredEffortTime;//עזר
             }
         }
         return null;
