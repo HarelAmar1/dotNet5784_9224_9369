@@ -320,19 +320,19 @@ internal class TaskImplementation : ITask
 
         foreach (var task in tasksWithDependency)
         {
-            f(task);
+            initScheduledDateRecursive(task);
         }
 
     }
     //recursive supporting function
-    private DateTime? f(BO.Task task)
+    private DateTime? initScheduledDateRecursive(BO.Task task)
     {
         if (task.DeadlineDate != null)
             return task.DeadlineDate;
         foreach (var dep in task.Dependencies)
         {
             var a = Read(dep.Id);
-            DateTime? temp = f(a);
+            DateTime? temp = initScheduledDateRecursive(a);
             if (task.ScheduledDate == null)
             {
                 startDateTimeManagement(task.Id, temp.GetValueOrDefault());

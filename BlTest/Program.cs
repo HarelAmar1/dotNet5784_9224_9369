@@ -69,9 +69,6 @@ internal class Program
                                     int idForDeleteTask = int.Parse(Console.ReadLine()!);
                                     s_bl!.Task.Delete(idForDeleteTask);
                                     break;
-                                case 6:
-                                    DateTimeManagement();
-                                    break;
                                 case 0:
                                     OpForTask = 0; // Exit Task operations
                                     break;
@@ -149,7 +146,6 @@ internal class Program
         Console.WriteLine("3 - Read All");
         Console.WriteLine("4 - Update");
         Console.WriteLine("5 - Delete");
-        Console.WriteLine("6 - Date Time Management");
         Console.WriteLine("0 - Back");
         int op = int.Parse(Console.ReadLine()!);
         return op;
@@ -226,8 +222,6 @@ internal class Program
             Console.WriteLine(task.Alias);
             Console.Write("Status: ");
             Console.WriteLine(task.Status);
-            Console.WriteLine(s_bl.Task.Read(task.Id).ScheduledDate);//deleteeeeeeeeeeeeeee
-            Console.WriteLine(s_bl.Task.Read(task.Id).DeadlineDate);//deleteeeeeeeeeeeeeee
             
         }
     }
