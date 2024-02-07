@@ -27,7 +27,7 @@
   <Engineer>
     <Id>158197</Id>
     <Email>Taylor@gmail.com</Email>
-    <Cost>20</Cost>
+    <Cost>25</Cost>
     <Name>Taylor</Name>
     <Active>true</Active>
     <level>Advanced</level>
@@ -35,7 +35,7 @@
   <Engineer>
     <Id>429867</Id>
     <Email>Morgan@gmail.com</Email>
-    <Cost>25</Cost>
+    <Cost>20</Cost>
     <Name>Morgan</Name>
     <Active>true</Active>
     <level>Expert</level>

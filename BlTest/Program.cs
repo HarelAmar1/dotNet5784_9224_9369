@@ -32,7 +32,7 @@ internal class Program
         }
 
         //Temporary variable of the start date of the entire projectproject
-        DateTime? startProject; 
+        DateTime? startProject = null; 
 
         // Get user input from the main menu
         int userInput = menu();
@@ -113,7 +113,7 @@ internal class Program
                         Console.WriteLine("Enter A Project Start Date");
                         startProject = DateTime.TryParse(Console.ReadLine(), out DateTime result) ? result : (DateTime?)null;
                         //We will activate the function that generates the start dates of all the tasks
-                        s_bl.Task.dateGeneratorOfAllTasks();
+                        s_bl.Task.dateGeneratorOfAllTasks(startProject.GetValueOrDefault());
                         break;
 
 
@@ -135,7 +135,7 @@ internal class Program
         Console.WriteLine("Choose from next list");
         Console.WriteLine("1 - Choose Task");
         Console.WriteLine("2 - Choose Engineer");
-        Console.WriteLine("2 - Done, Go from the planning stage to the execution stage - (Inserting a project start date)");
+        Console.WriteLine("3 - Done, Go from the planning stage to the execution stage - (Inserting a project start date)");
         Console.WriteLine("0 - exit");
         int firstMenu = int.Parse(Console.ReadLine()!);
         return firstMenu;
@@ -226,6 +226,9 @@ internal class Program
             Console.WriteLine(task.Alias);
             Console.Write("Status: ");
             Console.WriteLine(task.Status);
+            Console.WriteLine(s_bl.Task.Read(task.Id).ScheduledDate);//deleteeeeeeeeeeeeeee
+            Console.WriteLine(s_bl.Task.Read(task.Id).DeadlineDate);//deleteeeeeeeeeeeeeee
+            
         }
     }
 

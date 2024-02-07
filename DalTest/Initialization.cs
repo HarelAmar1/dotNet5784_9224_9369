@@ -76,7 +76,7 @@ public static class Initialization
 
         Random random = new Random();
         //init Task with ID, Alias, Descriptions,MaileStone, Level
-        TimeSpan effortDuration = new TimeSpan(random.Next(7, 21), 0, 0, 0); //3 days for requiredEffortTime
+        TimeSpan effortDuration = new TimeSpan(random.Next(7, 22), 0, 0, 0); //3 days for requiredEffortTime
         TimeSpan sevenDays = new TimeSpan(7, 0, 0, 0);
         for (int i = 0; i < 25; i++)
         {
@@ -93,7 +93,7 @@ public static class Initialization
             string? deliverables = taskDeliverables[i];
             string? remarks = taskRemarks[i];
             int? engineerId = idForEngineer[taskLevels[i] - 1];
-            DO.Task task = new DO.Task(i, descriptions, alias, isMilestone, createdAtDate, null,
+            DO.Task task = new DO.Task(i, descriptions, alias, isMilestone, createdAtDate, requiredEffortTime,
             level, null, null, null, null, deliverables, remarks, engineerId);
             s_dal!.Task.Create(task);
         }

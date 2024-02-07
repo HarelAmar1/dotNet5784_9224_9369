@@ -24,5 +24,5 @@ public interface ITask
     public void startDateTimeManagement(int IdTask, DateTime dateTime);
 
     //A date generator for all tasks, activated in the transition phase
-    public void dateGeneratorOfAllTasks();
+    public void dateGeneratorOfAllTasks(DateTime startOfProject);
 }

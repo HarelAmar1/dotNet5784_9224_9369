@@ -3,6 +3,7 @@ using BO;
 using DO;
 using System;
 using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BlImplementation;
 
@@ -180,29 +181,36 @@ internal class TaskImplementation : ITask
     }
 
     //startDateTimeManagement
-    public void startDateTimeManagement(int idTask, DateTime dateTime)
+    public void startDateTimeManagement(int idTask, DateTime scheduleDateTime)
     {
-        //get the list of tasks from the DAL
+        DO.Task taskWithNewDate = _dal.Task.Read(idTask) with { ScheduledDate = scheduleDateTime, DeadlineDate = scheduleDateTime + _dal.Task.Read(idTask).RequiredEffortTime };
+        _dal.Task.Update(taskWithNewDate);
+        return;
+        //get the list from the DAL
         var depenList = _dal.Dependency.ReadAll();
+        bool check = false;
         foreach (var depen in depenList)
         {
             //we will look for the current task in the dependent list
             if (depen.DependentTask == idTask)
             {
+                check = true;
                 //And after we have found it, we will check whether the task dependent on it has a start date
                 if (Read(depen.DependsOnTask.Value).ScheduledDate != null)
                 {
                     //if the given date is less than the date of the dependent task we will throw an error
-                    if (dateTime.CompareTo(Read(depen.DependsOnTask.Value).ScheduledDate) == -1)
+                    if (scheduleDateTime.CompareTo(Read(depen.DependsOnTask.Value).ScheduledDate) == -1)
                         throw new BlInvalidDatesException("Invalid Dates");
                 }
                 else
                     throw new BlInvalidDatesException("Invalid Dates");
 
             }
-            //There are no problems with the dates, so you can update the start date in the task
-            DO.Task taskWithNewDate = _dal.Task.Read(idTask) with { CreatedAtDate = dateTime };
-            _dal.Task.Update(taskWithNewDate);
+            //There are no problems with the dates, so you can update the ScheduledDate and DeadlineDate in the task
+            if(check == true)
+            {
+                
+            }
         }
 
     }
@@ -277,24 +285,63 @@ internal class TaskImplementation : ITask
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
 
-    public void dateGeneratorOfAllTasks(string dateOfProject)
+    public void dateGeneratorOfAllTasks(DateTime startOfProject)
     {
-        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
-
-        IEnumerable<DO.Dependency?> dependencies = _dal.Dependency.ReadAll();
-
-        IEnumerable<BO.TaskInList> tasksBO = ReadAll(); //new List<BO.Task>();
-        IEnumerable<BO.TaskInList> tasksWithotDependency = ReadAll(); //new List<BO.Task>();
-        foreach(var task in tasksBO)
+        IEnumerable<BO.TaskInList> tasksBO = ReadAll();
+        //מוצא את כל מי שבלי תלות
+        List<BO.Task> tasksWithOutDependency = new List<BO.Task>();
+        foreach (var task in tasksBO)
         {
-            if(task.)
+            if (Read(task.Id).Dependencies.Count == 0) 
+            {
+                tasksWithOutDependency.Add(Read(task.Id));
+            }
         }
-                                                                           
-                                                                           
-                                                      
+        //מכניס תאריך התחלה וסוף
+        foreach (var task in tasksWithOutDependency)
+        {
+            //נכניס את התאריכים בדאל
+            startDateTimeManagement(task.Id, startOfProject);
+        }
 
+        //מוצא את כל מי שעם תלות
+        List<BO.Task> tasksWithDependency = new List<BO.Task>();
+        foreach (var task in tasksBO)
+        {
+            if (Read(task.Id).Dependencies.Count != 0)
+            {
+                tasksWithDependency.Add(Read(task.Id));
+            }
+        }
 
-
+        foreach (var task in tasksWithDependency)
+        {
+            f(task);
+        }
 
     }
+    //פונקצית עזר רקורסיבית
+    private DateTime? f(BO.Task task)
+    {
+        if (task.DeadlineDate != null)
+            return task.DeadlineDate;
+        foreach(var dep in task.Dependencies)
+        {
+            var a = Read(dep.Id);
+            DateTime? temp = f(a);
+            if (task.ScheduledDate == null)
+            {
+                startDateTimeManagement(task.Id, temp.GetValueOrDefault());
+                task.ScheduledDate = temp;
+            }
+            else
+            {
+                task.ScheduledDate = (DateTime.Compare(task.DeadlineDate.GetValueOrDefault(), temp.GetValueOrDefault()) < 0) ? task.DeadlineDate : temp;
+                startDateTimeManagement(task.Id, task.ScheduledDate.GetValueOrDefault());
+            }
+        }
+        return null;
+    }
+
+
 }
