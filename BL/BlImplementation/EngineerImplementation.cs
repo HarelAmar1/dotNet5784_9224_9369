@@ -10,9 +10,9 @@ internal class EngineerImplementation : IEngineer
     {
         //Converts the list of engineers from DO to BO
 
-        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
         IEnumerable<BO.Engineer> engineers = (from item in _dal.Engineer.ReadAll().ToList()
+                                              let tasks = _dal.Task.ReadAll()
                                               select new BO.Engineer()
                                               {
                                                   Id = item.Id,
@@ -27,6 +27,7 @@ internal class EngineerImplementation : IEngineer
                                               });
 
         //Validity checks that ID is a positive number and that NAME is a non-empty string and that COST is a positive number
+        IEnumerable<DO.Task?> tasks1 = _dal.Task.ReadAll();
 
         string error = "";
         if (engineerToAdd.Id < 0)
@@ -42,7 +43,7 @@ internal class EngineerImplementation : IEngineer
         {
 
             //convert the engineerToAdd from BO to DO
-            DO.Task taskToChangeInDal = (from task in tasks
+            DO.Task taskToChangeInDal = (from task in tasks1
                                          where (task.Id == engineerToAdd.Task.Id)
                                          select (task)).FirstOrDefault();
 
@@ -63,9 +64,9 @@ internal class EngineerImplementation : IEngineer
     public BO.Engineer Read(int id)
     {
         //Converts the list of engineers from DO to BO
-        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
+                                               let tasks = _dal.Task.ReadAll()
                                                select new BO.Engineer()
                                                {
                                                    Id = item.Id,
@@ -173,9 +174,9 @@ internal class EngineerImplementation : IEngineer
     public void Delete(int id)
     {
         //bring the list of engineers from DO
-        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
+                                               let tasks = _dal.Task.ReadAll()
                                                select new BO.Engineer()
                                                {
                                                    Id = item.Id,
@@ -211,6 +212,7 @@ internal class EngineerImplementation : IEngineer
                 TaskImplementation toCheckStatus = new TaskImplementation();
 
                 //Checks if the engineer has already finished performing a task or is actively performing a task
+                IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
                 if ((BO.Status)(toCheckStatus.Read(toDelete.Task.Id).Status) != BO.Status.Done && (BO.Status)(toCheckStatus.Read(toDelete.Task.Id).Status) != BO.Status.OnTrack)
                 {
@@ -238,9 +240,8 @@ internal class EngineerImplementation : IEngineer
     {
         //Converts the list of engineers from DO to BO by filter
 
-        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
-
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll(filter).ToList()
+                                               let tasks = _dal.Task.ReadAll()
                                                select new BO.Engineer()
                                                {
                                                    Id = item.Id,
@@ -250,8 +251,7 @@ internal class EngineerImplementation : IEngineer
                                                    Level = (BO.EngineerExperience)(int)item.level,
                                                    Task = (from task in tasks
                                                            where (task.EngineerId == item.Id)
-                                                           select new TaskInEngineer(task.Id, task.Alias)
-                                                           ).FirstOrDefault()
+                                                           select new TaskInEngineer(task.Id, task.Alias)).FirstOrDefault()
                                                });
         return engineers;
     }
