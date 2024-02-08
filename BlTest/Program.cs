@@ -283,7 +283,7 @@ internal class Program
         string? remarks = Console.ReadLine();
         Console.WriteLine("Enter Engineer's ID - (click -1 to skip)");
         int engineerInTaskId = int.Parse(Console.ReadLine()!);
-        BO.Engineer findTheEngineer = null;
+        BO.Engineer? findTheEngineer = null;
         BO.EngineerInTask? engineerInTask = null;
         if (engineerInTaskId != -1) 
         {
@@ -328,8 +328,10 @@ internal class Program
         Console.WriteLine("Please enter your experience level (1-5)");
         int levelFromUser = int.Parse(Console.ReadLine()!);
         BO.EngineerExperience level = (BO.EngineerExperience)levelFromUser;
-        Console.WriteLine("Please enter your id and alias of the task:");
-        BO.TaskInEngineer task = new BO.TaskInEngineer(int.Parse(Console.ReadLine()!), Console.ReadLine()!);
+        Console.WriteLine("Please enter your id of the task:");
+        int idOfTask = int.Parse(Console.ReadLine());
+        string aliasOfTask = s_bl.Task.Read(idOfTask).Alias;
+        BO.TaskInEngineer task = new BO.TaskInEngineer(idOfTask, aliasOfTask);
         BO.Engineer engineer = new BO.Engineer()
         {
             Id = id,
@@ -354,7 +356,7 @@ internal class Program
         Console.Write("level: ");
         Console.WriteLine(ToPrint.Level);
         Console.Write("Id for Task: ");
-        Console.WriteLine(ToPrint.Task.Id);
+        Console.WriteLine(ToPrint?.Task.Id);
         Console.Write("Alias for Task: ");
         Console.WriteLine(ToPrint.Task.Alias);
     }
