@@ -2,7 +2,7 @@
 
 namespace BlApi;
 
-//פעולות על משימה: קובץ תיאור כללי עמוד 17
+
 public interface ITask
 {
     //Task list request

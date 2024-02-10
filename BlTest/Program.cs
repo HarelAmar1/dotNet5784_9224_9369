@@ -50,7 +50,7 @@ internal class Program
                             switch (OpForTask)
                             {
                                 case 1:
-                                    createBoTask();
+                                        createBoTask();
                                     break;
                                 case 2:
                                     Console.WriteLine("Enter the Task's ID:");
@@ -68,9 +68,6 @@ internal class Program
                                     Console.WriteLine("Enter the ID of the Task you want to delete:");
                                     int idForDeleteTask = int.Parse(Console.ReadLine()!);
                                     s_bl!.Task.Delete(idForDeleteTask);
-                                    break;
-                                case 6:
-                                    DateTimeManagement();
                                     break;
                                 case 0:
                                     OpForTask = 0; // Exit Task operations
@@ -149,7 +146,6 @@ internal class Program
         Console.WriteLine("3 - Read All");
         Console.WriteLine("4 - Update");
         Console.WriteLine("5 - Delete");
-        Console.WriteLine("6 - Date Time Management");
         Console.WriteLine("0 - Back");
         int op = int.Parse(Console.ReadLine()!);
         return op;
@@ -167,6 +163,7 @@ internal class Program
         int op = int.Parse(Console.ReadLine()!);
         return op;
     }
+    
     public static void createBoTask()
     {
         //We will create the task in the task generator
@@ -193,7 +190,7 @@ internal class Program
             Console.Write(depen.Id);
             Console.Write(" ");
         }
-        Console.Write("Required Effort Time: ");
+        Console.Write("\nRequired Effort Time: ");
         Console.WriteLine(toPrint.RequiredEffortTime);
         Console.Write("Start Date: ");
         Console.WriteLine(toPrint.StartDate);
@@ -210,7 +207,7 @@ internal class Program
         Console.Write("Remarks: ");
         Console.WriteLine(toPrint.Remarks);
         if (toPrint.Engineer != null) //If there is no engineer yet then there is nothing to print
-            Console.Write($"Engineer - Id: {toPrint.Engineer.Id}, Name: {toPrint.Engineer.Name}");
+            Console.Write($"Engineer - Id: {toPrint.Engineer.Id}, Name: {toPrint.Engineer.Name}\n");
         Console.Write("Complexity: ");
         Console.WriteLine(toPrint.Copmlexity);
     }
@@ -226,8 +223,6 @@ internal class Program
             Console.WriteLine(task.Alias);
             Console.Write("Status: ");
             Console.WriteLine(task.Status);
-            Console.WriteLine(s_bl.Task.Read(task.Id).ScheduledDate);//deleteeeeeeeeeeeeeee
-            Console.WriteLine(s_bl.Task.Read(task.Id).DeadlineDate);//deleteeeeeeeeeeeeeee
             
         }
     }
@@ -262,7 +257,7 @@ internal class Program
         DateTime createdAtDate = DateTime.Now;
         //A task has a list with all its dependent tasks
         //therefore we will ask the user for the task's ID and then take the rest of the data and put it in the list
-        Console.WriteLine("Insert dependent tasks (end with -1)");
+        Console.WriteLine("Insert dependent tasks - (click -1 to skip)");
         Console.WriteLine("Please enter the ID of the dependent task");
         List<BO.TaskInList> dependencies = new List<BO.TaskInList>();
         int IDOfDependTask = int.Parse(Console.ReadLine()!);
@@ -286,10 +281,15 @@ internal class Program
         string? deliverables = Console.ReadLine();
         Console.WriteLine("Remarks ");
         string? remarks = Console.ReadLine();
-        Console.WriteLine("Please enter the ID of the engineer working on this task");
+        Console.WriteLine("Enter Engineer's ID - (click -1 to skip)");
         int engineerInTaskId = int.Parse(Console.ReadLine()!);
-        BO.Engineer findTheEngineer = s_bl.Engineer.Read(engineerInTaskId);//We will search for the engineer by ID and create an instance of him
-        BO.EngineerInTask? engineerInTask = new EngineerInTask() { Id = findTheEngineer.Id, Name = findTheEngineer.Name };
+        BO.Engineer? findTheEngineer = null;
+        BO.EngineerInTask? engineerInTask = null;
+        if (engineerInTaskId != -1) 
+        {
+            findTheEngineer = s_bl.Engineer.Read(engineerInTaskId);//We will search for the engineer by ID and create an instance of him
+            engineerInTask = new EngineerInTask() { Id = findTheEngineer.Id, Name = findTheEngineer.Name };
+        }
         Console.WriteLine("Please enter the difficulty level of the task (0-5)");
         BO.EngineerExperience? copmlexity = (BO.EngineerExperience?)int.Parse(Console.ReadLine()!);
 
@@ -328,8 +328,10 @@ internal class Program
         Console.WriteLine("Please enter your experience level (1-5)");
         int levelFromUser = int.Parse(Console.ReadLine()!);
         BO.EngineerExperience level = (BO.EngineerExperience)levelFromUser;
-        Console.WriteLine("Please enter your id and alias of the task:");
-        BO.TaskInEngineer task = new BO.TaskInEngineer(int.Parse(Console.ReadLine()!), Console.ReadLine()!);
+        Console.WriteLine("Please enter your id of the task:");
+        int idOfTask = int.Parse(Console.ReadLine());
+        string aliasOfTask = s_bl.Task.Read(idOfTask).Alias;
+        BO.TaskInEngineer task = new BO.TaskInEngineer(idOfTask, aliasOfTask);
         BO.Engineer engineer = new BO.Engineer()
         {
             Id = id,
@@ -354,7 +356,7 @@ internal class Program
         Console.Write("level: ");
         Console.WriteLine(ToPrint.Level);
         Console.Write("Id for Task: ");
-        Console.WriteLine(ToPrint.Task.Id);
+        Console.WriteLine(ToPrint?.Task.Id);
         Console.Write("Alias for Task: ");
         Console.WriteLine(ToPrint.Task.Alias);
     }

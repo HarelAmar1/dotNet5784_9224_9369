@@ -1,7 +1,9 @@
 ﻿using BlApi;
 using BO;
 using DO;
+using System.Net.Mail;
 namespace BlImplementation;
+
 
 internal class EngineerImplementation : IEngineer
 {
@@ -29,15 +31,24 @@ internal class EngineerImplementation : IEngineer
         //Validity checks that ID is a positive number and that NAME is a non-empty string and that COST is a positive number
         IEnumerable<DO.Task?> tasks1 = _dal.Task.ReadAll();
 
+        //Correct email check
+        try
+        {
+            var mailAddress = new MailAddress(engineerToAdd.Email);
+        }
+        catch (FormatException)
+        {
+            throw new BlIncorrectInputException($"Email={engineerToAdd.Email}, is incorrect input");
+        }
         string error = "";
         if (engineerToAdd.Id < 0)
-            error = $"Id={engineerToAdd.Id}";
+            error = $"Id: {engineerToAdd.Id}";
         else
              if (engineerToAdd.Name == "")
-            error = $"Name={engineerToAdd.Name}";
+            error = $"Name: {engineerToAdd.Name}";
         else
              if (engineerToAdd.Cost < 0)
-            error = $"Cost={engineerToAdd.Cost}";
+            error = $"Cost: {engineerToAdd.Cost}";
         else
         if (engineers.Any(engineer => engineer?.Id == engineerToAdd.Id) != null)
         {
@@ -53,7 +64,7 @@ internal class EngineerImplementation : IEngineer
             _dal.Engineer.Create(becomeDO);
         }
         else
-            throw new BlDoesNotExistException($"Engineer with ID={engineerToAdd.Id} Does Not exists");
+            throw new BlDoesNotExistException($"Engineer with ID: {engineerToAdd.Id} Does Not exists");
 
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
@@ -89,7 +100,7 @@ internal class EngineerImplementation : IEngineer
 
 
         if (EngineerToGet == null)
-            throw new BlDoesNotExistException($"Engineer with ID={EngineerToGet.Id} Does Not exists");
+            throw new BlDoesNotExistException($"Engineer with ID: {EngineerToGet.Id} Does Not exists");
         return EngineerToGet;
 
     }
@@ -111,15 +122,22 @@ internal class EngineerImplementation : IEngineer
         //Validity checks that ID is a positive number 
 
 
+        //Correct email check
+        try
+        {
+            var mailAddress = new MailAddress(AnUpdatedEngineer.Email);
+        }
+        catch (FormatException)
+        {
+            throw new BlIncorrectInputException($"Email={AnUpdatedEngineer.Email}, is incorrect input");
+        }
         string error = "";
         if (AnUpdatedEngineer.Id < 0)
-            error = $"Id={AnUpdatedEngineer.Id}";
-        else
-             if (AnUpdatedEngineer.Name == "")
-            error = $"Name={AnUpdatedEngineer.Name}";
-        else
-             if (AnUpdatedEngineer.Cost < 0)
-            error = $"Cost={AnUpdatedEngineer.Cost}";
+            error = $"Id: {AnUpdatedEngineer.Id}";
+        else if (AnUpdatedEngineer.Name == "")
+            error = $"Name: {AnUpdatedEngineer.Name}";
+        else if (AnUpdatedEngineer.Cost < 0)
+            error = $"Cost: {AnUpdatedEngineer.Cost}";
         else
         {
 
@@ -130,7 +148,7 @@ internal class EngineerImplementation : IEngineer
                                          select item).FirstOrDefault();
             if (EngineerToUp == null)
             {
-                error = $"Id={AnUpdatedEngineer.Id}";
+                error = $"Id: {AnUpdatedEngineer.Id}";
                 throw new BlDoesNotExistException($"{error} Does Not Exist");
             }
             else
@@ -199,8 +217,8 @@ internal class EngineerImplementation : IEngineer
         {
             //Checks if the engineer with the ID exists
 
-            if (engineers.Any(engineer => engineer?.Id == id) == null)
-                throw new BlDoesNotExistException($"Engineer with ID={id} Does Not Exist");
+            if (engineers.Any(engineer => engineer?.Id == id) == false)
+                throw new BlDoesNotExistException($"Engineer with ID: {id} Does Not Exist");
             else
             {
                 //Brings the engineer with the same ID that I need to delete
@@ -228,11 +246,11 @@ internal class EngineerImplementation : IEngineer
                     _dal.Engineer.Delete(toDelete.Id);
                 }
                 else
-                    throw new BlCanNotBeDeletedException($"Id={toDelete.Id} Can Not Be Deleted");
+                    throw new BlCanNotBeDeletedException($"Id: {toDelete.Id} Can Not Be Deleted");
             }
         }
         else
-            error = $"Id={id}";
+            error = $"Id: {id}";
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }

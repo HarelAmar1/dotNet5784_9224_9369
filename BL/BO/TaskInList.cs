@@ -6,6 +6,6 @@ public class TaskInList
     public string Description { get; set; }
     public string Alias { get; set; }
     public Status? Status { get; set; }
-    //public override string ToString() => this.ToStringProperty();   לבדוק איך לממש
+    //public override string ToString() => this.ToStringProperty();  
 };
 

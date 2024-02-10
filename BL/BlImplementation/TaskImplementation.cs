@@ -12,21 +12,11 @@ internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = Factory.Get;
 
-
     //Create
     public int Create(BO.Task task)
     {
         //we will check the correctness of the ID and nickname
         checkData(task);
-
-        //add dependencies
-        foreach (var item in task.Dependencies)
-        {
-            //in a dependency there is one task and a task that that one depends on
-            //therefore we will create a new dependency for each member in the list of the current task and insert it into the list of data dependencies
-            Dependency depend = new Dependency(0, task.Id, item.Id);
-            _dal.Dependency.Create(depend);
-        }
 
         //We will create the task and transfer it to Dal
         DO.Task newTask = new DO.Task
@@ -43,17 +33,29 @@ internal class TaskImplementation : ITask
         task.CompleteDate,
         task.Deliverables,
         task.Remarks,
-        task.Engineer!.Id);
+        task.Engineer?.Id);
 
         // an attempt will be made to insert it into the data
         try
         {
-            _dal.Task.Create(newTask);
-            return task.Id;
+            int newTaskId = _dal.Task.Create(newTask);
+            //add dependencies
+            IEnumerable<DO.Dependency> dependencies = from item in task.Dependencies
+                                                      let depend = new Dependency(0, newTaskId, item.Id)
+                                                      select depend;
+            // Insert dependencies
+            foreach (var depend in dependencies)
+            {
+                _dal.Dependency.Create(depend);
+            }
+
+
+
+            return newTaskId;
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Task with ID={task.Id} already exist", ex);
+            throw new BO.BlAlreadyExistsException($"Task with ID: {task.Id} already exist", ex);
         }
     }
 
@@ -61,80 +63,67 @@ internal class TaskImplementation : ITask
     //Delete
     public void Delete(int idTask)
     {
-        //Find the task we want to delete
+        // Find the task we want to delete
         BO.Task? task = Read(idTask);
         if (task == null)
-            throw new BO.BlDoesNotExistException($"Task with ID ={idTask} is not exists");
+            throw new BO.BlDoesNotExistException($"Task with ID: {idTask} does not exist");
 
-        //we will check that there are no tasks that depend on this task
-        List<DO.Dependency> dependlist = (List<DO.Dependency>)_dal.Dependency.ReadAll(null);
-        bool check = true;
-        foreach (DO.Dependency dep in dependlist)
-        {
-            if (dep.DependsOnTask == task.Id)
-                check = false;
-        }
+        // Check that there are no tasks that depend on this task
+        IEnumerable<DO.Dependency> dependlist = _dal.Dependency.ReadAll();
+        bool hasDependentTasks = dependlist.Any(dep => dep.DependsOnTask == task.Id);
 
-        //delete it
-        if (check == true)
+        // Delete the task if there are no dependent tasks
+        if (!hasDependentTasks)
         {
             _dal.Task.Delete(idTask);
 
-            //delete from the dependencies that separate the tasks related to it
-            foreach (DO.Dependency dep in dependlist)
+            // Delete dependencies related to the task
+            IEnumerable<DO.Dependency> dependenciesToDelete = dependlist.Where(dep => dep.DependentTask == task.Id);
+            foreach (var dep in dependenciesToDelete)
             {
-                if (dep.DependentTask == task.Id)
-                    _dal.Dependency.Delete(dep.Id);
+                _dal.Dependency.Delete(dep.Id);
             }
-
         }
-        //Otherwise we will throw an error
         else
+        {
+            // Otherwise, throw an error
             throw new BlDeletionImpossible("The task depends on other tasks");
-
+        }
     }
 
-    //Read
+    // Read
     public BO.Task Read(int idTask)
     {
         try
         {
-            //get the data from the DAL
+            // Get the data from the DAL
             DO.Task? task = _dal.Task.Read(idTask);
             if (task == null)
-                throw new BO.BlDoesNotExistException($"Task with ID ={idTask} is not exists");
-            //we will create the engineer field in the task
-            BO.EngineerInTask engineerInTask = null;
-            EngineerImplementation lookForNameOfEngineer = new EngineerImplementation();
-            IEnumerable<BO.Engineer> engineers = lookForNameOfEngineer.ReadAll();
-            foreach (var E in engineers)
-            {
-                if (E.Task.Id == idTask)
-                {
-                    engineerInTask = new BO.EngineerInTask() { Id = E.Id, Name = E.Name };
-                }
-            }
+                throw new BO.BlDoesNotExistException($"Task with ID: {idTask} does not exist");
 
-            //We will create the field of all dependencies of the given task
-            List<DO.Dependency?> depenFromDal = (List<DO.Dependency?>)_dal.Dependency.ReadAll();
-            List<BO.TaskInList> newForDepend = new List<BO.TaskInList>();
-            foreach (var item in depenFromDal)
-            {
-                if (item.DependentTask == idTask)
-                {
-                    DO.Task findDependTask = _dal.Task.Read(item.DependsOnTask.Value); //find the task from dal 
-                    BO.TaskInList taskInList = new BO.TaskInList()//create taskInList
-                    {
-                        Id = findDependTask.Id,
-                        Description = findDependTask.Description,
-                        Alias = findDependTask.Alias,
-                        Status = (BO.Status)status(findDependTask)
-                    };
-                    newForDepend.Add(taskInList);
-                }
-            }
+            // Create the engineer field in the task
+            BO.EngineerInTask? engineerInTask = (
+                from E in new EngineerImplementation().ReadAll()
+                where E.Task.Id == idTask
+                select new BO.EngineerInTask { Id = E.Id, Name = E.Name }
+            ).FirstOrDefault();
 
-            BO.Task taskToRead = new BO.Task()
+            // Create the field of all dependencies of the given task
+            IEnumerable<DO.Dependency?> depenFromDal = _dal.Dependency.ReadAll();
+            List<BO.TaskInList> newForDepend = (
+                from item in depenFromDal
+                where item.DependentTask == idTask
+                let findDependTask = _dal.Task.Read(item.DependsOnTask.Value)
+                select new BO.TaskInList
+                {
+                    Id = findDependTask.Id,
+                    Description = findDependTask.Description,
+                    Alias = findDependTask.Alias,
+                    Status = (BO.Status)status(findDependTask)
+                }
+            ).ToList();
+
+            BO.Task? taskToRead = new BO.Task
             {
                 Id = task.Id,
                 Description = task.Description,
@@ -154,13 +143,11 @@ internal class TaskImplementation : ITask
                 Copmlexity = (BO.EngineerExperience)task.Copmlexity
             };
             return taskToRead;
-
         }
         catch (DO.DalDoesNotExistException ex)
         {
-            throw new BO.BlDoesNotExistException($"Task with ID ={idTask} is not exists", ex);
+            throw new BO.BlDoesNotExistException($"Task with ID: {idTask} does not exist", ex);
         }
-
     }
 
 
@@ -181,58 +168,24 @@ internal class TaskImplementation : ITask
         return BOTasks;
     }
 
-    //startDateTimeManagement
-    public void startDateTimeManagement(int idTask, DateTime scheduleDateTime)
-    {
-        DO.Task taskWithNewDate = _dal.Task.Read(idTask) with { ScheduledDate = scheduleDateTime, DeadlineDate = scheduleDateTime + _dal.Task.Read(idTask).RequiredEffortTime };
-        _dal.Task.Update(taskWithNewDate);
-        return;
-        //get the list from the DAL
-        var depenList = _dal.Dependency.ReadAll();
-        bool check = false;
-        foreach (var depen in depenList)
-        {
-            //we will look for the current task in the dependent list
-            if (depen.DependentTask == idTask)
-            {
-                check = true;
-                //And after we have found it, we will check whether the task dependent on it has a start date
-                if (Read(depen.DependsOnTask.Value).ScheduledDate != null)
-                {
-                    //if the given date is less than the date of the dependent task we will throw an error
-                    if (scheduleDateTime.CompareTo(Read(depen.DependsOnTask.Value).ScheduledDate) == -1)
-                        throw new BlInvalidDatesException("Invalid Dates");
-                }
-                else
-                    throw new BlInvalidDatesException("Invalid Dates");
 
-            }
-            //There are no problems with the dates, so you can update the ScheduledDate and DeadlineDate in the task
-            if (check == true)
-            {
-
-            }
-        }
-
-    }
-
-    //Update
+    // Update
     public void Update(BO.Task task)
     {
-        //we will check the correctness of the ID and nickname
+        // Check the correctness of the ID and nickname
         checkData(task);
 
-        // We will delete all the dependencies related to the task we received
-        foreach (var depend in _dal.Dependency.ReadAll())
+        // Delete all the dependencies related to the task we received
+        IEnumerable<Dependency> dependenciesToDelete = _dal.Dependency.ReadAll().Where(depend => depend.DependentTask == task.Id);
+        foreach (var depend in dependenciesToDelete)
         {
-            if (depend.DependentTask == task.Id)
-                _dal.Dependency.Delete(depend.Id);
+            _dal.Dependency.Delete(depend.Id);
         }
 
-        //we will add them back updated
-        foreach (var depend in task.Dependencies)
+        // Add them back updated
+        var newDependencies = task.Dependencies.Select(depend => new DO.Dependency(0, task.Id, depend.Id));
+        foreach (var insertUpdate in newDependencies)
         {
-            DO.Dependency insertUpdate = new DO.Dependency(0, task.Id, depend.Id);
             _dal.Dependency.Create(insertUpdate);
         }
 
@@ -251,12 +204,11 @@ internal class TaskImplementation : ITask
         task.CompleteDate,
         task.Deliverables,
         task.Remarks,
-        task.Engineer!.Id);
+        task.Engineer?.Id);
 
-        // We will update the DAL
+        // Update the DAL
         _dal.Task.Update(newTask);
     }
-
 
 
     //Helper function to find the status of the task from DAL
@@ -274,6 +226,14 @@ internal class TaskImplementation : ITask
         return 0;
     }
 
+    //startDateTimeManagement
+    public void startDateTimeManagement(int idTask, DateTime scheduleDateTime)
+    {
+        DO.Task taskWithNewDate = _dal.Task.Read(idTask) with { ScheduledDate = scheduleDateTime, DeadlineDate = scheduleDateTime + _dal.Task.Read(idTask).RequiredEffortTime };
+        _dal.Task.Update(taskWithNewDate);
+        return;
+    }
+
     //validity check
     private void checkData(BO.Task task)
     {
@@ -282,9 +242,15 @@ internal class TaskImplementation : ITask
             error = $"Id: {task.Id}";
         else if (task.Alias == "")
             error = $"Alias: {task.Alias}";
-        if (task.Id < 0 || task.Alias == "")
+        else if (task.Engineer != null)
+        {
+            if ((int)task.Copmlexity > (int)Read(task.Engineer.Id).Copmlexity)
+                error = "Task Complexity";
+        }
+        if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
+
 
     public void dateGeneratorOfAllTasks(DateTime startOfProject)
     {
@@ -303,8 +269,6 @@ internal class TaskImplementation : ITask
         {
             //put the dates in dal
             startDateTimeManagement(task.Id, startOfProject);
-            task.ScheduledDate = startOfProject; //supporting function
-            task.DeadlineDate = startOfProject + task.RequiredEffortTime;//supporting function
 
         }
 
@@ -320,28 +284,28 @@ internal class TaskImplementation : ITask
 
         foreach (var task in tasksWithDependency)
         {
-            f(task);
+            initScheduledDateRecursive(task);
         }
 
     }
     //recursive supporting function
-    private DateTime? f(BO.Task task)
+    private DateTime? initScheduledDateRecursive(BO.Task task)
     {
         if (task.DeadlineDate != null)
             return task.DeadlineDate;
         foreach (var dep in task.Dependencies)
         {
-            var a = Read(dep.Id);
-            DateTime? temp = f(a);
+            var findTheTaskofDependInList = Read(dep.Id);
+            DateTime? DeadlineFromDepend = initScheduledDateRecursive(findTheTaskofDependInList);
             if (task.ScheduledDate == null)
             {
-                startDateTimeManagement(task.Id, temp.GetValueOrDefault());
-                task.ScheduledDate = temp;//supporting function
-                task.DeadlineDate = temp + task.RequiredEffortTime;//supporting function
+                startDateTimeManagement(task.Id, DeadlineFromDepend.GetValueOrDefault());
+                task.ScheduledDate = DeadlineFromDepend;//supporting function
+                task.DeadlineDate = DeadlineFromDepend + task.RequiredEffortTime;//supporting function
             }
             else
             {
-                task.ScheduledDate = (DateTime.Compare(task.DeadlineDate.GetValueOrDefault(), temp.GetValueOrDefault()) > 0) ? task.ScheduledDate : temp;
+                task.ScheduledDate = (DateTime.Compare(task.ScheduledDate.GetValueOrDefault(), DeadlineFromDepend.GetValueOrDefault()) > 0) ? task.ScheduledDate : DeadlineFromDepend;
                 startDateTimeManagement(task.Id, task.ScheduledDate.GetValueOrDefault());
                 task.DeadlineDate = task.ScheduledDate + task.RequiredEffortTime;//supporting function
             }
