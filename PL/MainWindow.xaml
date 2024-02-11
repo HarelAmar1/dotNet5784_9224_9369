@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Handle Engineers" HorizontalAlignment="Left" Margin="490,217,0,0" VerticalAlignment="Top" Height="45" Width="116" Click="btnEngineer_Click"/>
-        <Button Content="Init DB" HorizontalAlignment="Left" Margin="490,131,0,0" VerticalAlignment="Top" Height="45" Width="116" Click="Button_Click"/>
+        <Button Content="Handle Engineers" HorizontalAlignment="Left" Margin="184,190,0,0" VerticalAlignment="Top" Height="45" Width="116" Click="btnEngineer_Click"/>
+        <Button Content="Init DB" HorizontalAlignment="Left" Margin="478,190,0,0" VerticalAlignment="Top" Height="45" Width="116" Click="Button_Click"/>
 
     </Grid>
 </Window>
