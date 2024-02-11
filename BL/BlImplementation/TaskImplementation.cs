@@ -48,9 +48,6 @@ internal class TaskImplementation : ITask
             {
                 _dal.Dependency.Create(depend);
             }
-
-
-
             return newTaskId;
         }
         catch (DO.DalAlreadyExistsException ex)

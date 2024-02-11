@@ -19,28 +19,28 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Label" HorizontalAlignment="Left" Margin="68,10,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+            <Label Content="Engineers" HorizontalAlignment="Left" Margin="68,10,0,0" VerticalAlignment="Top" Grid.Column="0"/>
             <!--תפריט סינון-->
             <ComboBox ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}"
             Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbEngineerDataFilter_SelectionChanged" 
             SelectedValue="{Binding Experience, Mode=TwoWay}"/>
-
-
         </Grid>
         <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList}">
-
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
-                    <GridViewColumn Header="Level" DisplayMemberBinding="{Binding Level}"/>
-                    <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}"/>
-                    <GridViewColumn Header="ID Task" DisplayMemberBinding="{Binding Task.Id}"/>
-                    <GridViewColumn Header="Alias Task" DisplayMemberBinding="{Binding Task.Alias}"/>
-                </GridView>
-            </ListView.View>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock Text="{Binding Id, StringFormat='ID: {0}'}"/>
+                        <TextBlock Text="{Binding Name, StringFormat='Name: {0}'}"/>
+                        <TextBlock Text="{Binding Email, StringFormat='Email: {0}'}"/>
+                        <TextBlock Text="{Binding Level, StringFormat='Level: {0}'}"/>
+                        <TextBlock Text="{Binding Cost, StringFormat='Cost: {0}'}"/>
+                        <TextBlock Text="{Binding Task.Id, StringFormat='ID Task: {0}'}"/>
+                        <TextBlock Text="{Binding Task.Alias, StringFormat='Alias Task: {0}'}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
+
 
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
 
