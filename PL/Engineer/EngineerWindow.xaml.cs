@@ -26,14 +26,11 @@ namespace PL.Engineer
         public EngineerWindow(int windowId = 0)
         {
             InitializeComponent();
-            if (windowId == 0)
-            {
-                s_bl.Engineer.Create(new BO.Engineer());
-            }
-            else
-            {
-                s_bl.Engineer.Update(s_bl.Engineer.Read(windowId));
-            }
+        }
+
+        private void bcUpdate(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

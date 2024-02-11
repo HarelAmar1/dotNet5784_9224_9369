@@ -13,12 +13,12 @@
         <Label Content="EngineerEmail" HorizontalAlignment="Left" Margin="300,111,0,0" VerticalAlignment="Top" Width="116" Height="42"/>
         <Label Content="EngineerLevel" HorizontalAlignment="Left" Margin="300,144,0,0" VerticalAlignment="Top" Width="114" Height="42"/>
         <Label Content="EngineerCost" HorizontalAlignment="Left" Margin="300,177,0,0" VerticalAlignment="Top" Width="110" Height="42"/>
-        <TextBox HorizontalAlignment="Left" Margin="456,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="30"/>
+        <TextBox HorizontalAlignment="Left" Margin="456,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="30" />
         <TextBox HorizontalAlignment="Left" Margin="456,78,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="29"/>
         <TextBox HorizontalAlignment="Left" Margin="456,111,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="29" />
         <ComboBox HorizontalAlignment="Left" Margin="456,144,0,0" VerticalAlignment="Top" Width="63" Height="30"/>
         <TextBox HorizontalAlignment="Left" Margin="456,177,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="29"/>
         <Button Content="ADD" HorizontalAlignment="Center" Margin="0,242,0,0" VerticalAlignment="Top" Height="50" Width="80"/>
-        <Button Content="UPDATE" HorizontalAlignment="Center" Margin="0,242,0,0" VerticalAlignment="Top" Height="50" Width="80" RenderTransformOrigin="0.848,-0.676" Click="Button_Click"/>
+        <Button Content="UPDATE" HorizontalAlignment="Center" Margin="0,242,0,0" VerticalAlignment="Top" Height="50" Width="80" RenderTransformOrigin="0.848,-0.676" Click="bcUpdate" />
     </Grid>
 </Window>
