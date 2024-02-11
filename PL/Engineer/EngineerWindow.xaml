@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="EngineerWindow" Height="450" Width="800">
+        Title="EngineerWindow" Height="450" Width="800"
+        DataContext="{Binding EngineerWindowProperty, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <Grid>
-        
+        <Label Content="EngineerId" HorizontalAlignment="Left" Margin="300,45,0,0" VerticalAlignment="Top"  Width="91" RenderTransformOrigin="0.766,0.425" Height="43"/>
+        <Label Content="EngineerName" HorizontalAlignment="Left" Margin="300,78,0,0" VerticalAlignment="Top" Width="121" Height="43"/>
+        <Label Content="EngineerEmail" HorizontalAlignment="Left" Margin="300,111,0,0" VerticalAlignment="Top" Width="116" Height="42"/>
+        <Label Content="EngineerLevel" HorizontalAlignment="Left" Margin="300,144,0,0" VerticalAlignment="Top" Width="114" Height="42"/>
+        <Label Content="EngineerCost" HorizontalAlignment="Left" Margin="300,177,0,0" VerticalAlignment="Top" Width="110" Height="42"/>
+        <TextBox HorizontalAlignment="Left" Margin="456,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="30"/>
+        <TextBox HorizontalAlignment="Left" Margin="456,78,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="29"/>
+        <TextBox HorizontalAlignment="Left" Margin="456,111,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="29" />
+        <ComboBox HorizontalAlignment="Left" Margin="456,144,0,0" VerticalAlignment="Top" Width="63" Height="30"/>
+        <TextBox HorizontalAlignment="Left" Margin="456,177,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="29"/>
+        <Button Content="ADD" HorizontalAlignment="Center" Margin="0,242,0,0" VerticalAlignment="Top" Height="50" Width="80"/>
+        <Button Content="UPDATE" HorizontalAlignment="Center" Margin="0,242,0,0" VerticalAlignment="Top" Height="50" Width="80" RenderTransformOrigin="0.848,-0.676" Click="Button_Click"/>
     </Grid>
 </Window>

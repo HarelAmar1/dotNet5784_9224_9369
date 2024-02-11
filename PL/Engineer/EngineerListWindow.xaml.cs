@@ -42,5 +42,10 @@ namespace PL.Engineer
             s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(item => (int)item.level == (int)Experience)!;
 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new EngineerWindow().Show();
+        }
     }
 }
