@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,6 +27,8 @@ namespace PL.Engineer
             DependencyProperty.Register("Engineer", typeof(IEnumerable<BO.Engineer>), typeof(EngineerWindow), new PropertyMetadata(null));
         public EngineerWindow(int windowId = 0)
         {
+            
+
             InitializeComponent();
             if (windowId == 0)
             {
@@ -32,8 +36,10 @@ namespace PL.Engineer
             }
             else
             {
-                s_bl.Engineer.Update(s_bl.Engineer.Read(windowId));
+                BO.Engineer engineer = new BO.Engineer() { }
             }
+
         }
+
     }
 }
