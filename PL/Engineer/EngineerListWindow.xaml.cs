@@ -32,8 +32,7 @@ namespace PL.Engineer
             set { SetValue(EngineerListListProperty, value); }
         }
 
-        public static readonly DependencyProperty EngineerListListProperty =
-            DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty EngineerListListProperty = DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
 
         public BO.EngineerExperience Experience { get; set; } = BO.EngineerExperience.All;
         private void cbEngineerDataFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)

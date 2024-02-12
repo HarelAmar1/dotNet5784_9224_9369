@@ -40,7 +40,7 @@ namespace PL.Engineer
                 Cost.Text = temp.Cost.ToString();
                 EngineerTask.Text = temp.Task.Id.ToString();
             }
-            else
+            else//add
             {
                 Update.Visibility = Visibility.Hidden;
                 Update.IsEnabled = false;
@@ -73,16 +73,19 @@ namespace PL.Engineer
         private void bcUPDATE(object sender, RoutedEventArgs e)
         {
             BO.TaskInEngineer temp = new BO.TaskInEngineer(int.Parse(EngineerTask.Text), s_bl.Task.Read(int.Parse(EngineerTask.Text)).Alias);
+
             BO.Engineer engineer = new BO.Engineer()
             {
                 Id = int.Parse(Id.Text),
                 Name = Name.Text,
                 Email = Email.Text,
-                Level = (BO.EngineerExperience)int.Parse(Level.Text),
+                Level = Enum.Parse<BO.EngineerExperience>(Level.Text),
                 Cost = double.Parse(Cost.Text),
                 Task = temp
             };
             s_bl.Engineer.Update(engineer);
+
+            Close();
         }
     }
 }

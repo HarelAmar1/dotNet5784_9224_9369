@@ -24,3 +24,4 @@
         <Button Name="Update" Content="UPDATE" HorizontalAlignment="Center" Margin="0,267,0,0" VerticalAlignment="Top" Height="50" Width="80" Click="bcUPDATE"/>
     </Grid>
 </Window>
+
