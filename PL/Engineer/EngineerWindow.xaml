@@ -14,12 +14,12 @@
         <Label Content="Engineer's Level:" HorizontalAlignment="Left" Margin="300,144,0,0" VerticalAlignment="Top" Width="114" Height="42"/>
         <Label Content="Engineer's Cost:" HorizontalAlignment="Left" Margin="300,177,0,0" VerticalAlignment="Top" Width="110" Height="42"/>
         <Label Content="Engineer's ID Task:" HorizontalAlignment="Left" Margin="300,207,0,0" VerticalAlignment="Top" Width="110" Height="42"/>
-        <TextBox Name="Id" HorizontalAlignment="Left" Margin="456,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="30"/>
-        <TextBox Name="Name" HorizontalAlignment="Left" Margin="456,78,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="29"/>
-        <TextBox Name="Email" HorizontalAlignment="Left" Margin="456,111,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="29" />
-        <ComboBox Name="Level" HorizontalAlignment="Left" Margin="456,144,0,0" VerticalAlignment="Top" Width="63" Height="29" ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}"/>
-        <TextBox Name="Cost" HorizontalAlignment="Left" Margin="456,177,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="29"/>
-        <TextBox Name="EngineerTask" HorizontalAlignment="Left" Margin="456,207,0,0" TextWrapping = "Wrap" Text="TextBox" VerticalAlignment="Top" Width="63" Height="29"/>
+        <TextBox Name="Id" HorizontalAlignment="Left" Margin="456,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="auto" Height="auto"/>
+        <TextBox Name="Name" HorizontalAlignment="Left" Margin="456,78,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="auto" Height="auto"/>
+        <TextBox Name="Email" HorizontalAlignment="Left" Margin="456,111,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="auto" Height="auto" />
+        <ComboBox Name="Level" HorizontalAlignment="Left" Margin="456,144,0,0" VerticalAlignment="Top" Width="auto" Height="auto" ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}"/>
+        <TextBox Name="Cost" HorizontalAlignment="Left" Margin="456,177,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="auto" Height="auto"/>
+        <TextBox Name="EngineerTask" HorizontalAlignment="Left" Margin="456,207,0,0" TextWrapping = "Wrap" Text="TextBox" VerticalAlignment="Top" Width="auto" Height="auto"/>
         <Button Name="Add" Content="ADD" HorizontalAlignment="Center" Margin="0,267,0,0" VerticalAlignment="Top" Height="50" Width="80" Click="bcADD"/>
         <Button Name="Update" Content="UPDATE" HorizontalAlignment="Center" Margin="0,267,0,0" VerticalAlignment="Top" Height="50" Width="80" Click="bcUPDATE"/>
     </Grid>
