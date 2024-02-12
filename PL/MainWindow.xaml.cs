@@ -32,7 +32,7 @@ namespace PL
             new EngineerListWindow().Show();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void bcInitDB(object sender, RoutedEventArgs e)
         {
             MessageBoxButton buttons = MessageBoxButton.OKCancel;
             MessageBoxResult a = MessageBox.Show("Would you like to create Initial data?", "cho", buttons);

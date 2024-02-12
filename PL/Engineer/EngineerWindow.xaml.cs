@@ -25,21 +25,65 @@ namespace PL.Engineer
 
         public static readonly DependencyProperty EngineerWindowProperty =
             DependencyProperty.Register("Engineer", typeof(IEnumerable<BO.Engineer>), typeof(EngineerWindow), new PropertyMetadata(null));
-        public EngineerWindow(int windowId = 0)
+        public EngineerWindow(int windowId)//לזכור לתפוס חריגות
         {
-            
-
             InitializeComponent();
-            if (windowId == 0)
+            if (windowId != 0)//update
             {
-                s_bl.Engineer.Create(new BO.Engineer());
+                Add.Visibility = Visibility.Hidden;
+                Add.IsEnabled = false;
+                BO.Engineer temp = s_bl.Engineer.Read(windowId);
+                Id.Text = temp.Id.ToString();
+                Name.Text = temp.Name.ToString();
+                Email.Text = temp.Email.ToString();
+                Level.Text = temp.Level.ToString();
+                Cost.Text = temp.Cost.ToString();
+                EngineerTask.Text = temp.Task.Id.ToString();
             }
-            else
+            else//add
             {
-                BO.Engineer engineer = new BO.Engineer() { }
+                Update.Visibility = Visibility.Hidden;
+                Update.IsEnabled = false;
+                Id.Text = "0";
+                Name.Text = "";
+                Email.Text = "";
+                Level.Text = "";
+                Cost.Text = "";
+                EngineerTask.Text = "";
             }
-
         }
 
+        private void bcADD(object sender, RoutedEventArgs e)
+        {
+            BO.TaskInEngineer temp = new BO.TaskInEngineer(int.Parse(EngineerTask.Text), s_bl.Task.Read(int.Parse(EngineerTask.Text)).Alias);
+            BO.Engineer engineer = new BO.Engineer()
+            {
+                Id = int.Parse(Id.Text),
+                Name = Name.Text,
+                Email = Email.Text,
+                Level = (BO.EngineerExperience)int.Parse(Level.Text),
+                Cost = double.Parse(Cost.Text),
+                Task = temp
+            };
+            s_bl.Engineer.Create(engineer);
+        }
+
+        private void bcUPDATE(object sender, RoutedEventArgs e)
+        {
+            BO.TaskInEngineer temp = new BO.TaskInEngineer(int.Parse(EngineerTask.Text), s_bl.Task.Read(int.Parse(EngineerTask.Text)).Alias);
+
+            BO.Engineer engineer = new BO.Engineer()
+            {
+                Id = int.Parse(Id.Text),
+                Name = Name.Text,
+                Email = Email.Text,
+                Level = Enum.Parse<BO.EngineerExperience>(Level.Text),
+                Cost = double.Parse(Cost.Text),
+                Task = temp
+            };
+            s_bl.Engineer.Update(engineer);
+
+            Close();
+        }
     }
 }

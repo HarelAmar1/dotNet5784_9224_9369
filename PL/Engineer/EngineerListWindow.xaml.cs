@@ -32,20 +32,25 @@ namespace PL.Engineer
             set { SetValue(EngineerListListProperty, value); }
         }
 
-        public static readonly DependencyProperty EngineerListListProperty =
-            DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty EngineerListListProperty = DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
 
         public BO.EngineerExperience Experience { get; set; } = BO.EngineerExperience.All;
         private void cbEngineerDataFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            EngineerList = (Experience == BO.EngineerExperience.All) ?
-            s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(item => (int)item.level == (int)Experience)!;
-
+            EngineerList = (Experience == BO.EngineerExperience.All) ? s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(item => (int)item.level == (int)Experience)!;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void bcPreesToAdd(object sender, RoutedEventArgs e)
         {
-            new EngineerWindow().Show();
+            new EngineerWindow(0).Show();
+        }
+
+        private void bcPreesToUpdate(object sender, MouseButtonEventArgs e)
+        {
+            BO.Engineer selectedEngineer = (BO.Engineer)((ListView)sender).SelectedItem;
+            int selectedId = selectedEngineer.Id;
+            new EngineerWindow(selectedId).Show();
+            
         }
     }
 }
