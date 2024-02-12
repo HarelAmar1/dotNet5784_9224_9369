@@ -40,12 +40,18 @@ namespace PL.Engineer
         {
             EngineerList = (Experience == BO.EngineerExperience.All) ?
             s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(item => (int)item.level == (int)Experience)!;
-
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void bcPreesToAdd(object sender, RoutedEventArgs e)
         {
-            new EngineerWindow().Show();
+            new EngineerWindow(0).Show();
+        }
+
+        private void bcPreesToUpdate(object sender, MouseButtonEventArgs e)
+        {
+            BO.Engineer selectedEngineer = (BO.Engineer)((ListView)sender).SelectedItem;
+            int selectedId = selectedEngineer.Id;
+            new EngineerWindow(selectedId).Show();
         }
     }
 }
