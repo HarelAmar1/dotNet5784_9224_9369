@@ -99,6 +99,7 @@ internal class TaskImplementation : ITask
                 throw new BO.BlDoesNotExistException($"Task with ID: {idTask} does not exist");
 
             // Create the engineer field in the task
+
             BO.EngineerInTask? engineerInTask = (
                 from E in new EngineerImplementation().ReadAll()
                 where E.Task?.Id != null && E.Task.Id == idTask

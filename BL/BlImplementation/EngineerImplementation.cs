@@ -2,6 +2,9 @@
 using BO;
 using DO;
 using System.Net.Mail;
+using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace BlImplementation;
 
 
@@ -11,6 +14,8 @@ internal class EngineerImplementation : IEngineer
     public int Create(BO.Engineer engineerToAdd)
     {
         //Converts the list of engineers from DO to BO
+
+
         IEnumerable<BO.Engineer> engineers = (from item in _dal.Engineer.ReadAll().ToList()
                                               let tasks = _dal.Task.ReadAll()
                                               select new BO.Engineer()
@@ -48,16 +53,19 @@ internal class EngineerImplementation : IEngineer
              if (engineerToAdd.Cost < 0)
             error = $"Cost: {engineerToAdd.Cost}";
         else
-        if (engineers.Any(engineer => engineer?.Id == engineerToAdd.Id) == false)
+        if (engineers.Any(engineer => engineer?.Id == engineerToAdd.Id) != null)
         {
-
             //convert the engineerToAdd from BO to DO
-            DO.Task taskToChangeInDal = (from task in tasks1
-                                         where (task.Id == engineerToAdd.Task.Id)
-                                         select (task)).FirstOrDefault();
+            if (engineerToAdd.Task!= null)
+            {
+                DO.Task? taskToChangeInDal = (from task in tasks1
+                                              where (task.Id == engineerToAdd.Task.Id)
+                                              select (task)).FirstOrDefault();
 
-            DO.Task taskToChangeInDalrecord = taskToChangeInDal with { EngineerId = engineerToAdd.Id };
-            _dal.Task.Update(taskToChangeInDalrecord);
+                DO.Task taskToChangeInDalrecord = taskToChangeInDal with { EngineerId = engineerToAdd.Id };
+                _dal.Task.Update(taskToChangeInDalrecord);
+            }
+
             DO.Engineer becomeDO = new DO.Engineer(engineerToAdd.Id, engineerToAdd.Email, engineerToAdd.Cost, engineerToAdd.Name, false, (DO.EngineerExperience)(int)engineerToAdd.Level);
             _dal.Engineer.Create(becomeDO);
         }
@@ -70,12 +78,65 @@ internal class EngineerImplementation : IEngineer
         return engineerToAdd.Id;
 
     }
+    /* public int Create(BO.Engineer engineerToAdd)
+     {
+         string error = "";
+         if (engineerToAdd.Id < 0)
+             error = $"Id: {engineerToAdd.Id}";
+         else
+              if (engineerToAdd.Name == "")
+             error = $"Name: {engineerToAdd.Name}";
+         else
+              if (engineerToAdd.Cost < 0)
+             error = $"Cost: {engineerToAdd.Cost}";
+         if (error != "")
+             throw new BlIncorrectInputException($"{error}, is incorrect input");
+         //Correct email check
+         try
+         {
+             var mailAddress = new MailAddress(engineerToAdd.Email);
+         }
+         catch (FormatException)
+         {
+             throw new BlIncorrectInputException($"Email={engineerToAdd.Email}, is incorrect input");
+         }
+
+         //נבדוק שאין מהנדס עם תז כזאת ברשימה
+         if (_dal.Engineer.Read(engineerToAdd.Id) != null)
+             throw new BO.BlAlreadyExistsException($"Task with ID: {engineerToAdd.Id} already exist");
+
+         bool active = engineerToAdd.Task == null ? false : true;
+         DO.Engineer doEgineer = new DO.Engineer
+         (
+             engineerToAdd.Id,
+             engineerToAdd.Email,
+             engineerToAdd.Cost,
+             engineerToAdd.Name,
+             active,
+             (DO.EngineerExperience)engineerToAdd.Level
+         );
+         //Update the ID Task from current engineer
+         if (engineerToAdd.Task != null)
+         {
+             //לבדוק האם המשימה קיימת
+             if (_dal.Task.Read(engineerToAdd.Task.Id) == null)
+                 throw new BlIncorrectInputException($"The Task is not exist, is incorrect input");
+
+             //לעדכן במשימות כך שהמהנדס הנוכחי מבצע אותה
+             DO.Task task1 = _dal.Task.Read(engineerToAdd.Task.Id) with { EngineerId = engineerToAdd.Id };
+             _dal.Task.Update(task1);
+         }
+         _dal.Engineer.Create(doEgineer);
+         return engineerToAdd.Id;
+     }*/
+
     public BO.Engineer Read(int id)
     {
         //Converts the list of engineers from DO to BO
 
+
+       List<DO.Task> tasks = _dal.Task.ReadAll().ToList();
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
-                                               let tasks = _dal.Task.ReadAll()
                                                select new BO.Engineer()
                                                {
                                                    Id = item.Id,
@@ -102,6 +163,7 @@ internal class EngineerImplementation : IEngineer
         return EngineerToGet;
 
     }
+
     public void Update(BO.Engineer AnUpdatedEngineer)
     {
 
@@ -122,10 +184,10 @@ internal class EngineerImplementation : IEngineer
                                                            select new TaskInEngineer(task.Id, task.Alias)).FirstOrDefault()
                                                });
 
-        //Validity checks that ID is a positive number 
+        BO.Engineer? EngineerToUp = (from item in engineers
+                                     where (item.Id == AnUpdatedEngineer.Id)
+                                     select item).FirstOrDefault();
 
-
-        //Correct email check
         try
         {
             var mailAddress = new MailAddress(AnUpdatedEngineer.Email);
@@ -141,14 +203,12 @@ internal class EngineerImplementation : IEngineer
             error = $"Name: {AnUpdatedEngineer.Name}";
         else if (AnUpdatedEngineer.Cost < 0)
             error = $"Cost: {AnUpdatedEngineer.Cost}";
-        else
+        else if (AnUpdatedEngineer.Task != null)
         {
 
             // Brings the engineer with the matching ID
 
-            BO.Engineer? EngineerToUp = (from item in engineers
-                                         where (item.Id == AnUpdatedEngineer.Id)
-                                         select item).FirstOrDefault();
+           
             if (EngineerToUp == null)
             {
                 error = $"Id: {AnUpdatedEngineer.Id}";
@@ -156,39 +216,40 @@ internal class EngineerImplementation : IEngineer
             }
 
             //Uses the TaskImplementation instance to update the task in Dal
-            if (EngineerToUp.Task != AnUpdatedEngineer.Task)
-            {
-                IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
-                DO.Task taskToremoveInDal = (from task in tasks
-                                             where (task.EngineerId == AnUpdatedEngineer.Id)
-                                             select (task)).FirstOrDefault() with
-                { EngineerId = null };
+            IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
-                _dal.Task.Update(taskToremoveInDal);
+            DO.Task taskToremoveInDal = (from task in tasks
+                                         where (task.EngineerId == AnUpdatedEngineer.Id)
+                                         select (task)).FirstOrDefault() with
+            { EngineerId = null };
 
-                DO.Task taskToChangeInDal = (from task in tasks
-                                             where (task.Id == AnUpdatedEngineer.Task.Id)
-                                             select (task)).FirstOrDefault() with
-                { EngineerId = AnUpdatedEngineer.Id };
+            _dal.Task.Update(taskToremoveInDal);
 
-                _dal.Task.Update(taskToChangeInDal);
+            DO.Task taskToChangeInDal = (from task in tasks
+                                         where (task.Id == AnUpdatedEngineer.Task.Id)
+                                         select (task)).FirstOrDefault() with
+            { EngineerId = AnUpdatedEngineer.Id };
 
-                //Checks whether the level of the existing engineer is greater than the updated one
-
-                BO.EngineerExperience changeUpTheLevel = (int)EngineerToUp.Level > (int)AnUpdatedEngineer.Level ? EngineerToUp.Level : AnUpdatedEngineer.Level;
-
-                DO.Engineer becomeDO = new DO.Engineer(AnUpdatedEngineer.Id, AnUpdatedEngineer.Email, AnUpdatedEngineer.Cost, AnUpdatedEngineer.Name, true, (DO.EngineerExperience)(int)changeUpTheLevel);
-
-                //Save the updated engineer and task in the DAL layer
-
-                _dal.Engineer.Update(becomeDO);
-            }
-
+            _dal.Task.Update(taskToChangeInDal);
         }
+            //Checks whether the level of the existing engineer is greater than the updated one
+
+            BO.EngineerExperience changeUpTheLevel = (int)EngineerToUp.Level > (int)AnUpdatedEngineer.Level ? EngineerToUp.Level : AnUpdatedEngineer.Level;
+
+            DO.Engineer becomeDO = new DO.Engineer(AnUpdatedEngineer.Id, AnUpdatedEngineer.Email, AnUpdatedEngineer.Cost, AnUpdatedEngineer.Name, true, (DO.EngineerExperience)(int)changeUpTheLevel);
+
+            //Save the updated engineer and task in the DAL layer
+
+            _dal.Engineer.Update(becomeDO);
+            
+            
+        
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
+
+
 
     public void Delete(int id)
     {
@@ -257,7 +318,15 @@ internal class EngineerImplementation : IEngineer
     }
     public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? filter = null)
     {
-        //Converts the list of engineers from DO to BO by filter
+
+      /*  //Converts the list of engineers from DO to BO by filter
+        List<BO.Engineer?> engineers= new List<BO.Engineer>();
+        EngineerImplementation toCheckStatus = new EngineerImplementation();
+        foreach(var a in _dal.Engineer.ReadAll(filter))
+        {
+            engineers.Add(toCheckStatus.Read(a.Id));
+        }
+        return engineers;*/
 
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll(filter).ToList()
                                                let tasks = _dal.Task.ReadAll()

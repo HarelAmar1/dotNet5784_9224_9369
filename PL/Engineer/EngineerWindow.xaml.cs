@@ -1,4 +1,5 @@
 ﻿using BO;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace PL.Engineer
 
         public static readonly DependencyProperty EngineerWindowProperty =
             DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
-        public EngineerWindow(int Id=0)//לזכור לתפוס חריגות
+        public EngineerWindow(int Id=0)
         {
             InitializeComponent();
 
@@ -43,33 +44,35 @@ namespace PL.Engineer
             }
             else//add
             {
-                TaskInEngineer temp = new TaskInEngineer(0,"");
-                Engineer = new BO.Engineer() { Id = 0, Name = "", Cost = 0, Task = temp, Email = "", Level = 0 };
+                Engineer = new BO.Engineer() { Id = 0, Name = "Default", Cost = 0, Email = "@gmail.com", Level = 0 };
             }
         }
 
         private void bcADD(object sender, RoutedEventArgs e)
         {
-            
-            BO.TaskInEngineer temp = new BO.TaskInEngineer(s_bl.Task.Read(Engineer.Task.Id).Id, s_bl.Task.Read(Engineer.Task.Id).Alias);
             BO.Engineer engineer = new BO.Engineer()
             {
                 Id = Engineer.Id,
                 Name = Engineer.Name,
                 Email = Engineer.Email,
                 Level = Engineer.Level,
-                Cost = Engineer.Cost,
-                Task = temp
-        };
-            s_bl.Engineer.Create(engineer);
+                Cost = Engineer.Cost
+                //Task = null
+            };
+            try
+            {
+                s_bl.Engineer.Create(engineer);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            } // Exception handling
             Close();
             new EngineerListWindow().Show();
         }
 
         private void bcUPDATE(object sender, RoutedEventArgs e)
         {
-            var a = s_bl.Task.Read(Engineer.Task.Id).Id;
-            BO.TaskInEngineer temp = new BO.TaskInEngineer(s_bl.Task.Read(Engineer.Task.Id).Id, s_bl.Task.Read(Engineer.Task.Id).Alias);
             BO.Engineer engineer = new BO.Engineer()
             {
                 Id = Engineer.Id,
@@ -77,11 +80,17 @@ namespace PL.Engineer
                 Email = Engineer.Email,
                 Level = Engineer.Level,
                 Cost = Engineer.Cost,
-                Task = temp
+                //Task = null
             };
-            s_bl.Engineer.Update(engineer);
-
-            Close();
+            try
+            {
+                s_bl.Engineer.Update(engineer);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            } // Exception handling
+                Close();
             new EngineerListWindow().Show();
         }
     }

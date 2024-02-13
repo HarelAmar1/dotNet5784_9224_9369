@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace PL;
 
-class ConvertIdToVisibility : IValueConverter
+class ConvertIdToVisibilityForAdd : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -15,11 +15,26 @@ class ConvertIdToVisibility : IValueConverter
     {
         throw new NotImplementedException();
     }
-}class ConvertIdToVisibility2 : IValueConverter
+}
+
+class ConvertIdToVisibilityForUp : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return (int)value == 0 ? Visibility.Hidden : Visibility.Visible;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertIdToVisibilityForId: IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (int)value == 0 ? true : false;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

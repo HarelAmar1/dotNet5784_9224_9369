@@ -5,7 +5,8 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:ExperienceCollection x:Key="ExperienceCollectionKey"/>
-        <local:ConvertIdToVisibility x:Key="ConvertIdToVisibilityAdKey"/>
-        <local:ConvertIdToVisibility2 x:Key="ConvertIdToVisibilityUpKey"/>
+        <local:ConvertIdToVisibilityForAdd x:Key="ConvertIdToVisibilityAdKey"/>
+        <local:ConvertIdToVisibilityForUp x:Key="ConvertIdToVisibilityUpKey"/>
+        <local:ConvertIdToVisibilityForId x:Key="ConvertIdToVisibilityIdKey"/>
     </Application.Resources>
 </Application>
