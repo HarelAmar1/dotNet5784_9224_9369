@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
+    <Id>987782</Id>
+    <Email>Dan@gmail.com</Email>
+    <Cost>20</Cost>
+    <Name>Dan</Name>
+    <level>Beginner</level>
+  </Engineer>
+  <Engineer>
     <Id>664508</Id>
     <Email>Sam@gmail.com</Email>
-    <Cost>25</Cost>
+    <Cost>20</Cost>
     <Name>Sam</Name>
-    <Active>true</Active>
     <level>AdvancedBeginner</level>
   </Engineer>
   <Engineer>
@@ -13,39 +19,20 @@
     <Email>Jordan@gmail.com</Email>
     <Cost>25</Cost>
     <Name>Jordan</Name>
-    <Active>true</Active>
     <level>Intermediate</level>
-  </Engineer>
-  <Engineer>
-    <Id>429867</Id>
-    <Email>Morgan@gmail.com</Email>
-    <Cost>20</Cost>
-    <Name>Morgan</Name>
-    <Active>true</Active>
-    <level>Expert</level>
   </Engineer>
   <Engineer>
     <Id>158197</Id>
     <Email>Taylor@gmail.com</Email>
     <Cost>25</Cost>
-    <Name>99999999999999999</Name>
-    <Active>true</Active>
+    <Name>Taylor</Name>
     <level>Advanced</level>
   </Engineer>
   <Engineer>
-    <Id>34534</Id>
-    <Email>eee@gmail.com</Email>
-    <Cost>5000000</Cost>
-    <Name>Default</Name>
-    <Active>true</Active>
-    <level>Advanced</level>
-  </Engineer>
-  <Engineer>
-    <Id>987782</Id>
-    <Email>Dan@gmail.com</Email>
-    <Cost>25</Cost>
-    <Name>Dan</Name>
-    <Active>true</Active>
-    <level>AdvancedBeginner</level>
+    <Id>429867</Id>
+    <Email>s@d.d</Email>
+    <Cost>1</Cost>
+    <Name>1</Name>
+    <level>Expert</level>
   </Engineer>
 </ArrayOfEngineer>

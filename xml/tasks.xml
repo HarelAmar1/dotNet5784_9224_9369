@@ -1,28 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
-    <Id>1</Id>
-    <Description>Review Settings</Description>
-    <Alias>Review Settings</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.383422+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
-    <Copmlexity>Beginner</Copmlexity>
-    <StartDate xsi:nil="true" />
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Project Plan Document</Deliverables>
-    <Remarks>Verify with project goals</Remarks>
-    <EngineerId xsi:nil="true" />
-  </Task>
-  <Task>
     <Id>2</Id>
     <Description>Collect Requirements</Description>
     <Alias>Collect Requirements</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.413597+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-13T23:12:20.6416966+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Beginner</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -36,9 +20,9 @@
     <Id>3</Id>
     <Description>Analyze Data</Description>
     <Alias>Analyze Data</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.4399532+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:20.6738555+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Beginner</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -52,9 +36,9 @@
     <Id>4</Id>
     <Description>Design Seed Robot</Description>
     <Alias>Design Seed Robot</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.448787+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:20.6953837+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -68,9 +52,9 @@
     <Id>5</Id>
     <Description>Develop Planting Software</Description>
     <Alias>Develop Planting Software</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.4648755+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:20.7174499+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -85,8 +69,8 @@
     <Description>Robot Testing</Description>
     <Alias>Robot Testing</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.4820006+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-13T23:12:20.7444586+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -100,9 +84,9 @@
     <Id>7</Id>
     <Description>Plan Management System</Description>
     <Alias>Plan Management System</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.4882467+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:20.7661534+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -116,9 +100,9 @@
     <Id>8</Id>
     <Description>Develop UI</Description>
     <Alias>Develop UI</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.4974362+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:20.7889919+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -133,8 +117,8 @@
     <Description>System-Robot Integration</Description>
     <Alias>System-Robot Integration</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.5153856+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-13T23:12:20.8081565+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -148,9 +132,9 @@
     <Id>10</Id>
     <Description>Field Trials</Description>
     <Alias>Field Trials</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.5261642+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:20.8283372+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -164,9 +148,9 @@
     <Id>11</Id>
     <Description>Pest Control Robot</Description>
     <Alias>Pest Control Robot</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.5341599+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:20.8501972+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -181,8 +165,8 @@
     <Description>Build Growth Models</Description>
     <Alias>Build Growth Models</Alias>
     <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.5424624+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-13T23:12:20.8704165+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -196,9 +180,9 @@
     <Id>13</Id>
     <Description>Integrate Models</Description>
     <Alias>Integrate Models</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.5504772+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:20.893914+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -213,8 +197,8 @@
     <Description>Pest Monitoring</Description>
     <Alias>Pest Monitoring</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.5650767+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-13T23:12:20.9160047+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -228,9 +212,9 @@
     <Id>15</Id>
     <Description>Monitoring Tests</Description>
     <Alias>Monitoring Tests</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.5741964+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:20.9453995+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -244,9 +228,9 @@
     <Id>16</Id>
     <Description>Communication Interfaces</Description>
     <Alias>Communication Interfaces</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.5915808+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:20.96703+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -261,8 +245,8 @@
     <Description>Image Analysis Dev</Description>
     <Alias>Image Analysis Dev</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.6082795+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-13T23:12:20.9908187+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -277,8 +261,8 @@
     <Description>Image-Robot Integration</Description>
     <Alias>Image-Robot Integration</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.626056+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-13T23:12:21.0154175+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Advanced</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -293,8 +277,8 @@
     <Description>Water Management Dev</Description>
     <Alias>Water Management Dev</Alias>
     <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.6418841+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-13T23:12:21.0359523+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -308,9 +292,9 @@
     <Id>20</Id>
     <Description>Water System Tests</Description>
     <Alias>Water System Tests</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.656607+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:21.0596048+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -325,8 +309,8 @@
     <Description>Harvesting Robot Dev</Description>
     <Alias>Harvesting Robot Dev</Alias>
     <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.6664298+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-13T23:12:21.0849548+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -340,9 +324,9 @@
     <Id>22</Id>
     <Description>Harvesting Tests</Description>
     <Alias>Harvesting Tests</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.6856468+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:21.1135243+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -356,9 +340,9 @@
     <Id>23</Id>
     <Description>Automate Management</Description>
     <Alias>Automate Management</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.7029303+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:21.138236+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -373,8 +357,8 @@
     <Description>Advanced Analysis Impl</Description>
     <Alias>Advanced Analysis Impl</Alias>
     <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.71719+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-13T23:12:21.1584746+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>Expert</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -388,9 +372,9 @@
     <Id>25</Id>
     <Description>System Field Testing</Description>
     <Alias>System Field Testing</Alias>
-    <IsMilestone>true</IsMilestone>
-    <CreatedAtDate>2024-02-13T22:33:34.7411308+02:00</CreatedAtDate>
-    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:21.1804857+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
     <ScheduledDate xsi:nil="true" />
@@ -399,5 +383,21 @@
     <Deliverables>Complete System Field Test Report</Deliverables>
     <Remarks>Comprehensive testing across all modules</Remarks>
     <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>1</Id>
+    <Description>Review Settings</Description>
+    <Alias>Review Settings</Alias>
+    <IsMilestone>true</IsMilestone>
+    <CreatedAtDate>2024-02-13T23:12:20.5926382+02:00</CreatedAtDate>
+    <RequiredEffortTime>P21D</RequiredEffortTime>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Project Plan Document</Deliverables>
+    <Remarks>Verify with project goals</Remarks>
+    <EngineerId>429867</EngineerId>
   </Task>
 </ArrayOfTask>

@@ -359,7 +359,7 @@ internal class Program
         Console.WriteLine(ToPrint.Name);
         Console.Write("level: ");
         Console.WriteLine(ToPrint.Level);
-        if (ToPrint.Task.Id != null)
+        if (ToPrint.Task != null)
         {
             Console.Write("Id for Task: ");
             Console.WriteLine(ToPrint.Task.Id);
@@ -387,8 +387,13 @@ internal class Program
         Console.WriteLine("Please enter your experience level (1-5)");
         int levelFromUser = int.Parse(Console.ReadLine()!);
         BO.EngineerExperience level = (BO.EngineerExperience)levelFromUser;
-        Console.WriteLine("Please enter your id and alias of the task:");
-        BO.TaskInEngineer task = new BO.TaskInEngineer(int.Parse(Console.ReadLine()!), Console.ReadLine()!);
+        Console.WriteLine("Please enter your id of the task - (click -1 to skip)");
+        int idOfTask = int.Parse(Console.ReadLine());
+        BO.TaskInEngineer? task = null;
+        if (idOfTask != -1)
+        {
+            task = new BO.TaskInEngineer(idOfTask, s_bl.Task.Read(idOfTask).Alias);
+        }
         BO.Engineer temp = new BO.Engineer()
         {
             Id = id,
