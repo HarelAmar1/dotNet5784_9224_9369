@@ -66,7 +66,7 @@ internal class EngineerImplementation : IEngineer
                 _dal.Task.Update(taskToChangeInDalrecord);
             }
 
-            DO.Engineer becomeDO = new DO.Engineer(engineerToAdd.Id, engineerToAdd.Email, engineerToAdd.Cost, engineerToAdd.Name, false, (DO.EngineerExperience)(int)engineerToAdd.Level);
+            DO.Engineer becomeDO = new DO.Engineer(engineerToAdd.Id, engineerToAdd.Email, engineerToAdd.Cost, engineerToAdd.Name, (DO.EngineerExperience)(int)engineerToAdd.Level);
             _dal.Engineer.Create(becomeDO);
         }
         else
@@ -187,7 +187,7 @@ internal class EngineerImplementation : IEngineer
 
             BO.EngineerExperience changeUpTheLevel = (int)EngineerToUp.Level > (int)AnUpdatedEngineer.Level ? EngineerToUp.Level : AnUpdatedEngineer.Level;
 
-            DO.Engineer becomeDO = new DO.Engineer(AnUpdatedEngineer.Id, AnUpdatedEngineer.Email, AnUpdatedEngineer.Cost, AnUpdatedEngineer.Name, true, (DO.EngineerExperience)(int)changeUpTheLevel);
+            DO.Engineer becomeDO = new DO.Engineer(AnUpdatedEngineer.Id, AnUpdatedEngineer.Email, AnUpdatedEngineer.Cost, AnUpdatedEngineer.Name, (DO.EngineerExperience)(int)changeUpTheLevel);
 
             //Save the updated engineer and task in the DAL layer
 

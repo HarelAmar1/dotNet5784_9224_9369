@@ -215,7 +215,7 @@ public class Program
         Console.WriteLine("Please enter your experience level (1-5)");
         int levelFromUser = int.Parse(Console.ReadLine()!);
         DO.EngineerExperience level = (EngineerExperience)levelFromUser;
-        Engineer engineer = new Engineer(id, email, cost, name, true,level);
+        Engineer engineer = new Engineer(id, email, cost, name,level);
         s_dal!.Engineer.Create(engineer);
     }
 
@@ -288,7 +288,7 @@ public class Program
         Console.WriteLine("Please enter your experience level (1-5)");
         int l = int.Parse(Console.ReadLine()!);
         DO.EngineerExperience level = (EngineerExperience)l;
-        DO.Engineer temp = new Engineer(id, email, cost, name, true, level);
+        DO.Engineer temp = new Engineer(id, email, cost, name, level);
         return temp;
     }
     // Prints detailed information of a single Task object.
@@ -346,8 +346,6 @@ public class Program
         Console.WriteLine(ToPrint.Name);
         Console.Write("level: ");
         Console.WriteLine(ToPrint.level);
-        Console.Write("Active: ");
-        Console.WriteLine(ToPrint.Active + "\n");
     }
 
     // Prints details of each Task object in the provided list

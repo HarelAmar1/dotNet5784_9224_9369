@@ -23,9 +23,8 @@ public static class Initialization
             string name = names[i];
             EngineerExperience level = (EngineerExperience)i;
             double cost = 5 * random.Next(4, 6);
-            bool active = true;
 
-            Engineer engineer = new Engineer(id, email, cost, name, active, level);
+            Engineer engineer = new Engineer(id, email, cost, name, level);
 
             // Add engineer to your collection or process them as needed
             s_dal!.Engineer.Create(engineer);
