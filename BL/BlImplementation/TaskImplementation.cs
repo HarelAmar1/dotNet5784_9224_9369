@@ -101,7 +101,7 @@ internal class TaskImplementation : ITask
             // Create the engineer field in the task
             BO.EngineerInTask? engineerInTask = (
                 from E in new EngineerImplementation().ReadAll()
-                where E.Task.Id == idTask
+                where E.Task?.Id != null && E.Task.Id == idTask
                 select new BO.EngineerInTask { Id = E.Id, Name = E.Name }
             ).FirstOrDefault();
 
