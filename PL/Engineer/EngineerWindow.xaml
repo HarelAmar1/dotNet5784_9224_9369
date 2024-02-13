@@ -21,8 +21,8 @@
             <TextBox Text="{Binding Cost, Mode=TwoWay}"/>
             <Label Content="Engineer's ID Task:"/>
             <TextBox Text="{Binding Task.Id, Mode=TwoWay}"/>
-            <Button Content="ADD" Margin="0,10,0,0" Click="bcADD"/>
-            <Button Content="UPDATE" Margin="0,10,0,0" Click="bcUPDATE" />
         </StackPanel>
+        <Button Content="ADD" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityAdKey}}"  HorizontalAlignment="Center" Margin="0,310,0,0" VerticalAlignment="Top" Padding="5" Click="bcADD" Height="50" Width="100"/>
+        <Button Content="UPDATE" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}" HorizontalAlignment="Center" Margin="0,310,0,0" VerticalAlignment="Top" Padding="5" Click="bcUPDATE" Height="50" Width="100"/>
     </Grid>
 </Window>

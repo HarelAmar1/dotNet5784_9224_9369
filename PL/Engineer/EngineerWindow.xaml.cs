@@ -33,13 +33,13 @@ namespace PL.Engineer
 
         public static readonly DependencyProperty EngineerWindowProperty =
             DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
-        public EngineerWindow(int windowId = 0)//לזכור לתפוס חריגות
+        public EngineerWindow(int Id=0)//לזכור לתפוס חריגות
         {
             InitializeComponent();
 
-            if (windowId != 0)//update
+            if (Id != 0)//update
             {
-                Engineer  = s_bl.Engineer.Read(windowId);
+                Engineer  = s_bl.Engineer.Read(Id);
             }
             else//add
             {

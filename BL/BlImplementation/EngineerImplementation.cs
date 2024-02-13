@@ -111,12 +111,17 @@ internal class EngineerImplementation : IEngineer
         //Converts the list of engineers from DO to BO
 
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
+                                               let tasks = _dal.Task.ReadAll()
                                                select new BO.Engineer()
                                                {
                                                    Id = item.Id,
                                                    Name = item.Name,
                                                    Cost = item.Cost,
-                                                   Email = item.Email
+                                                   Email = item.Email,
+                                                   Level = (BO.EngineerExperience)(int)item.level,
+                                                   Task = (from task in tasks
+                                                           where (task.EngineerId == item.Id)
+                                                           select new TaskInEngineer(task.Id, task.Alias)).FirstOrDefault()
                                                });
 
         //Validity checks that ID is a positive number 
@@ -151,28 +156,26 @@ internal class EngineerImplementation : IEngineer
                 error = $"Id: {AnUpdatedEngineer.Id}";
                 throw new BlDoesNotExistException($"{error} Does Not Exist");
             }
-            else
+
+            //Uses the TaskImplementation instance to update the task in Dal
+            if (EngineerToUp.Task != AnUpdatedEngineer.Task)
             {
+                IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
-                //Uses the TaskImplementation instance to update the task in Dal
-                if (EngineerToUp.Task != AnUpdatedEngineer.Task)
-                {
-                    IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
+                DO.Task taskToremoveInDal = (from task in tasks
+                                             where (task.EngineerId == AnUpdatedEngineer.Id)
+                                             select (task)).FirstOrDefault() with
+                { EngineerId = null };
 
-                    DO.Task taskToremoveInDal = (from task in tasks
-                                                 where (task.EngineerId == AnUpdatedEngineer.Id)
-                                                 select (task)).FirstOrDefault() with
-                    { EngineerId = null };
+                _dal.Task.Update(taskToremoveInDal);
 
-                    _dal.Task.Update(taskToremoveInDal);
+                DO.Task taskToChangeInDal = (from task in tasks
+                                             where (task.Id == AnUpdatedEngineer.Task.Id)
+                                             select (task)).FirstOrDefault() with
+                { EngineerId = AnUpdatedEngineer.Id };
 
-                    DO.Task taskToChangeInDal = (from task in tasks
-                                                 where (task.Id == AnUpdatedEngineer.Task.Id)
-                                                 select (task)).FirstOrDefault() with
-                    { EngineerId = AnUpdatedEngineer.Id };
+                _dal.Task.Update(taskToChangeInDal);
 
-                    _dal.Task.Update(taskToChangeInDal);
-                }
                 //Checks whether the level of the existing engineer is greater than the updated one
 
                 BO.EngineerExperience changeUpTheLevel = (int)EngineerToUp.Level > (int)AnUpdatedEngineer.Level ? EngineerToUp.Level : AnUpdatedEngineer.Level;
