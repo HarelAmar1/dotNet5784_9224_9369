@@ -328,10 +328,14 @@ internal class Program
         Console.WriteLine("Please enter your experience level (1-5)");
         int levelFromUser = int.Parse(Console.ReadLine()!);
         BO.EngineerExperience level = (BO.EngineerExperience)levelFromUser;
-        Console.WriteLine("Please enter your id of the task:");
+        Console.WriteLine("Please enter your id of the task - (click -1 to skip)");
         int idOfTask = int.Parse(Console.ReadLine());
-        string aliasOfTask = s_bl.Task.Read(idOfTask).Alias;
-        BO.TaskInEngineer task = new BO.TaskInEngineer(idOfTask, aliasOfTask);
+        BO.TaskInEngineer? task = null;
+        if (idOfTask != -1)
+        {
+            task = new BO.TaskInEngineer(idOfTask, s_bl.Task.Read(idOfTask).Alias);
+        }
+
         BO.Engineer engineer = new BO.Engineer()
         {
             Id = id,
@@ -355,10 +359,13 @@ internal class Program
         Console.WriteLine(ToPrint.Name);
         Console.Write("level: ");
         Console.WriteLine(ToPrint.Level);
-        Console.Write("Id for Task: ");
-        Console.WriteLine(ToPrint?.Task.Id);
-        Console.Write("Alias for Task: ");
-        Console.WriteLine(ToPrint.Task.Alias);
+        if (ToPrint.Task.Id != null)
+        {
+            Console.Write("Id for Task: ");
+            Console.WriteLine(ToPrint.Task.Id);
+            Console.Write("Alias for Task: ");
+            Console.WriteLine(ToPrint.Task.Alias);
+        }
     }
     public static void PrintTheReadAllFunctionOfEngineer(IEnumerable<BO.Engineer> toPrint)
     {
