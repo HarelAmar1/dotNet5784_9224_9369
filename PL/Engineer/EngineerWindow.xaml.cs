@@ -39,18 +39,18 @@ namespace PL.Engineer
 
             if (windowId != 0)//update
             {
-                Engineer = s_bl.Engineer.Read(windowId);
+                Engineer  = s_bl.Engineer.Read(windowId);
             }
             else//add
             {
-                TaskInEngineer temp = new TaskInEngineer(0, "");
+                TaskInEngineer temp = new TaskInEngineer(0,"");
                 Engineer = new BO.Engineer() { Id = 0, Name = "", Cost = 0, Task = temp, Email = "", Level = 0 };
             }
         }
 
         private void bcADD(object sender, RoutedEventArgs e)
         {
-
+            
             BO.TaskInEngineer temp = new BO.TaskInEngineer(s_bl.Task.Read(Engineer.Task.Id).Id, s_bl.Task.Read(Engineer.Task.Id).Alias);
             BO.Engineer engineer = new BO.Engineer()
             {
@@ -60,9 +60,10 @@ namespace PL.Engineer
                 Level = Engineer.Level,
                 Cost = Engineer.Cost,
                 Task = temp
-            };
+        };
             s_bl.Engineer.Create(engineer);
             Close();
+            new EngineerListWindow().Show();
         }
 
         private void bcUPDATE(object sender, RoutedEventArgs e)
@@ -81,6 +82,7 @@ namespace PL.Engineer
             s_bl.Engineer.Update(engineer);
 
             Close();
+            new EngineerListWindow().Show();
         }
     }
 }

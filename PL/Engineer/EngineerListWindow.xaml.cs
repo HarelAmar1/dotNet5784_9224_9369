@@ -28,11 +28,12 @@ namespace PL.Engineer
 
         public IEnumerable<BO.Engineer> EngineerList
         {
-            get { return (IEnumerable<BO.Engineer>)GetValue(EngineerListListProperty); }
-            set { SetValue(EngineerListListProperty, value); }
+            get { return (IEnumerable<BO.Engineer>)GetValue(EngineerListProperty); }
+            set { SetValue(EngineerListProperty, value); }
         }
 
-        public static readonly DependencyProperty EngineerListListProperty = DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty EngineerListProperty = 
+            DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
 
         public BO.EngineerExperience Experience { get; set; } = BO.EngineerExperience.All;
         private void cbEngineerDataFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
