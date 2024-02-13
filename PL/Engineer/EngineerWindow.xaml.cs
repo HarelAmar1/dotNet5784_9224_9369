@@ -1,4 +1,5 @@
 ﻿using BO;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace PL.Engineer
 
         public static readonly DependencyProperty EngineerWindowProperty =
             DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
-        public EngineerWindow(int Id=0)//לזכור לתפוס חריגות
+        public EngineerWindow(int Id=0)
         {
             InitializeComponent();
 
@@ -43,8 +44,7 @@ namespace PL.Engineer
             }
             else//add
             {
-                TaskInEngineer temp = new TaskInEngineer(0,"");
-                Engineer = new BO.Engineer() { Id = 0, Name = "", Cost = 0, Task = temp, Email = "", Level = 0 };
+                Engineer = new BO.Engineer() { Id = 0, Name = "Default", Cost = 0, Email = "@gmail.com", Level = 0 };
             }
         }
 
@@ -59,7 +59,14 @@ namespace PL.Engineer
                 Cost = Engineer.Cost
                 //Task = null
             };
-            s_bl.Engineer.Create(engineer);
+            try
+            {
+                s_bl.Engineer.Create(engineer);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            } // Exception handling
             Close();
             new EngineerListWindow().Show();
         }
@@ -75,8 +82,15 @@ namespace PL.Engineer
                 Cost = Engineer.Cost,
                 //Task = null
             };
-            s_bl.Engineer.Update(engineer);
-            Close();
+            try
+            {
+                s_bl.Engineer.Update(engineer);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            } // Exception handling
+                Close();
             new EngineerListWindow().Show();
         }
     }

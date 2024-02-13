@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Engineers" HorizontalAlignment="Left" Margin="68,10,0,0" VerticalAlignment="Top" Grid.Column="0"/>
-            <!--תפריט סינון-->
+            <!--Engineers list data-->
             <ComboBox ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}"
             Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbEngineerDataFilter_SelectionChanged" 
             SelectedValue="{Binding Experience, Mode=TwoWay}"/>
@@ -40,8 +40,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
-
+        
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="bcPreesToAdd" />
 
 

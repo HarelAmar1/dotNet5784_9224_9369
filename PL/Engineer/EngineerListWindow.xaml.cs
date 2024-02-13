@@ -44,7 +44,7 @@ namespace PL.Engineer
 
         private void bcPreesToAdd(object sender, RoutedEventArgs e)
         {
-            new EngineerWindow(0).Show();
+            new EngineerWindow().Show();
             Close();
         }
 
