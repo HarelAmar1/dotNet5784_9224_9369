@@ -80,12 +80,12 @@ internal class EngineerImplementation : IEngineer
         string error = "";
         if (engineerToAdd.Id < 0)
             error = $"Id: {engineerToAdd.Id}";
-        else
-             if (engineerToAdd.Name == "")
+        else if (engineerToAdd.Name == "")
             error = $"Name: {engineerToAdd.Name}";
-        else
-             if (engineerToAdd.Cost < 0)
+        else if (engineerToAdd.Cost < 0)
             error = $"Cost: {engineerToAdd.Cost}";
+        else if ((int)engineerToAdd.Level >= 5)
+            error = $"Level: {engineerToAdd.Level}";
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
         //Correct email check
@@ -109,7 +109,6 @@ internal class EngineerImplementation : IEngineer
             engineerToAdd.Email,
             engineerToAdd.Cost,
             engineerToAdd.Name,
-            active,
             (DO.EngineerExperience)engineerToAdd.Level
         );
         //Update the ID Task from current engineer
