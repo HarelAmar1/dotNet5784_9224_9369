@@ -44,6 +44,7 @@ namespace PL.Engineer
         private void bcPreesToAdd(object sender, RoutedEventArgs e)
         {
             new EngineerWindow(0).Show();
+            Close();
         }
 
         private void bcPreesToUpdate(object sender, MouseButtonEventArgs e)
@@ -51,6 +52,7 @@ namespace PL.Engineer
             BO.Engineer selectedEngineer = (BO.Engineer)((ListView)sender).SelectedItem;
             int selectedId = selectedEngineer.Id;
             new EngineerWindow(selectedId).Show();
+            Close();
         }
     }
 }
