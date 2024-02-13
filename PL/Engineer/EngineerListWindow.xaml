@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
         <!--Internal, Upper Grid-->
         <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+        
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -26,6 +27,12 @@
             SelectedValue="{Binding Experience, Mode=TwoWay}"/>
         </Grid>
         <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList}" MouseDoubleClick="bcPreesToUpdate">
+            <ListView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="LightBlue" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </ListView.Background>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">

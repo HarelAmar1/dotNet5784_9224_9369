@@ -46,13 +46,15 @@ internal class EngineerImplementation : IEngineer
         string error = "";
         if (engineerToAdd.Id < 0)
             error = $"Id: {engineerToAdd.Id}";
-        else
-             if (engineerToAdd.Name == "")
+        else if (engineerToAdd.Name == "")
             error = $"Name: {engineerToAdd.Name}";
-        else
-             if (engineerToAdd.Cost < 0)
+        else if (engineerToAdd.Cost < 0)
             error = $"Cost: {engineerToAdd.Cost}";
-        else
+        else if ((int)engineerToAdd.Level >= 5) 
+            error = $"Level: {engineerToAdd.Level}";
+        if (error != "")
+            throw new BlIncorrectInputException($"{error}, is incorrect input");
+
         if (engineers.Any(engineer => engineer?.Id == engineerToAdd.Id) != null)
         {
             //convert the engineerToAdd from BO to DO
@@ -72,8 +74,7 @@ internal class EngineerImplementation : IEngineer
         else
             throw new BlDoesNotExistException($"Engineer with ID: {engineerToAdd.Id} Does Not exists");
 
-        if (error != "")
-            throw new BlIncorrectInputException($"{error}, is incorrect input");
+        
 
         return engineerToAdd.Id;
 
@@ -153,7 +154,12 @@ internal class EngineerImplementation : IEngineer
             error = $"Name: {AnUpdatedEngineer.Name}";
         else if (AnUpdatedEngineer.Cost < 0)
             error = $"Cost: {AnUpdatedEngineer.Cost}";
-        else if (AnUpdatedEngineer.Task != null)
+        else if ((int)AnUpdatedEngineer.Level >= 5) 
+            error = $"Level: {AnUpdatedEngineer.Level}";
+        if (error != "")
+            throw new BlIncorrectInputException($"{error}, is incorrect input");
+
+        if (AnUpdatedEngineer.Task != null)
         {
 
             // Brings the engineer with the matching ID
@@ -194,11 +200,6 @@ internal class EngineerImplementation : IEngineer
         //Save the updated engineer and task in the DAL layer
 
         _dal.Engineer.Update(becomeDO);
-
-
-
-        if (error != "")
-            throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
 
 
@@ -270,16 +271,6 @@ internal class EngineerImplementation : IEngineer
     }
     public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? filter = null)
     {
-
-        /*  //Converts the list of engineers from DO to BO by filter
-          List<BO.Engineer?> engineers= new List<BO.Engineer>();
-          EngineerImplementation toCheckStatus = new EngineerImplementation();
-          foreach(var a in _dal.Engineer.ReadAll(filter))
-          {
-              engineers.Add(toCheckStatus.Read(a.Id));
-          }
-          return engineers;*/
-
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll(filter).ToList()
                                                let tasks = _dal.Task.ReadAll()
                                                select new BO.Engineer()

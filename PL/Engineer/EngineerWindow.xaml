@@ -9,6 +9,13 @@
         DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <!--Engineer's data-->
     <Grid>
+        <!-- Gradient background from blue to white -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="LightSkyBlue" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20">
             <Label Content="Engineer's Id:"/>
             <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityIdKey}}"/>

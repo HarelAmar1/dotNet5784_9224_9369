@@ -8,8 +8,32 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Handle Engineers" HorizontalAlignment="Left" Margin="184,190,0,0" VerticalAlignment="Top" Height="45" Width="116" Click="btnEngineer_Click"/>
-        <Button Content="Init DB" HorizontalAlignment="Left" Margin="478,190,0,0" VerticalAlignment="Top" Height="45" Width="116" Click="bcInitDB"/>
+        <!-- Gradient background from blue to white -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="LightSkyBlue" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <!-- Text "project managing" in the center with styled font -->
+        <TextBlock Text="project managing" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="90" FontSize="34" FontWeight="Bold" FontStyle="Italic"/>
+
+        <Button Content="Handle Engineers" HorizontalAlignment="Left" Margin="184,190,0,0" VerticalAlignment="Top" Height="45" Width="116" Click="btnEngineer_Click" FontStyle="Italic">
+            <Button.Background>
+                <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
+                    <GradientStop Color="#d7e6ef" Offset="0"/>
+                    <GradientStop Color="#cbeafd" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button Content="Init DB" HorizontalAlignment="Left" Margin="478,190,0,0" VerticalAlignment="Top" Height="45" Width="116" Click="bcInitDB" FontStyle="Italic">
+            <Button.Background>
+                <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
+                    <GradientStop Color="#d7e6ef" Offset="0"/>
+                    <GradientStop Color="#cbeafd" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
 
     </Grid>
 </Window>
