@@ -11,8 +11,6 @@ internal class EngineerImplementation : IEngineer
     public int Create(BO.Engineer engineerToAdd)
     {
         //Converts the list of engineers from DO to BO
-
-
         IEnumerable<BO.Engineer> engineers = (from item in _dal.Engineer.ReadAll().ToList()
                                               let tasks = _dal.Task.ReadAll()
                                               select new BO.Engineer()
@@ -50,7 +48,7 @@ internal class EngineerImplementation : IEngineer
              if (engineerToAdd.Cost < 0)
             error = $"Cost: {engineerToAdd.Cost}";
         else
-        if (engineers.Any(engineer => engineer?.Id == engineerToAdd.Id) != null)
+        if (engineers.Any(engineer => engineer?.Id == engineerToAdd.Id) == false)
         {
 
             //convert the engineerToAdd from BO to DO
