@@ -78,57 +78,7 @@ internal class EngineerImplementation : IEngineer
         return engineerToAdd.Id;
 
     }
-    /* public int Create(BO.Engineer engineerToAdd)
-     {
-         string error = "";
-         if (engineerToAdd.Id < 0)
-             error = $"Id: {engineerToAdd.Id}";
-         else
-              if (engineerToAdd.Name == "")
-             error = $"Name: {engineerToAdd.Name}";
-         else
-              if (engineerToAdd.Cost < 0)
-             error = $"Cost: {engineerToAdd.Cost}";
-         if (error != "")
-             throw new BlIncorrectInputException($"{error}, is incorrect input");
-         //Correct email check
-         try
-         {
-             var mailAddress = new MailAddress(engineerToAdd.Email);
-         }
-         catch (FormatException)
-         {
-             throw new BlIncorrectInputException($"Email={engineerToAdd.Email}, is incorrect input");
-         }
 
-         //נבדוק שאין מהנדס עם תז כזאת ברשימה
-         if (_dal.Engineer.Read(engineerToAdd.Id) != null)
-             throw new BO.BlAlreadyExistsException($"Task with ID: {engineerToAdd.Id} already exist");
-
-         bool active = engineerToAdd.Task == null ? false : true;
-         DO.Engineer doEgineer = new DO.Engineer
-         (
-             engineerToAdd.Id,
-             engineerToAdd.Email,
-             engineerToAdd.Cost,
-             engineerToAdd.Name,
-             active,
-             (DO.EngineerExperience)engineerToAdd.Level
-         );
-         //Update the ID Task from current engineer
-         if (engineerToAdd.Task != null)
-         {
-             //לבדוק האם המשימה קיימת
-             if (_dal.Task.Read(engineerToAdd.Task.Id) == null)
-                 throw new BlIncorrectInputException($"The Task is not exist, is incorrect input");
-
-             //לעדכן במשימות כך שהמהנדס הנוכחי מבצע אותה
-             DO.Task task1 = _dal.Task.Read(engineerToAdd.Task.Id) with { EngineerId = engineerToAdd.Id };
-             _dal.Task.Update(task1);
-         }
-         _dal.Engineer.Create(doEgineer);
-         return engineerToAdd.Id;
-     }*/
 
     public BO.Engineer Read(int id)
     {
