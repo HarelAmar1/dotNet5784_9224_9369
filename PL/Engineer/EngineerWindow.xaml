@@ -19,8 +19,6 @@
             <ComboBox ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}" SelectedItem="{Binding Level, Mode=TwoWay}"/>
             <Label Content="Engineer's Cost:"/>
             <TextBox Text="{Binding Cost, Mode=TwoWay}"/>
-            <Label Content="Engineer's ID Task:"/>
-            <TextBox Text="{Binding Task.Id, Mode=TwoWay}"/>
             <Button Content="ADD" Margin="0,10,0,0" Click="bcADD"/>
             <Button Content="UPDATE" Margin="0,10,0,0" Click="bcUPDATE" />
         </StackPanel>

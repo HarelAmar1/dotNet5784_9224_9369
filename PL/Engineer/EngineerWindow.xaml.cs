@@ -50,17 +50,15 @@ namespace PL.Engineer
 
         private void bcADD(object sender, RoutedEventArgs e)
         {
-            
-            BO.TaskInEngineer temp = new BO.TaskInEngineer(s_bl.Task.Read(Engineer.Task.Id).Id, s_bl.Task.Read(Engineer.Task.Id).Alias);
             BO.Engineer engineer = new BO.Engineer()
             {
                 Id = Engineer.Id,
                 Name = Engineer.Name,
                 Email = Engineer.Email,
                 Level = Engineer.Level,
-                Cost = Engineer.Cost,
-                Task = temp
-        };
+                Cost = Engineer.Cost
+                //Task = null
+            };
             s_bl.Engineer.Create(engineer);
             Close();
             new EngineerListWindow().Show();
@@ -68,8 +66,6 @@ namespace PL.Engineer
 
         private void bcUPDATE(object sender, RoutedEventArgs e)
         {
-            var a = s_bl.Task.Read(Engineer.Task.Id).Id;
-            BO.TaskInEngineer temp = new BO.TaskInEngineer(s_bl.Task.Read(Engineer.Task.Id).Id, s_bl.Task.Read(Engineer.Task.Id).Alias);
             BO.Engineer engineer = new BO.Engineer()
             {
                 Id = Engineer.Id,
@@ -77,10 +73,9 @@ namespace PL.Engineer
                 Email = Engineer.Email,
                 Level = Engineer.Level,
                 Cost = Engineer.Cost,
-                Task = temp
+                //Task = null
             };
             s_bl.Engineer.Update(engineer);
-
             Close();
             new EngineerListWindow().Show();
         }

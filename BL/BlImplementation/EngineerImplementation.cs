@@ -76,8 +76,9 @@ internal class EngineerImplementation : IEngineer
     {
         //Converts the list of engineers from DO to BO
 
+
+       List<DO.Task> tasks = _dal.Task.ReadAll().ToList();
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
-                                               let tasks = _dal.Task.ReadAll()
                                                select new BO.Engineer()
                                                {
                                                    Id = item.Id,
@@ -104,6 +105,7 @@ internal class EngineerImplementation : IEngineer
         return EngineerToGet;
 
     }
+
     public void Update(BO.Engineer AnUpdatedEngineer)
     {
 
@@ -165,12 +167,10 @@ internal class EngineerImplementation : IEngineer
                     { EngineerId = null };
 
                     _dal.Task.Update(taskToremoveInDal);
-
                     DO.Task taskToChangeInDal = (from task in tasks
                                                  where (task.Id == AnUpdatedEngineer.Task.Id)
                                                  select (task)).FirstOrDefault() with
                     { EngineerId = AnUpdatedEngineer.Id };
-
                     _dal.Task.Update(taskToChangeInDal);
                 }
                 //Checks whether the level of the existing engineer is greater than the updated one
@@ -188,6 +188,8 @@ internal class EngineerImplementation : IEngineer
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
+
+
 
     public void Delete(int id)
     {
@@ -256,9 +258,17 @@ internal class EngineerImplementation : IEngineer
     }
     public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? filter = null)
     {
-        //Converts the list of engineers from DO to BO by filter
 
-        IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll(filter).ToList()
+        //Converts the list of engineers from DO to BO by filter
+        List<BO.Engineer?> engineers= new List<BO.Engineer>();
+        EngineerImplementation toCheckStatus = new EngineerImplementation();
+        foreach(var a in _dal.Engineer.ReadAll(filter))
+        {
+            engineers.Add(toCheckStatus.Read(a.Id));
+        }
+        return engineers;
+
+       /* IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll(filter).ToList()
                                                let tasks = _dal.Task.ReadAll()
                                                select new BO.Engineer()
                                                {
@@ -271,6 +281,6 @@ internal class EngineerImplementation : IEngineer
                                                            where (task.EngineerId == item.Id)
                                                            select new TaskInEngineer(task.Id, task.Alias)).FirstOrDefault()
                                                });
-        return engineers;
+        return engineers;*/
     }
 }

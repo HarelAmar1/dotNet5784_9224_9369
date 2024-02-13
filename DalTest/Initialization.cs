@@ -92,7 +92,7 @@ public static class Initialization
             DateTime? completeDate = null;
             string? deliverables = taskDeliverables[i];
             string? remarks = taskRemarks[i];
-            int? engineerId = idForEngineer[taskLevels[i] - 1];
+            int? engineerId = null; //idForEngineer[taskLevels[i] - 1];
             DO.Task task = new DO.Task(i, descriptions, alias, isMilestone, createdAtDate, requiredEffortTime,
             level, null, null, null, null, deliverables, remarks, engineerId);
             s_dal!.Task.Create(task);
