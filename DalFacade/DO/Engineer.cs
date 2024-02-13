@@ -14,11 +14,10 @@ public record Engineer
     string Email,
     double Cost,
     string Name,
-    bool Active,
     DO.EngineerExperience level = EngineerExperience.Beginner
 )
 {
     //Empty Ctor
-    public Engineer() : this(0,"",0,"",true)
+    public Engineer() : this(0,"",0,"")
     { }
 }
