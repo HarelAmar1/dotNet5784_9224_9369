@@ -22,7 +22,7 @@ internal class Program
             string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
             if (ans == "Y")
             {
-                DalTest.Initialization.deleteXMLFile();//We will initialize the Xml files
+                DalTest.Initialization.Reset();//We will initialize the Xml files
                 DalTest.Initialization.Do();
             }
         }

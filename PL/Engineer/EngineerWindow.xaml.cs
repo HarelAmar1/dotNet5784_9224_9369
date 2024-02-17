@@ -65,7 +65,7 @@ namespace PL.Engineer
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show(ex.Message);
             } // Exception handling
             Close();
             new EngineerListWindow().Show();
@@ -88,7 +88,7 @@ namespace PL.Engineer
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show(ex.Message);
             } // Exception handling
                 Close();
             new EngineerListWindow().Show();

@@ -153,7 +153,7 @@ public class Program
         {
             try
             {
-                Initialization.deleteXMLFile();
+                Initialization.Reset();
                 Initialization.Do(); 
             }
             catch (Exception ex)

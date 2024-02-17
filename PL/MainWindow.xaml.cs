@@ -1,4 +1,5 @@
 ﻿using PL.Engineer;
+using BlApi;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,15 +33,28 @@ namespace PL
             new EngineerListWindow().Show();
         }
 
+        //Init DB func
         private void bcInitDB(object sender, RoutedEventArgs e)
         {
             MessageBoxButton buttons = MessageBoxButton.OKCancel;
-            MessageBoxResult a = MessageBox.Show("Would you like to create Initial data?", "cho", buttons);
+            MessageBoxResult a = MessageBox.Show("Would you like to create Initial data?", "Data Initial", buttons);
             if (a == MessageBoxResult.OK)
             {
-                DalTest.Initialization.deleteXMLFile();
-                DalTest.Initialization.Do();
+                BlApi.Factory.Get().ResetDB();
+                BlApi.Factory.Get().InitializeDB();
             }
         }
+
+        //Reset DB func
+        private void bcResetDB(object sender, RoutedEventArgs e)
+        {
+            MessageBoxButton buttons = MessageBoxButton.OKCancel;
+            MessageBoxResult a = MessageBox.Show("Would you like to Reset the DB?", "Data Reset", buttons);
+            if (a == MessageBoxResult.OK)
+            {
+                BlApi.Factory.Get().ResetDB();
+            }
+        }
+
     }
 }

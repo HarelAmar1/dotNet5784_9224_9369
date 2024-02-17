@@ -129,7 +129,7 @@ public static class Initialization
 
 
     // init the all XML file
-    public static void deleteXMLFile()//Check that it doesn't return anything
+    public static void Reset()//Check that it doesn't return anything
     {
         //init the XML tasks file
         XElement tasks = new XElement("ArrayOfTask", "");

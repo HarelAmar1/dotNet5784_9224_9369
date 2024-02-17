@@ -10,5 +10,6 @@ internal class Bl : IBl
 
     public IMilestone Milestone => throw new NotImplementedException();//check if we do
 
-    
+    public void InitializeDB() => DalTest.Initialization.Do();
+    public void ResetDB() => DalTest.Initialization.Reset();
 }

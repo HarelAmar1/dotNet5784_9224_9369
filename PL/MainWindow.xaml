@@ -1,4 +1,4 @@
-﻿<!--Extrnal Grid-->
+﻿ <!--Extrnal Grid-->
 <Window x:Class="PL.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,8 +6,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="PeakProjectPro" Icon="C:\Users\shneor\Desktop\miniP\iconForProgram.ico" Height="450" Width="800">
+
     <Grid>
+        
         <!-- Gradient background from blue to white -->
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -18,22 +20,33 @@
         <!-- Text "project managing" in the center with styled font -->
         <TextBlock Text="project managing" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="90" FontSize="34" FontWeight="Bold" FontStyle="Italic"/>
 
-        <Button Content="Handle Engineers" HorizontalAlignment="Left" Margin="184,190,0,0" VerticalAlignment="Top" Height="45" Width="116" Click="btnEngineer_Click" FontStyle="Italic">
-            <Button.Background>
+        
+        
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30">
+            <Button Content="Handle Engineers" Height="45" Width="116" Click="btnEngineer_Click" FontStyle="Italic" Margin="0,0,0,10">
+                <Button.Background>
+                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
+                        <GradientStop Color="#d7e6ef" Offset="0"/>
+                        <GradientStop Color="#cbeafd" Offset="1"/>
+                    </RadialGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Content="Init DB" Height="45" Width="116" Click="bcInitDB" FontStyle="Italic" Margin="0,0,0,10">
+                <Button.Background>
+                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
+                        <GradientStop Color="#d7e6ef" Offset="0"/>
+                        <GradientStop Color="#cbeafd" Offset="1"/>
+                    </RadialGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Content="Reset DB" Height="45" Width="116" Click="bcResetDB" FontStyle="Italic" Margin="0,0,0,10">
+                <Button.Background>
                 <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
                     <GradientStop Color="#d7e6ef" Offset="0"/>
                     <GradientStop Color="#cbeafd" Offset="1"/>
                 </RadialGradientBrush>
             </Button.Background>
         </Button>
-        <Button Content="Init DB" HorizontalAlignment="Left" Margin="478,190,0,0" VerticalAlignment="Top" Height="45" Width="116" Click="bcInitDB" FontStyle="Italic">
-            <Button.Background>
-                <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
-                    <GradientStop Color="#d7e6ef" Offset="0"/>
-                    <GradientStop Color="#cbeafd" Offset="1"/>
-                </RadialGradientBrush>
-            </Button.Background>
-        </Button>
-
+        </StackPanel>
     </Grid>
 </Window>
