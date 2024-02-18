@@ -18,6 +18,8 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -56,5 +58,15 @@ namespace PL
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new ManagerWindow().Show();
+        }
+
+        private void bcInitSchedule(object sender, RoutedEventArgs e)
+        {
+            
+            s_bl.Task.dateGeneratorOfAllTasks();
+        }
     }
 }
