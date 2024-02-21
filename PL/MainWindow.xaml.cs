@@ -19,6 +19,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
@@ -57,9 +58,19 @@ namespace PL
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new ManagerWindow().Show();
+        }
+
         private void bcTask(object sender, RoutedEventArgs e)
         {
             new TaskForListWindow().Show();
+        }
+        private void bcInitSchedule(object sender, RoutedEventArgs e)
+        {
+            
+            new ScheduleWindow().Show();
         }
     }
 }
