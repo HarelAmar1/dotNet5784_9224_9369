@@ -6,16 +6,17 @@
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
         Title="ManagerWindow" Height="450" Width="800">
-   <Grid>
-     <!-- Gradient background from blue to white -->
-     <Grid.Background>
-         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-             <GradientStop Color="LightSkyBlue" Offset="0"/>
-             <GradientStop Color="White" Offset="1"/>
-         </LinearGradientBrush>
-     </Grid.Background>
+    <Grid>
+        <!-- Gradient background from blue to white -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="LightSkyBlue" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Button Content="Engineers" HorizontalAlignment="Center" Margin="0,310,-150,0" VerticalAlignment="Top" Padding="5" Click="bcEngineer" Height="50" Width="100"/>
         <Button Content="Tasks" HorizontalAlignment="Center" Margin="0,310,150,0" VerticalAlignment="Top" Padding="5" Click="bcTask" Height="50" Width="100"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,105,0,0" TextWrapping="Wrap" Text="Project Manager window" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

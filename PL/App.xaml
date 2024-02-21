@@ -8,5 +8,6 @@
         <local:ConvertIdToVisibilityForAdd x:Key="ConvertIdToVisibilityAdKey"/>
         <local:ConvertIdToVisibilityForUp x:Key="ConvertIdToVisibilityUpKey"/>
         <local:ConvertIdToVisibilityForId x:Key="ConvertIdToVisibilityIdKey"/>
+        <local:ConverterStringToDateTime x:Key="ConverterString"/>
     </Application.Resources>
 </Application>

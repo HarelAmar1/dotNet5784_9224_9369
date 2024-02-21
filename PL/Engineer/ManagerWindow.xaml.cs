@@ -31,9 +31,14 @@ namespace PL.Engineer
 
         private void bcEngineer(object sender, RoutedEventArgs e)
         {
-
+            new EngineerListWindow().Show();
         }
         private void bcTask(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }

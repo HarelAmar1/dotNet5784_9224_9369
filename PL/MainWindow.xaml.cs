@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PL.Task;
 
 namespace PL
 {
@@ -18,7 +19,6 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
         public MainWindow()
         {
@@ -66,7 +66,7 @@ namespace PL
         private void bcInitSchedule(object sender, RoutedEventArgs e)
         {
             
-            s_bl.Task.dateGeneratorOfAllTasks();
+            new ScheduleWindow().Show();
         }
     }
 }

@@ -20,7 +20,7 @@
         <!-- Text "project managing" in the center with styled font -->
         <TextBlock Text="project managing" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,65,0,0" FontSize="34" FontWeight="Bold" FontStyle="Italic"/>
 
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="344,0,0,56">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="340,0,0,21">
             <Button Content="Handle Engineers" Height="45" Width="116" Click="btnEngineer_Click" FontStyle="Italic" Margin="0,0,0,10">
                 <Button.Background>
                     <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">

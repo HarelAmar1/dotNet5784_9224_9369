@@ -8,7 +8,7 @@ class ConvertIdToVisibilityForAdd : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (int)value == 0 ? Visibility.Visible: Visibility.Hidden;
+        return (int)value == 0 ? Visibility.Visible : Visibility.Hidden;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -30,11 +30,29 @@ class ConvertIdToVisibilityForUp : IValueConverter
     }
 }
 
-class ConvertIdToVisibilityForId: IValueConverter
+class ConvertIdToVisibilityForId : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return (int)value == 0 ? true : false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+
+}
+public class ConverterStringToDateTime : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is DateTime dateTime)
+        {
+            return dateTime.ToString("dd MMMM yyyy");
+        }
+
+        return "";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
