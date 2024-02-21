@@ -1,11 +1,11 @@
-﻿<Window x:Class="PL.Engineer.EngineerListWindow"
+﻿<Window x:Class="PL.Task.TaskForListWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Engineer"
+        xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
-        Title="EngineerListWindow" Height="640" Width="800"
+        Title="TaskForListWindow" Height="660" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid Height="624" VerticalAlignment="Top">
         <Grid.RowDefinitions>
@@ -15,18 +15,17 @@
         </Grid.RowDefinitions>
         <!--Internal, Upper Grid-->
         <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Engineers" HorizontalAlignment="Left" Margin="68,10,0,0" VerticalAlignment="Top" Grid.Column="0"/>
-            <!--Engineers list data-->
+            <Label Content="Task" HorizontalAlignment="Left" Margin="68,10,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+            <!--Task list data-->
             <ComboBox ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}"
-            Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbEngineerDataFilter_SelectionChanged" 
-            SelectedValue="{Binding Experience, Mode=TwoWay}"/>
+            Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbTaskDataFilter_SelectionChanged" 
+            SelectedValue="{Binding Copmlexity, Mode=TwoWay}"/>
         </Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList}" MouseDoubleClick="bcPreesToUpdate">
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding TaskForList}" MouseDoubleClick="bcPreesToUpdate">
             <ListView.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Color="LightBlue" Offset="0"/>
@@ -37,19 +36,14 @@
                 <DataTemplate>
                     <StackPanel Margin="5">
                         <TextBlock Text="{Binding Id, StringFormat='ID: {0}'}"/>
-                        <TextBlock Text="{Binding Name, StringFormat='Name: {0}'}"/>
-                        <TextBlock Text="{Binding Email, StringFormat='Email: {0}'}"/>
-                        <TextBlock Text="{Binding Level, StringFormat='Level: {0}'}"/>
-                        <TextBlock Text="{Binding Cost, StringFormat='Cost: {0}'}"/>
-                        <TextBlock Text="{Binding Task.Id, StringFormat='ID Task: {0}'}"/>
-                        <TextBlock Text="{Binding Task.Alias, StringFormat='Alias Task: {0}'}"/>
+                        <TextBlock Text="{Binding Description, StringFormat='Description: {0}'}"/>
+                        <TextBlock Text="{Binding Alias , StringFormat='Alias: {0}'}"/>
+                        <TextBlock Text="{Binding Status , StringFormat='CreatedAtDate : {0}'}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="bcPreesToAdd" />
-
-
     </Grid>
 </Window>

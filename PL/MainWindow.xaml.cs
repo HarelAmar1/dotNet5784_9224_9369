@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PL.Task;
 
 namespace PL
 {
@@ -56,5 +57,9 @@ namespace PL
             }
         }
 
+        private void bcTask(object sender, RoutedEventArgs e)
+        {
+            new TaskForListWindow().Show();
+        }
     }
 }

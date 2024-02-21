@@ -8,7 +8,7 @@ class ConvertIdToVisibilityForAdd : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (int)value == 0 ? Visibility.Visible: Visibility.Hidden;
+        return (int)value == 0 ? Visibility.Visible : Visibility.Hidden;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -30,7 +30,7 @@ class ConvertIdToVisibilityForUp : IValueConverter
     }
 }
 
-class ConvertIdToVisibilityForId: IValueConverter
+class ConvertIdToIsEnableForId: IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

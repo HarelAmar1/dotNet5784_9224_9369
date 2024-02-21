@@ -1,0 +1,32 @@
+﻿<Window x:Class="PL.Task.TaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Task"
+        mc:Ignorable="d"
+        Title="TaskWindow" Height="450" Width="800"
+        DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+    <!--Engineer's data-->
+    <Grid>
+        <!-- Gradient background from blue to white -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="LightSkyBlue" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20">
+            <Label Content="Task's Id:"/>
+            <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityAdKey}}"/>
+            <Label Content="Task's Alias:"/>
+            <TextBox Text="{Binding Alias, Mode=TwoWay}"/>
+            <Label Content="Task's Description:"/>
+            <TextBox Text="{Binding Description, Mode=TwoWay}"/>
+            <Label Content="Task's Status:"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}" SelectedItem="{Binding Status, Mode=TwoWay}"/>
+        </StackPanel>
+        <Button Content="ADD" HorizontalAlignment="Center" Margin="0,310,0,0" VerticalAlignment="Top" Padding="5" Click="bcAdd" Height="50" Width="100"/>
+        <Button Content="UPDATE" HorizontalAlignment="Center" Margin="0,310,0,0" VerticalAlignment="Top" Padding="5" Click="bcUpdate" Height="50" Width="100"/>
+    </Grid>
+</Window>

@@ -31,13 +31,13 @@ namespace PL.Engineer
             get { return (BO.Engineer)GetValue(EngineerWindowProperty); }
             set { SetValue(EngineerWindowProperty, value); }
         }
-
         public static readonly DependencyProperty EngineerWindowProperty =
             DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
+
         public EngineerWindow(int Id=0)
         {
             InitializeComponent();
-
+            
             if (Id != 0)//update
             {
                 Engineer  = s_bl.Engineer.Read(Id);
@@ -90,7 +90,7 @@ namespace PL.Engineer
             {
                 MessageBox.Show(ex.Message);
             } // Exception handling
-                Close();
+            Close();
             new EngineerListWindow().Show();
         }
     }

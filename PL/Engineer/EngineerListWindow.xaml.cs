@@ -32,7 +32,7 @@ namespace PL.Engineer
             set { SetValue(EngineerListProperty, value); }
         }
 
-        public static readonly DependencyProperty EngineerListProperty = 
+        public static readonly DependencyProperty EngineerListProperty =
             DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
 
         public BO.EngineerExperience Experience { get; set; } = BO.EngineerExperience.All;
@@ -53,7 +53,7 @@ namespace PL.Engineer
             BO.Engineer selectedEngineer = (BO.Engineer)((ListView)sender).SelectedItem;
             int selectedId = selectedEngineer.Id;
             new EngineerWindow(selectedId).Show();
-           Close();
+            Close();
         }
     }
 }

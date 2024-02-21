@@ -18,7 +18,7 @@
         </Grid.Background>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20">
             <Label Content="Engineer's Id:"/>
-            <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityIdKey}}"/>
+            <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsEnableForIdKey}}"/>
             <Label Content="Engineer's Name:"/>
             <TextBox Text="{Binding Name, Mode=TwoWay}"/>
             <Label Content="Engineer's Email:"/>

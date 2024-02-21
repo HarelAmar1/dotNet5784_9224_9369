@@ -7,6 +7,6 @@
         <local:ExperienceCollection x:Key="ExperienceCollectionKey"/>
         <local:ConvertIdToVisibilityForAdd x:Key="ConvertIdToVisibilityAdKey"/>
         <local:ConvertIdToVisibilityForUp x:Key="ConvertIdToVisibilityUpKey"/>
-        <local:ConvertIdToVisibilityForId x:Key="ConvertIdToVisibilityIdKey"/>
+        <local:ConvertIdToIsEnableForId x:Key="ConvertIdToIsEnableForIdKey"/>
     </Application.Resources>
 </Application>
