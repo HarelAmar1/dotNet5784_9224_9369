@@ -9,4 +9,5 @@
         <local:ConvertIdToVisibilityForUp x:Key="ConvertIdToVisibilityUpKey"/>
         <local:ConvertIdToIsEnableForId x:Key="ConvertIdToIsEnableForIdKey"/>
     </Application.Resources>
+    
 </Application>
