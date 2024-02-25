@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Task" HorizontalAlignment="Left" Margin="68,10,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+            <Label Content="Task" HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
             <!--Task list data-->
             <ComboBox ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}"
             Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbTaskDataFilter_SelectionChanged" 

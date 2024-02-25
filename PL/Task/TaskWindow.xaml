@@ -5,28 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
-        Title="TaskWindow" Height="450" Width="800"
+        Title="TaskWindow" SizeToContent="Height" Width="800"
         DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <!--Engineer's data-->
-    <Grid>
-        <!-- Gradient background from blue to white -->
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="LightSkyBlue" Offset="0"/>
-                <GradientStop Color="White" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20">
-            <Label Content="Task's Id:"/>
-            <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityAdKey}}"/>
+    <Grid Style="{Binding Source={StaticResource MyGridStyle}}">
+        <!--Row of Grid Definitions-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20">
+            <Label Content="Task's Id:" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
+            <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsEnableForIdKey}}"/>
             <Label Content="Task's Alias:"/>
             <TextBox Text="{Binding Alias, Mode=TwoWay}"/>
             <Label Content="Task's Description:"/>
             <TextBox Text="{Binding Description, Mode=TwoWay}"/>
             <Label Content="Task's Status:"/>
-            <ComboBox ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}" SelectedItem="{Binding Status, Mode=TwoWay}"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" SelectedValue="{Binding Status, Mode=TwoWay}"/>
+            <Label Content="The Task Creation Date:"/>
+            <DatePicker SelectedDate="{Binding CreatedAtDate}" IsEnabled="False"/>
+            <!--Dependency List
+            <Label Content="Task Dependency:"/>
+            <ListBox ItemsSource="{Binding Dependencies}" SelectionMode="Multiple" Margin="0,20,0,20" Height="20" Width="300"/>-->
+            <Label Content="Task's Required Effort Time: (Days)"/>
+            <TextBox Text="{Binding RequiredEffortTime, Converter={StaticResource ConverterTimeSpanToDayesKey}, Mode=TwoWay}"/>
+            <Label Content="Task's Start Date:"/>
+            <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}"/>
+            <!--ניתן לראות את הזמן ההתחלתי המשוער רק בעריכת משימה ולא בהוספת משימה-->
+            <Label Content="The Task's Scheduled Date:" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
+            <DatePicker SelectedDate="{Binding ScheduledDate}" IsEnabled="False" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
+            <!--ניתן לבחור בתאריך סיום רק בעריכת המשימה ולא בהוספת משימה-->
+            <Label Content="Task's Complete Date:" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
+            <DatePicker SelectedDate="{Binding CompleteDate, Mode=TwoWay}" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
+            <Label Content="Task's Deliverables:"/>
+            <TextBox Text="{Binding Deliverables, Mode=TwoWay}"/>
+            <Label Content="Task's Remarks:"/>
+            <TextBox Text="{Binding Remarks, Mode=TwoWay}"/>
+            <!--<Label Content="Task's Engineer:"/> לבדוק איך לשים את המהנדס
+            <TextBox Text="{Binding Engineer, Mode=TwoWay}"/>-->
+            <Label Content="Task's Copmlexity:"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}" SelectedItem="{Binding Copmlexity, Mode=TwoWay}"/>
+
+
         </StackPanel>
-        <Button Content="ADD" HorizontalAlignment="Center" Margin="0,310,0,0" VerticalAlignment="Top" Padding="5" Click="bcAdd" Height="50" Width="100"/>
-        <Button Content="UPDATE" HorizontalAlignment="Center" Margin="0,310,0,0" VerticalAlignment="Top" Padding="5" Click="bcUpdate" Height="50" Width="100"/>
+        <Button Grid.Row="1" Content="ADD" Visibility="{Binding Id, Mode=OneWay, Converter={StaticResource ConvertIdToVisibilityAdKey}}"   Padding="5" Click="bcAdd" Height="50" Width="100"/>
+        <Button Grid.Row="1" Content="UPDATE" Visibility="{Binding Id, Mode=OneWay, Converter={StaticResource ConvertIdToVisibilityUpKey}}"   Padding="5" Click="bcUpdate" Height="50" Width="100"/>
     </Grid>
 </Window>

@@ -22,6 +22,8 @@ namespace PL.Task
     public partial class TaskWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+
         public BO.Task Task
         {
             get { return (BO.Task)GetValue(TaskProperty); }
@@ -30,17 +32,22 @@ namespace PL.Task
         public static readonly DependencyProperty TaskProperty =
         DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
 
-        public TaskWindow(int id)
+
+        public TaskWindow(int id = 0)
         {
             InitializeComponent();
-            if (s_bl.Task.Read(id) != null) //update
+            if (id != 0)  //update 
             {
-                var taskFromDal = s_bl.Task.Read(id);
-                Task = new BO.Task() { Id = taskFromDal.Id,Description=taskFromDal.Description,Alias=taskFromDal.Alias,Status=taskFromDal.Status};
+                Task = s_bl.Task.Read(id);
             }
             else//add
             {
-                Task = new BO.Task() { Id = 0, Description = "Description", Alias = "Alias", Status = 0 };
+                Task = new BO.Task()
+                { Id = 0, Description = "Description", Alias = "Alias",
+                    Status = 0, CreatedAtDate = DateTime.Now, RequiredEffortTime = new TimeSpan(0, 0, 0, 0),
+                    StartDate = DateTime.Now, Copmlexity = 0,
+                    Deliverables = "Deliverables", Remarks = "Remarks" 
+                };
             }
         }
 
@@ -52,6 +59,10 @@ namespace PL.Task
                 Description = Task.Description,
                 Alias = Task.Alias,
                 Status = Task.Status,
+                CreatedAtDate = Task.CreatedAtDate,
+                RequiredEffortTime = Task.RequiredEffortTime,
+                Deliverables = Task.Deliverables,
+                Remarks = Task.Remarks
             };
             try
             {
@@ -73,6 +84,10 @@ namespace PL.Task
                 Description = Task.Description,
                 Alias = Task.Alias,
                 Status = Task.Status,
+                CreatedAtDate = Task.CreatedAtDate,
+                RequiredEffortTime = Task.RequiredEffortTime,
+                Deliverables = Task.Deliverables,
+                Remarks = Task.Remarks
             };
             try
             {

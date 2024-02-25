@@ -32,12 +32,13 @@ namespace PL.Task
 
         // Using a DependencyProperty as the backing store for Date.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DateProperty =
-            DependencyProperty.Register("Date", typeof(DateTime), typeof(ScheduleWindow), new PropertyMetadata(DateTime.Now));
+            DependencyProperty.Register("Date", typeof(DateTime), typeof(ScheduleWindow), new PropertyMetadata());
 
 
         public ScheduleWindow()
         {
             InitializeComponent();
+            Date = DateTime.Now;
         }
 
         private void bcInsetTheSchedule(object sender, RoutedEventArgs e)
