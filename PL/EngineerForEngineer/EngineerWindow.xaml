@@ -1,0 +1,40 @@
+﻿<Window x:Class="PL.EngineerForEngineer.EngineerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.EngineerForEngineer"
+        mc:Ignorable="d"
+        Title="EngineerWindow" Height="450" Width="500"
+        DataContext="{Binding RelativeSource={RelativeSource self}}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid DataContext="{Binding Engineer}" Grid.Row="0" >
+            <!--אם אין מהדנס אז נסתיר את החלון-->
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityInEngineerKey}}">
+                <Label Content="The Current Id Task's" />
+                <TextBox Text="{Binding Task.Id}" IsEnabled="False"/>
+                <Label Content="The Current Task"/>
+                <TextBox Text="{Binding Task.Alias}" IsEnabled="False"/>
+                <Label Content="Complete Task"/>
+                <DatePicker SelectedDate="{Binding CompleteDate, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:EngineerWindow}} }" Foreground="White"/>
+            </StackPanel>
+        </Grid>
+        <!--תמיד יופיע רשימת המשימות האופציולניות-->
+        <Grid DataContext="{Binding TaskInEngineer}" Grid.Row="2" >
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="Task Selection"/>
+                <ComboBox ItemsSource="{Binding}" DisplayMemberPath="Alias" SelectionChanged="ComboBoxTask_SelectionChanged" Loaded="ComboBoxTask_Loaded"/>
+                <Button Content="Done" Click="bcUpdate" Height="50" Width="100" Margin="0,20,0,0" />
+            </StackPanel>
+        </Grid>
+
+
+    </Grid>
+</Window>

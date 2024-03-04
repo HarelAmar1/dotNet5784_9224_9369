@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="TaskForListWindow" Height="660" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <Grid Height="624" VerticalAlignment="Top">
+    <Grid Height="624" VerticalAlignment="Top" Style="{Binding Source={StaticResource MyGridStyle}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
@@ -26,12 +26,6 @@
             SelectedValue="{Binding Copmlexity, Mode=TwoWay}"/>
         </Grid>
         <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding TaskForList}" MouseDoubleClick="bcPreesToUpdate">
-            <ListView.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="LightBlue" Offset="0"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </ListView.Background>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
@@ -44,6 +38,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="bcPreesToAdd" />
+        <Button Style="{Binding Source={StaticResource MyButtonStyle}}" Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="bcPreesToAdd" />
     </Grid>
 </Window>

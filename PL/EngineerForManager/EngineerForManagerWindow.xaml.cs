@@ -21,7 +21,7 @@ namespace PL.Engineer
     /// <summary>
     /// Interaction logic for EngineerWindow.xaml
     /// </summary>
-    public partial class EngineerWindow : Window
+    public partial class EngineerForManagerWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
@@ -32,9 +32,9 @@ namespace PL.Engineer
             set { SetValue(EngineerWindowProperty, value); }
         }
         public static readonly DependencyProperty EngineerWindowProperty =
-            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerForManagerWindow), new PropertyMetadata(null));
 
-        public EngineerWindow(int Id=0)
+        public EngineerForManagerWindow(int Id=0)
         {
             InitializeComponent();
             

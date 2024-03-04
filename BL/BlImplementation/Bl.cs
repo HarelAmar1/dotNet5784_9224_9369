@@ -8,7 +8,10 @@ internal class Bl : IBl
 
     public ITask Task => new TaskImplementation();
 
+    public ISchedule Schedule => new ScheduleImplementation();
+
     public IMilestone Milestone => throw new NotImplementedException();//check if we do
+
 
     public void InitializeDB() => DalTest.Initialization.Do();
     public void ResetDB() => DalTest.Initialization.Reset();

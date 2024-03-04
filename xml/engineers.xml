@@ -10,7 +10,7 @@
   <Engineer>
     <Id>664508</Id>
     <Email>Sam@gmail.com</Email>
-    <Cost>25</Cost>
+    <Cost>20</Cost>
     <Name>Sam</Name>
     <level>AdvancedBeginner</level>
   </Engineer>
@@ -22,17 +22,17 @@
     <level>Intermediate</level>
   </Engineer>
   <Engineer>
-    <Id>158197</Id>
-    <Email>Taylor@gmail.com</Email>
-    <Cost>20</Cost>
-    <Name>Taylor</Name>
-    <level>Advanced</level>
-  </Engineer>
-  <Engineer>
     <Id>429867</Id>
     <Email>Morgan@gmail.com</Email>
     <Cost>20</Cost>
     <Name>Morgan</Name>
     <level>Expert</level>
+  </Engineer>
+  <Engineer>
+    <Id>158197</Id>
+    <Email>Taylor@gmail.com</Email>
+    <Cost>20</Cost>
+    <Name>Taylor</Name>
+    <level>Advanced</level>
   </Engineer>
 </ArrayOfEngineer>

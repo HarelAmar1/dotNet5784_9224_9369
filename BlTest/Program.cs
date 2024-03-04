@@ -32,7 +32,7 @@ internal class Program
         }
 
         //Temporary variable of the start date of the entire projectproject
-        DateTime? startProject = null; 
+        DateTime? startProject; 
 
         // Get user input from the main menu
         int userInput = menu();
@@ -111,9 +111,21 @@ internal class Program
                         startProject = DateTime.TryParse(Console.ReadLine(), out DateTime result) ? result : (DateTime?)null;
                         //We will activate the function that generates the start dates of all the tasks
                         s_bl.Task.dateGeneratorOfAllTasks(startProject.GetValueOrDefault());
+                        //Insert the Start Date of Project to DB
+                        s_bl.Schedule.setStartDateOfProject(startProject.GetValueOrDefault());
+                        //find the End Date Of Project
+                        DateTime? lastDateTime = s_bl.Task.Read(s_bl.Task.ReadAll().FirstOrDefault().Id).DeadlineDate;
+                        foreach(var task in s_bl.Task.ReadAll())
+                        {
+                            DateTime? newDateTime = s_bl.Task.Read(task.Id).DeadlineDate;
+                            if (lastDateTime < newDateTime)
+                            {
+                                lastDateTime = newDateTime;
+                            }
+                        }
+                        //Insert the End Date of Project to DB
+                        s_bl.Schedule.setEndDateOfProject(lastDateTime.GetValueOrDefault());
                         break;
-
-
                 }
                 userInput = menu();
             }

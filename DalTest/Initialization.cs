@@ -8,7 +8,7 @@ using System.Xml.Linq;
 //Initialization class
 public static class Initialization
 {
-    private static IDal? s_dal;     
+    private static IDal? s_dal;
 
     private static readonly Random s_rand = new();
     private static void createEngineer()
@@ -75,10 +75,12 @@ public static class Initialization
 
         Random random = new Random();
         //init Task with ID, Alias, Descriptions,MaileStone, Level
-        TimeSpan effortDuration = new TimeSpan(random.Next(7, 22), 0, 0, 0); //3 days for requiredEffortTime
+
         TimeSpan sevenDays = new TimeSpan(7, 0, 0, 0);
         for (int i = 0; i < 25; i++)
         {
+            TimeSpan effortDuration = new TimeSpan(random.Next(7, 22), 0, 0, 0); //3 days for requiredEffortTime
+
             string alias = engineeringTasks[i];
             string descriptions = taskDescriptions[i];
             DateTime createdAtDate = DateTime.Now;
@@ -146,8 +148,12 @@ public static class Initialization
         //init the XML config file
         XElement NextTaskId = new XElement("NextTaskId", 1);
         XElement NextDependencyId = new XElement("NextDependencyId", 1);
-        XElement config = new XElement("config", NextTaskId, NextDependencyId);
+        XElement startProjectDate = new XElement("startProjectDate", "");
+        XElement endProjectDate = new XElement("endProjectDate", "");
+        XElement config = new XElement("config", NextTaskId, NextDependencyId, startProjectDate, endProjectDate); ;
         config.Save(@"..\xml\data-config.xml");
+
+
 
     }
 

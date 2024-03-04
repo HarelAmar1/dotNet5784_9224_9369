@@ -1,6 +1,8 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using System;
 using System.Windows;
+using System.Reflection;
+using System.IO;
+
 
 namespace PL
 {
@@ -11,5 +13,4 @@ namespace PL
     {
 
     }
-
 }

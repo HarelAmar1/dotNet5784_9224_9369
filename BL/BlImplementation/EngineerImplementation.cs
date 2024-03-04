@@ -110,7 +110,7 @@ internal class EngineerImplementation : IEngineer
 
 
         if (EngineerToGet == null)
-            throw new BlDoesNotExistException($"Engineer with ID: {EngineerToGet.Id} Does Not exists");
+            throw new BlDoesNotExistException($"Engineer with ID: {id} Does Not exists");
         return EngineerToGet;
 
     }

@@ -242,7 +242,7 @@ internal class TaskImplementation : ITask
             error = $"Alias: {task.Alias}";
         else if (task.Engineer != null)
         {
-            if ((int)task.Copmlexity > (int)Read(task.Engineer.Id).Copmlexity)
+            if ((int)task.Copmlexity > (int)_dal.Engineer.Read(task.Engineer.Id).level)
                 error = "Task Complexity";
         }
         if (error != "")
