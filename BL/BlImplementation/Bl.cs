@@ -12,7 +12,31 @@ internal class Bl : IBl
 
     public IMilestone Milestone => throw new NotImplementedException();//check if we do
 
-
+    private static DateTime s_Clock = DateTime.Now.Date;
+    public DateTime Clock
+    {
+        get { return s_Clock; }
+        private set { s_Clock = value; }
+    }
+    public void AddedInAnYear()
+    {
+        TimeSpan toAdd = new TimeSpan(365, 0, 0, 0);
+        Clock = s_Clock + toAdd;
+    }
+    public void AddedInAnDay()
+    {
+        TimeSpan toAdd = new TimeSpan(1, 0, 0, 0);
+        Clock = s_Clock + toAdd;
+    }
+    public void AddedInAnHour()
+    {
+        TimeSpan toAdd = new TimeSpan(1, 0, 0);
+        Clock = s_Clock + toAdd;
+    }
+    public void TimeReset()
+    {
+        Clock = DateTime.Now;
+    }
     public void InitializeDB() => DalTest.Initialization.Do();
     public void ResetDB() => DalTest.Initialization.Reset();
 }

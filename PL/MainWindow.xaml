@@ -6,7 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"      
         mc:Ignorable="d"
-        Title="PeakProjectPro" Height="450" Width="800">
+        Title="PeakProjectPro" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid Style="{Binding Source={StaticResource MyGridStyle}}">
         <Grid.RowDefinitions>
@@ -31,5 +32,6 @@
             <Button Style="{Binding Source={StaticResource MyButtonStyle}}" Content="Automatic Schedule" Height="45" Width="116" Click="bcInitSchedule" FontStyle="Italic" Margin="0,0,0,10">
             </Button>
         </StackPanel>
+        <Label Content="{Binding}" HorizontalAlignment="Left" Margin="52,208,0,0" Grid.Row="2" VerticalAlignment="Top" Height="64" Width="165"/>
     </Grid>
 </Window>

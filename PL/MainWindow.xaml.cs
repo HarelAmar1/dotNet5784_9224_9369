@@ -20,6 +20,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
         public MainWindow()
         {
@@ -71,7 +72,6 @@ namespace PL
         }
         private void bcInitSchedule(object sender, RoutedEventArgs e)
         {
-            
             new ScheduleWindow().ShowDialog();
         }
     }

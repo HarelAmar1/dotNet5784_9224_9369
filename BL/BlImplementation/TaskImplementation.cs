@@ -10,6 +10,9 @@ namespace BlImplementation;
 
 internal class TaskImplementation : ITask
 {
+    private readonly IBl _bl;
+    internal TaskImplementation(IBl bl) => _bl = bl;
+
     private DalApi.IDal _dal = Factory.Get;
 
     //Create
@@ -24,7 +27,7 @@ internal class TaskImplementation : ITask
         task.Description,
         task.Alias,
         false,
-        DateTime.Now,
+        _bl.Clock,
         task.RequiredEffortTime,
         (DO.EngineerExperience)task.Copmlexity!,
         task.StartDate,
@@ -33,8 +36,9 @@ internal class TaskImplementation : ITask
         task.CompleteDate,
         task.Deliverables,
         task.Remarks,
-        task.Engineer?.Id);
-
+        task.Engineer?.Id
+        );
+        
         // an attempt will be made to insert it into the data
         try
         {
@@ -60,11 +64,11 @@ internal class TaskImplementation : ITask
     //Delete
     public void Delete(int idTask)
     {
+
         // Find the task we want to delete
         BO.Task? task = Read(idTask);
         if (task == null)
             throw new BO.BlDoesNotExistException($"Task with ID: {idTask} does not exist");
-
         // Check that there are no tasks that depend on this task
         IEnumerable<DO.Dependency> dependlist = _dal.Dependency.ReadAll();
         bool hasDependentTasks = dependlist.Any(dep => dep.DependsOnTask == task.Id);
@@ -140,6 +144,7 @@ internal class TaskImplementation : ITask
                 Engineer = engineerInTask,
                 Copmlexity = (BO.EngineerExperience)task.Copmlexity
             };
+
             return taskToRead;
         }
         catch (DO.DalDoesNotExistException ex)
@@ -193,7 +198,7 @@ internal class TaskImplementation : ITask
         task.Description,
         task.Alias,
         false,
-        task.CreatedAtDate,
+        _bl.Clock,
         task.RequiredEffortTime,
         (DO.EngineerExperience)task.Copmlexity!,
         task.StartDate,
