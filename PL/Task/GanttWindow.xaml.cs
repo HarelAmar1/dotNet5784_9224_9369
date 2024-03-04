@@ -22,6 +22,7 @@ namespace PL.Task
         public GanttWindow()
         {
             InitializeComponent();
+            
         }
     }
 }

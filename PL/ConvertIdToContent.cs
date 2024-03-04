@@ -8,7 +8,7 @@ class ConvertIdToVisibilityForAdd : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (int)value == 0 ? Visibility.Visible : Visibility.Hidden;
+        return (int)value == 0 ? Visibility.Visible : Visibility.Collapsed;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -21,7 +21,7 @@ class ConvertIdToVisibilityForUp : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (int)value == 0 ? Visibility.Hidden : Visibility.Visible;
+        return (int)value == 0 ? Visibility.Collapsed : Visibility.Visible;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -30,7 +30,7 @@ class ConvertIdToVisibilityForUp : IValueConverter
     }
 }
 
-class ConvertIdToIsEnableForId: IValueConverter
+class ConvertIdToIsEnableForId : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -59,4 +59,27 @@ public class ConverterStringToDateTime : IValueConverter
     {
         throw new NotImplementedException();
     }
+}
+
+public class ConverterTimeSpanToDayes : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is TimeSpan)
+        {
+            TimeSpan timeSpan = (TimeSpan)value;
+            return timeSpan.TotalDays.ToString("0");
+        }
+        return "0"; // Default value if conversion fails
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        string daysStr = value as string;
+        if (int.TryParse(daysStr, out int days))
+        {
+            return new TimeSpan(days, 0, 0, 0);
+        }
+        return new TimeSpan(0, 0, 0, 0); // Default value if conversion fails
+    }
 }

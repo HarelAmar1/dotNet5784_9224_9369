@@ -5,9 +5,36 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:ExperienceCollection x:Key="ExperienceCollectionKey"/>
+        <local:StatusCollection x:Key="StatusCollectionKey"/>
         <local:ConvertIdToVisibilityForAdd x:Key="ConvertIdToVisibilityAdKey"/>
         <local:ConvertIdToVisibilityForUp x:Key="ConvertIdToVisibilityUpKey"/>
         <local:ConvertIdToIsEnableForId x:Key="ConvertIdToIsEnableForIdKey"/>
+        <local:ConverterTimeSpanToDayes x:Key="ConverterTimeSpanToDayesKey"/>
+
+        <!--Style-->
+        <!--Background Style-->
+        <Style x:Key="MyGridStyle" TargetType="Grid">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="LightSkyBlue" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--Button Style-->
+        <Style x:Key="MyButtonStyle" TargetType="Button">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
+                        <GradientStop Color="#d7e6ef" Offset="0"/>
+                        <GradientStop Color="#cbeafd" Offset="1"/>
+                    </RadialGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--End Style-->
+
     </Application.Resources>
-    
 </Application>

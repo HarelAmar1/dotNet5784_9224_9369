@@ -8,58 +8,27 @@
         mc:Ignorable="d"
         Title="PeakProjectPro" Height="450" Width="800">
 
-    <Grid>
+    <Grid Style="{Binding Source={StaticResource MyGridStyle}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="13"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!-- Text "Peak Project Pro" in the center with styled font -->
+        <TextBlock Grid.Row="1" Text="Peak Project Pro" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="34" FontWeight="Bold" FontStyle="Italic"/>
 
-        <!-- Gradient background from blue to white -->
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="LightSkyBlue" Offset="0"/>
-                <GradientStop Color="White" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
-        <!-- Text "project managing" in the center with styled font -->
-        <TextBlock Text="project managing" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,65,0,0" FontSize="34" FontWeight="Bold" FontStyle="Italic"/>
-
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="340,0,0,21">
-            <Button Content="Handle Engineers" Height="45" Width="116" Click="btnEngineer_Click" FontStyle="Italic" Margin="0,0,0,10">
-                <Button.Background>
-                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
-                        <GradientStop Color="#d7e6ef" Offset="0"/>
-                        <GradientStop Color="#cbeafd" Offset="1"/>
-                    </RadialGradientBrush>
-                </Button.Background>
+        <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Content="Handle Engineers" Style="{Binding Source={StaticResource MyButtonStyle}}" Height="45" Width="116" Click="btnEngineer_Click" FontStyle="Italic" Margin="0,0,0,10">
             </Button>
-            <Button Content="Init DB" Height="45" Width="116" Click="bcInitDB" FontStyle="Italic" Margin="0,0,0,10">
-                <Button.Background>
-                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
-                        <GradientStop Color="#d7e6ef" Offset="0"/>
-                        <GradientStop Color="#cbeafd" Offset="1"/>
-                    </RadialGradientBrush>
-                </Button.Background>
+            <Button Content="Handle Task" Style="{Binding Source={StaticResource MyButtonStyle}}" Height="45" Width="116" Click="bcTask" FontStyle="Italic" Margin="0,0,0,10">
             </Button>
-            <Button Content="Reset DB" Height="45" Width="116" Click="bcResetDB" FontStyle="Italic" Margin="0,0,0,10">
-                <Button.Background>
-                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
-                        <GradientStop Color="#d7e6ef" Offset="0"/>
-                        <GradientStop Color="#cbeafd" Offset="1"/>
-                    </RadialGradientBrush>
-                </Button.Background>
+            <Button Content="Init DB" Style="{Binding Source={StaticResource MyButtonStyle}}" Height="45" Width="116" Click="bcInitDB" FontStyle="Italic" Margin="0,0,0,10">
             </Button>
-            <Button Content="Manager" Height="45" Width="116" Click="Button_Click" FontStyle="Italic" Margin="0,0,0,10">
-                <Button.Background>
-                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
-                        <GradientStop Color="#d7e6ef" Offset="0"/>
-                        <GradientStop Color="#cbeafd" Offset="1"/>
-                    </RadialGradientBrush>
-                </Button.Background>
+            <Button Content="Reset DB" Style="{Binding Source={StaticResource MyButtonStyle}}" Height="45" Width="116" Click="bcResetDB" FontStyle="Italic" Margin="0,0,0,10">
             </Button>
-            <Button Content="Automatic Schedule" Height="45" Width="116" Click="bcInitSchedule" FontStyle="Italic" Margin="0,0,0,10">
-                <Button.Background>
-                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
-                        <GradientStop Color="#d7e6ef" Offset="0"/>
-                        <GradientStop Color="#cbeafd" Offset="1"/>
-                    </RadialGradientBrush>
-                </Button.Background>
+            <Button Content="Manager" Style="{Binding Source={StaticResource MyButtonStyle}}" Height="45" Width="116" Click="Button_Click" FontStyle="Italic" Margin="0,0,0,10">
+            </Button>
+            <Button Content="Automatic Schedule" Style="{Binding Source={StaticResource MyButtonStyle}}" Height="45" Width="116" Click="bcInitSchedule" FontStyle="Italic" Margin="0,0,0,10">
             </Button>
         </StackPanel>
     </Grid>
