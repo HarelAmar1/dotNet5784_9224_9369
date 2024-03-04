@@ -24,55 +24,16 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            new EngineerWindow(158197).ShowDialog();////למחוק!!!!!!!!!!!!!!!!
         }
 
-        private void btnEngineer_Click(object sender, RoutedEventArgs e)
+        private void bcEngineer(object sender, RoutedEventArgs e)
         {
-            new EngineerListWindow().ShowDialog();
+            new EngineerLogInWindow().ShowDialog();
         }
 
-        private void InitDB(object sender, RoutedEventArgs e)
-        {
-            new EngineerListWindow().ShowDialog();
-        }
-
-        //Init DB func
-        private void bcInitDB(object sender, RoutedEventArgs e)
-        {
-            MessageBoxButton buttons = MessageBoxButton.OKCancel;
-            MessageBoxResult a = MessageBox.Show("Would you like to create Initial data?", "Data Initial", buttons);
-            if (a == MessageBoxResult.OK)
-            {
-                BlApi.Factory.Get().ResetDB();
-                BlApi.Factory.Get().InitializeDB();
-            }
-        }
-
-        //Reset DB func
-        private void bcResetDB(object sender, RoutedEventArgs e)
-        {
-            MessageBoxButton buttons = MessageBoxButton.OKCancel;
-            MessageBoxResult a = MessageBox.Show("Would you like to Reset the DB?", "Data Reset", buttons);
-            if (a == MessageBoxResult.OK)
-            {
-                BlApi.Factory.Get().ResetDB();
-            }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void bcManager(object sender, RoutedEventArgs e)
         {
             new ManagerWindow().ShowDialog();
-        }
-
-        private void bcTask(object sender, RoutedEventArgs e)
-        {
-            new TaskForListWindow().ShowDialog();
-        }
-        private void bcInitSchedule(object sender, RoutedEventArgs e)
-        {
-            
-            new ScheduleWindow().ShowDialog();
         }
     }
 }

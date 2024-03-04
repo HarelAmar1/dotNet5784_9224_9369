@@ -126,6 +126,7 @@
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="Padding" Value="10,5" />
             <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontStyle" Value="Italic" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -157,6 +158,7 @@
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="Padding" Value="10,5" />
             <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontStyle" Value="Italic" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Template">
                 <Setter.Value>
