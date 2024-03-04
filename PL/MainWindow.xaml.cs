@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PL.Task;
+using PL.EngineerForEngineer;
 
 namespace PL
 {
@@ -23,16 +24,17 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+            new EngineerWindow(158197).ShowDialog();////למחוק!!!!!!!!!!!!!!!!
         }
 
         private void btnEngineer_Click(object sender, RoutedEventArgs e)
         {
-            new EngineerListWindow().Show();
+            new EngineerListWindow().ShowDialog();
         }
 
         private void InitDB(object sender, RoutedEventArgs e)
         {
-            new EngineerListWindow().Show();
+            new EngineerListWindow().ShowDialog();
         }
 
         //Init DB func
@@ -60,17 +62,17 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new ManagerWindow().Show();
+            new ManagerWindow().ShowDialog();
         }
 
         private void bcTask(object sender, RoutedEventArgs e)
         {
-            new TaskForListWindow().Show();
+            new TaskForListWindow().ShowDialog();
         }
         private void bcInitSchedule(object sender, RoutedEventArgs e)
         {
             
-            new ScheduleWindow().Show();
+            new ScheduleWindow().ShowDialog();
         }
     }
 }

@@ -11,8 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PL.Engineer;
 
-namespace PL.Engineer
+namespace PL
 {
     /// <summary>
     /// Interaction logic for ManagerWindow.xaml

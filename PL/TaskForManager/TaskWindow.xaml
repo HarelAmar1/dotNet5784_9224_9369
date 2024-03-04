@@ -1,0 +1,77 @@
+﻿<Window x:Class="PL.Task.TaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Task"
+        mc:Ignorable="d"
+        Title="TaskWindow" Height="450"  Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+
+        <Grid Style="{Binding Source={StaticResource MyGridStyle}}" DataContext="{Binding Task}" >
+            <!--Row of Grid Definitions-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20">
+                <Label Content="Task's Id:" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
+                <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsEnableForIdKey}}"/>
+                <Label Content="Task's Alias:"/>
+                <TextBox Text="{Binding Alias, Mode=TwoWay}"/>
+                <Label Content="Task's Description:"/>
+                <TextBox Text="{Binding Description, Mode=TwoWay}"/>
+                <Label Content="Task's Status:"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" SelectedValue="{Binding Status, Mode=TwoWay}"/>
+                <Label Content="The Task Creation Date:"/>
+                <DatePicker SelectedDate="{Binding CreatedAtDate}" IsEnabled="False"/>
+
+                <!--Dependency List-->
+                <Expander Header="Dependency List" IsExpanded="False" Margin="0,8,0,8">
+                    <ScrollViewer Height="100" VerticalScrollBarVisibility="Auto">
+                        <ListBox ItemsSource="{Binding TaskInList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TaskWindow}}}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Loaded="CheckBox_Loaded" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Tag="{Binding Id}"/>
+                                        <TextBlock Text="{Binding Alias}" Margin="5,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                </Expander>
+
+                <Label Content="Task's Required Effort Time: (Days)"/>
+                <TextBox Text="{Binding RequiredEffortTime, Converter={StaticResource ConverterTimeSpanToDayesKey}, Mode=TwoWay}"/>
+                <Label Content="Task's Start Date:"/>
+                <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}" IsEnabled="False"/>
+                <!--ניתן לראות את הזמן ההתחלתי המשוער רק בעריכת משימה ולא בהוספת משימה-->
+                <Label Content="The Task's Scheduled Date:" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
+                <DatePicker SelectedDate="{Binding ScheduledDate}" IsEnabled="False" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
+                <!--ניתן לבחור בתאריך סיום רק בעריכת המשימה ולא בהוספת משימה-->
+                <Label Content="Task's Complete Date:" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
+                <DatePicker SelectedDate="{Binding CompleteDate, Mode=TwoWay}" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
+                <Label Content="Task's Deliverables:"/>
+                <TextBox Text="{Binding Deliverables, Mode=TwoWay}"/>
+                <Label Content="Task's Remarks:"/>
+                <TextBox Text="{Binding Remarks, Mode=TwoWay}"/>
+                <!--כפתור מיני מהנדס-->
+                <StackPanel Orientation="Horizontal" >
+                    <Label Content="Task's Engineer:" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                    <Button Background="{x:Null}" Content="⚙️" Foreground="White" Width="35" Height="35" MouseEnter="OpenNewWindowButton_MouseEnter" MouseLeave="OpenNewWindowButton_MouseLeave" Tag="{Binding Engineer.Id}"/>
+                </StackPanel>
+                <ComboBox ItemsSource="{Binding EngineerInTask, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TaskWindow}}}" 
+                          DisplayMemberPath="Name" SelectionChanged="ComboBoxEngineer_SelectionChanged" Loaded="ComboBoxEngineer_Loaded"/>
+                <Label Content="Task's Copmlexity:"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}" SelectedItem="{Binding Copmlexity, Mode=TwoWay}"/>
+            </StackPanel>
+            <Button Style="{Binding Source={StaticResource MyButtonStyle}}" Grid.Row="1" Content="ADD" Visibility="{Binding Id, Mode=OneWay, Converter={StaticResource ConvertIdToVisibilityAdKey}}"   Padding="5" Click="bcAdd" Height="50" Width="100"/>
+            <Button Style="{Binding Source={StaticResource MyButtonStyle}}" Grid.Row="1" Content="UPDATE" Visibility="{Binding Id, Mode=OneWay, Converter={StaticResource ConvertIdToVisibilityUpKey}}"   Padding="5" Click="bcUpdate" Height="50" Width="100"/>
+
+        </Grid>
+    </ScrollViewer>
+</Window>

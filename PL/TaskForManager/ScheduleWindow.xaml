@@ -8,21 +8,10 @@
         Title="ScheduleWindow" Height="300" Width="450"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="LightSkyBlue" Offset="0"/>
-                <GradientStop Color="White" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
+        <!--לסדר ללא מרגיןולהוסיף כפתור ביטול -->
         <DatePicker SelectedDate="{Binding Date}" HorizontalAlignment="Left" Margin="112,128,0,0"  VerticalAlignment="Top" Width="auto" />
         <Label  Content="Enter a start date to start the project:" HorizontalAlignment="Left" Margin="112,97,0,0" VerticalAlignment="Top"/>
-        <Button Content="OK" HorizontalAlignment="Left" Margin="176,169,0,0" VerticalAlignment="Top" Height="29" Width="78" Click="bcInsetTheSchedule">
-            <Button.Background>
-                <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
-                    <GradientStop Color="#d7e6ef" Offset="0"/>
-                    <GradientStop Color="#cbeafd" Offset="1"/>
-                </RadialGradientBrush>
-            </Button.Background>
+        <Button Style="{Binding Source={StaticResource MyButtonStyle}}" Content="OK" HorizontalAlignment="Left" Margin="176,169,0,0" VerticalAlignment="Top" Height="29" Width="78" Click="bcInsetTheSchedule">
         </Button>
     </Grid>
 </Window>

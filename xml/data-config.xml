@@ -2,4 +2,6 @@
 <config>
   <NextTaskId>26</NextTaskId>
   <NextDependencyId>41</NextDependencyId>
+  <startProjectDate></startProjectDate>
+  <endProjectDate></endProjectDate>
 </config>
