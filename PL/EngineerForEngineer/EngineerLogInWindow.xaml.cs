@@ -20,14 +20,8 @@ namespace PL.EngineerForEngineer
     public partial class EngineerLogInWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public EngineerLogInWindow()
-        {
-            InitializeComponent();
-        }
-
-
         //תעודת זהות של המנדס
-        public BO.IUser User
+        public BO.User User
         {
             get { return (BO.User)GetValue(IdProperty); }
             set { SetValue(IdProperty, value); }
@@ -38,14 +32,33 @@ namespace PL.EngineerForEngineer
             DependencyProperty.Register("Id", typeof(BO.User), typeof(EngineerLogInWindow), new PropertyMetadata(null));
 
 
+        public EngineerLogInWindow()
+        {
+            InitializeComponent();
+        }
+
+
 
         private void bcLogIn(object sender, RoutedEventArgs e)
         {
-           
+            try
+            {
+               
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
         }
 
         private void bcSignIn(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
