@@ -43,24 +43,40 @@ namespace PL.EngineerForEngineer
         {
             try
             {
-               
+                if (s_bl.User.Read(User.UserId).Password == User.Password)
+                {
+                    if (s_bl.User.Read(User.UserId).IsAdmin)
+                    {
+                        new ManagerWindow().Show();
+                    }
+                    else
+                    {
+                        new EngineerWindow(User.UserId).Show();
+                    }
+                }
+                else
+                {
+                    throw new Exception("Your password is incorrect");
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show(ex.Message);
             }
+
 
         }
 
         private void bcSignIn(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+            try
+            {
+                s_bl.User.Create(User);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
