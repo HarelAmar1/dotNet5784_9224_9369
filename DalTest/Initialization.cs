@@ -147,7 +147,7 @@ public static class Initialization
 
         //init the XML Users file
         XElement users = new XElement("ArrayOfUser", "");
-        engineers.Save(@"..\xml\users.xml");
+        users.Save(@"..\xml\users.xml");
 
         //init the XML config file
         XElement NextTaskId = new XElement("NextTaskId", 1);

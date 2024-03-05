@@ -16,7 +16,7 @@ internal class UserImplementation : IUser
 
 
         List<DO.User> listUser = XMLTools.LoadListFromXMLSerializer<DO.User>(s_tasks_xml);// this is root
-        if (Read(user.UserId) == null) //if the user exist
+        if (Read(user.UserId) != null) //if the user exist
             throw new DalAlreadyExistsException($"User with Id: {user.UserId} already exists");
         listUser.Add(user);//insert to list
         XMLTools.SaveListToXMLSerializer<DO.User>(listUser, s_tasks_xml); //return to XML file

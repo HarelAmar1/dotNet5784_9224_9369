@@ -35,7 +35,7 @@ namespace PL.EngineerForEngineer
         public EngineerLogInWindow()
         {
             InitializeComponent();
-            User= new BO.User();
+            User = new BO.User() { IsAdmin = false };
         }
 
 
