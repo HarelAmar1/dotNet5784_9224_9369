@@ -9,6 +9,7 @@ internal class Bl : IBl
     public ITask Task => new TaskImplementation(this);
     public ISchedule Schedule => new ScheduleImplementation();
 
+    public IUser User => new UserImplementation();
     public IMilestone Milestone => throw new NotImplementedException();//check if we do
 
     #region Clock
@@ -38,6 +39,7 @@ internal class Bl : IBl
         Clock = DateTime.Now;
     }
     #endregion
+
     public void InitializeDB() => DalTest.Initialization.Do();
     public void ResetDB() => DalTest.Initialization.Reset();
 }

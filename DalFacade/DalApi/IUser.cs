@@ -6,5 +6,7 @@ public interface IUser
 {
     void Create(User user);
     void Delete(int id);
+    bool ExistUser(int id);
+
 
 }

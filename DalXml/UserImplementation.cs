@@ -12,11 +12,11 @@ internal class UserImplementation : IUser
         //if the user is not Engineer throw exception
         EngineerImplementation engineer = new EngineerImplementation();
         if (engineer.Read(user.UserId) == null) 
-            throw new DalDoesNotExistException($"ID: {user.UserId}, not exist");
+            throw new DalDoesNotExistException($"ID: {user.UserId}, Not Engineer");
 
 
         List<DO.User> listTask = XMLTools.LoadListFromXMLSerializer<DO.User>(s_tasks_xml);// this is root
-        if (listTask.Any(u => u.UserId == user.UserId))//if the user exist
+        if (ExistUser(user.UserId))//if the user exist
             throw new DalAlreadyExistsException($"User with Id: {user.UserId} already exists");
         listTask.Add(user);//insert to list
         XMLTools.SaveListToXMLSerializer<DO.User>(listTask, s_tasks_xml); //return to XML file
@@ -26,8 +26,16 @@ internal class UserImplementation : IUser
     {
         List<DO.User> listTask = XMLTools.LoadListFromXMLSerializer<DO.User>(s_tasks_xml);// this is root
         if (!listTask.Any(user => user.UserId == id))//Looking for the ID to delete
-            throw new DalDoesNotExistException($"ID: {id}, not exist");
+            throw new DalDoesNotExistException($"ID: {id}, Not Exist");
         listTask.RemoveAll(U => U.UserId == id);
         XMLTools.SaveListToXMLSerializer<DO.User>(listTask, s_tasks_xml);//return to XML file
+    }
+
+    public bool ExistUser(int id)
+    {
+        List<DO.User> listTask = XMLTools.LoadListFromXMLSerializer<DO.User>(s_tasks_xml);// this is root
+        if (listTask.Any(u => u.UserId == id))//if the user exist
+            return true;
+        return false;
     }
 }

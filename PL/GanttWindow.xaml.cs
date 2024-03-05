@@ -183,8 +183,6 @@ namespace PL
         }
 
 
-
-
         // מתודה עזר לחיפוש רכיב בעץ הוויזואלי לפי סוג
         private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
         {

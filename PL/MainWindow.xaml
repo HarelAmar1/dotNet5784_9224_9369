@@ -25,10 +25,10 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,134,0,0">
             <Label Content="{Binding Date}" Height="32" Width="auto" />
-            <Button Content="Add Hour" Grid.Row="1"  Click="AddedInAnHour"/>
-            <Button Content="Add Day" Grid.Row="1" Click="AddedInAnDay"/>
-            <Button Content="Add Year" Grid.Row="1"  Click="AddedInAnYear"/>
-            <Button Content="Init Date" Grid.Row="1" Click="InitADate"/>
+            <Button Content="Add Hour" Click="AddedInAnHour"/>
+            <Button Content="Add Day" Click="AddedInAnDay"/>
+            <Button Content="Add Year" Click="AddedInAnYear"/>
+            <Button Content="Init Date" Click="InitADate"/>
         </StackPanel>
     </Grid>
 </Window>  
