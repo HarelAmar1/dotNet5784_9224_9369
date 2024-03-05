@@ -12,7 +12,7 @@ internal class Bl : IBl
     public IMilestone Milestone => throw new NotImplementedException();//check if we do
 
     #region Clock
-    private static DateTime s_Clock = DateTime.Now.Date;
+    private static DateTime s_Clock = DateTime.Now;
     public DateTime Clock
     {
         get { return s_Clock; }

@@ -10,10 +10,15 @@
 
     <Grid Style="{Binding Source={StaticResource MyGridStyle}}">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label FontSize="20" Content="Enter Id To Login" Margin="0,0,0,15" HorizontalAlignment="Center"/>
+            <Label FontSize="20" Content="System log in:" Margin="0,0,0,15" HorizontalAlignment="Center"/>
             <TextBox Height="35" Width="140" Margin="0,0,0,15" Text="{Binding Id}"/>
-            <Button Content="Login" Click="bcLogIn"/> 
+            <TextBox Height="35" Width="140" Margin="0,0,0,15" Text="{Binding Id}"/>
+            <Button Content="Log in" Click="bcLogIn"  Margin="0,0,0,15"/>
+            <Button Content="Sign in" Click="bcSignIn" Margin="0,0,0,15"/>
         </StackPanel>
-
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,50">
+            <Label FontSize="20" Content="Username:" Height="35" Margin="0,0,0,15" />
+            <Label FontSize="20" Content="Password:" Height="35" Margin="0,0,0,15" />
+        </StackPanel>
     </Grid>
 </Window>

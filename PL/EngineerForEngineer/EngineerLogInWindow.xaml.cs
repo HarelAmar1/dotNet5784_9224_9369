@@ -27,30 +27,27 @@ namespace PL.EngineerForEngineer
 
 
         //תעודת זהות של המנדס
-        public int Id
+        public BO.IUser User
         {
-            get { return (int)GetValue(IdProperty); }
+            get { return (BO.User)GetValue(IdProperty); }
             set { SetValue(IdProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Id.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IdProperty =
-            DependencyProperty.Register("Id", typeof(int), typeof(EngineerLogInWindow), new PropertyMetadata(0));
+            DependencyProperty.Register("Id", typeof(BO.User), typeof(EngineerLogInWindow), new PropertyMetadata(null));
 
 
 
         private void bcLogIn(object sender, RoutedEventArgs e)
         {
-            try//נסגור את החלון כניסה
-            {
-                s_bl.Engineer.Read(Id);//יחזיר שגיאה במידה וריק
-                this.Close();
-                new EngineerWindow(Id).ShowDialog();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+           
+
+        }
+
+        private void bcSignIn(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -35,6 +35,7 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+            Date = s_bl.Clock;
         }
 
         private void bcEngineer(object sender, RoutedEventArgs e)
