@@ -15,7 +15,7 @@ internal class UserImplementation : IUser
             throw new DalDoesNotExistException($"ID: {user.UserId}, Not Engineer");
 
         //check if exist in the List
-        if (ExistUser(user.UserId))
+        if (Read(user.UserId) == null) 
             throw new DalAlreadyExistsException($"User with UserName: {user.UserId} already exists");
         DataSource.Users.Add(user);
     }
@@ -34,14 +34,8 @@ internal class UserImplementation : IUser
             throw new DalDoesNotExistException($"ID: {id}, not exist");
     }
 
-    public bool ExistUser(int id)
+    public User? Read(int id)
     {
-        //check if exsist in the List
-        foreach (var obj in DataSource.Users)
-        {
-            if (obj.UserId == id)
-                return true;
-        }
-        return false;
+        return DataSource.Users.FirstOrDefault(U => U.UserId == id);
     }
 }

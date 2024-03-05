@@ -15,27 +15,25 @@ internal class UserImplementation : IUser
             throw new DalDoesNotExistException($"ID: {user.UserId}, Not Engineer");
 
 
-        List<DO.User> listTask = XMLTools.LoadListFromXMLSerializer<DO.User>(s_tasks_xml);// this is root
-        if (ExistUser(user.UserId))//if the user exist
+        List<DO.User> listUser = XMLTools.LoadListFromXMLSerializer<DO.User>(s_tasks_xml);// this is root
+        if (Read(user.UserId) == null) //if the user exist
             throw new DalAlreadyExistsException($"User with Id: {user.UserId} already exists");
-        listTask.Add(user);//insert to list
-        XMLTools.SaveListToXMLSerializer<DO.User>(listTask, s_tasks_xml); //return to XML file
+        listUser.Add(user);//insert to list
+        XMLTools.SaveListToXMLSerializer<DO.User>(listUser, s_tasks_xml); //return to XML file
     }
 
     public void Delete(int id)
     {
-        List<DO.User> listTask = XMLTools.LoadListFromXMLSerializer<DO.User>(s_tasks_xml);// this is root
-        if (!listTask.Any(user => user.UserId == id))//Looking for the ID to delete
+        List<DO.User> listUser = XMLTools.LoadListFromXMLSerializer<DO.User>(s_tasks_xml);// this is root
+        if (!listUser.Any(user => user.UserId == id))//Looking for the ID to delete
             throw new DalDoesNotExistException($"ID: {id}, Not Exist");
-        listTask.RemoveAll(U => U.UserId == id);
-        XMLTools.SaveListToXMLSerializer<DO.User>(listTask, s_tasks_xml);//return to XML file
+        listUser.RemoveAll(U => U.UserId == id);
+        XMLTools.SaveListToXMLSerializer<DO.User>(listUser, s_tasks_xml);//return to XML file
     }
 
-    public bool ExistUser(int id)
+    public User? Read(int id)
     {
-        List<DO.User> listTask = XMLTools.LoadListFromXMLSerializer<DO.User>(s_tasks_xml);// this is root
-        if (listTask.Any(u => u.UserId == id))//if the user exist
-            return true;
-        return false;
+        List<DO.User> listUser = XMLTools.LoadListFromXMLSerializer<DO.User>(s_tasks_xml);// this is root
+        return listUser.FirstOrDefault(U => U.UserId == id);
     }
 }

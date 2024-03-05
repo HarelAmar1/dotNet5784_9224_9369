@@ -22,17 +22,21 @@ internal class UserImplementation : IUser
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Task with ID: {user.UserId} already exist", ex);
+            throw new BO.BlAlreadyExistsException($"ID: {user.UserId} already exist", ex);
         }
     }
     public void Delete(int id)
     {
-        if (!ExistUser(id))
-            throw new BO.BlDoesNotExistException($"Task with ID: {id} does not exist");
+        if (Read(id) == null)
+            throw new BO.BlDoesNotExistException($"ID: {id} does not exist");
     }
 
-    public bool ExistUser(int id)
+    public User Read(int id)
     {
-        return _dal.User.ExistUser(id);
+        DO.User user = _dal.User.Read(id);
+        if (user == null)
+            throw new BO.BlDoesNotExistException($"ID: {id} does not exist");
+        BO.User read = new User { UserId = user.UserId, Password = user.Password, IsAdmin = user.IsAdmin };
+        return read;
     }
 }
