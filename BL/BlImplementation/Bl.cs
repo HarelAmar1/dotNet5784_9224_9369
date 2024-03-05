@@ -38,7 +38,7 @@ internal class Bl : IBl
     {
         Clock = DateTime.Now;
     }
-    #endregion
+    #endregion 
 
     public void InitializeDB() => DalTest.Initialization.Do();
     public void ResetDB() => DalTest.Initialization.Reset();
