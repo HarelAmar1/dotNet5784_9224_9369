@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.Engineer;
+using PL.Task;
 
 namespace PL
 {
@@ -25,23 +26,47 @@ namespace PL
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void bcEngineer(object sender, RoutedEventArgs e)
         {
-            new EngineerListWindow().Show();
+            new EngineerListWindow().ShowDialog();
         }
         private void bcTask(object sender, RoutedEventArgs e)
         {
-
+            new TaskForListWindow().ShowDialog();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void bcSchedule(object sender, RoutedEventArgs e)
         {
+            new ScheduleWindow().ShowDialog();
+        }
 
+        private void bcGantt(object sender, RoutedEventArgs e)
+        {
+            new GanttWindow().ShowDialog();
+        }
+
+
+        //Reset DB func
+        private void bcResetDB(object sender, RoutedEventArgs e)
+        {
+            MessageBoxButton buttons = MessageBoxButton.OKCancel;
+            MessageBoxResult a = MessageBox.Show("Would you like to Reset the DB?", "Data Reset", buttons);
+            if (a == MessageBoxResult.OK)
+            {
+                BlApi.Factory.Get().ResetDB();
+            }
+        }
+
+        //Init DB func
+        private void bcInitDB(object sender, RoutedEventArgs e)
+        {
+            MessageBoxButton buttons = MessageBoxButton.OKCancel;
+            MessageBoxResult a = MessageBox.Show("Would you like to create Initial data?", "Data Initial", buttons);
+            if (a == MessageBoxResult.OK)
+            {
+                BlApi.Factory.Get().ResetDB();
+                BlApi.Factory.Get().InitializeDB();
+            }
         }
     }
 }

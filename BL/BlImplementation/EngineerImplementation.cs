@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BlImplementation;
-
-
 internal class EngineerImplementation : IEngineer
 {
     private DalApi.IDal _dal = Factory.Get;
@@ -242,7 +240,8 @@ internal class EngineerImplementation : IEngineer
                                          where (item.Id == id)
                                          select item).FirstOrDefault();
 
-                TaskImplementation toCheckStatus = new TaskImplementation();
+                IBl temp = new Bl();
+                TaskImplementation toCheckStatus = new TaskImplementation(temp);
 
                 //Checks if the engineer has already finished performing a task or is actively performing a task
                 IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();

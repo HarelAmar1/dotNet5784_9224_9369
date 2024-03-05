@@ -10,8 +10,9 @@ namespace BlImplementation;
 
 internal class TaskImplementation : ITask
 {
-    private readonly IBl _bl;
     internal TaskImplementation(IBl bl) => _bl = bl;
+
+    private readonly IBl _bl;
 
     private DalApi.IDal _dal = Factory.Get;
 
@@ -198,7 +199,7 @@ internal class TaskImplementation : ITask
         task.Description,
         task.Alias,
         false,
-        _bl.Clock,
+        task.CreatedAtDate,
         task.RequiredEffortTime,
         (DO.EngineerExperience)task.Copmlexity!,
         task.StartDate,

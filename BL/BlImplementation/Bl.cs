@@ -6,12 +6,12 @@ internal class Bl : IBl
 
     public IEngineer Engineer => new EngineerImplementation();
 
-    public ITask Task => new TaskImplementation();
-
+    public ITask Task => new TaskImplementation(this);
     public ISchedule Schedule => new ScheduleImplementation();
 
     public IMilestone Milestone => throw new NotImplementedException();//check if we do
 
+    #region Clock
     private static DateTime s_Clock = DateTime.Now.Date;
     public DateTime Clock
     {
@@ -37,6 +37,7 @@ internal class Bl : IBl
     {
         Clock = DateTime.Now;
     }
+    #endregion
     public void InitializeDB() => DalTest.Initialization.Do();
     public void ResetDB() => DalTest.Initialization.Reset();
 }

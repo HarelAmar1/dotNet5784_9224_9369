@@ -22,57 +22,54 @@ namespace PL
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+        public DateTime Date
+        {
+            get { return (DateTime)GetValue(DateProperty); }
+            set { SetValue(DateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Date.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DateProperty =
+            DependencyProperty.Register("Date", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(s_bl.Clock));
+
         public MainWindow()
         {
             InitializeComponent();
-            new EngineerWindow(158197).ShowDialog();////למחוק!!!!!!!!!!!!!!!!
         }
 
-        private void btnEngineer_Click(object sender, RoutedEventArgs e)
+        private void bcEngineer(object sender, RoutedEventArgs e)
         {
-            new EngineerListWindow().ShowDialog();
+            new EngineerLogInWindow().ShowDialog();
         }
 
-        private void InitDB(object sender, RoutedEventArgs e)
-        {
-            new EngineerListWindow().ShowDialog();
-        }
-
-        //Init DB func
-        private void bcInitDB(object sender, RoutedEventArgs e)
-        {
-            MessageBoxButton buttons = MessageBoxButton.OKCancel;
-            MessageBoxResult a = MessageBox.Show("Would you like to create Initial data?", "Data Initial", buttons);
-            if (a == MessageBoxResult.OK)
-            {
-                BlApi.Factory.Get().ResetDB();
-                BlApi.Factory.Get().InitializeDB();
-            }
-        }
-
-        //Reset DB func
-        private void bcResetDB(object sender, RoutedEventArgs e)
-        {
-            MessageBoxButton buttons = MessageBoxButton.OKCancel;
-            MessageBoxResult a = MessageBox.Show("Would you like to Reset the DB?", "Data Reset", buttons);
-            if (a == MessageBoxResult.OK)
-            {
-                BlApi.Factory.Get().ResetDB();
-            }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void bcManager(object sender, RoutedEventArgs e)
         {
             new ManagerWindow().ShowDialog();
         }
 
-        private void bcTask(object sender, RoutedEventArgs e)
+        private void AddedInAnHour(object sender, RoutedEventArgs e)
         {
-            new TaskForListWindow().ShowDialog();
+            s_bl.AddedInAnHour();
+            Date = s_bl.Clock;
         }
-        private void bcInitSchedule(object sender, RoutedEventArgs e)
+
+
+        private void AddedInAnDay(object sender, RoutedEventArgs e)
         {
-            new ScheduleWindow().ShowDialog();
+            s_bl.AddedInAnDay();
+            Date = s_bl.Clock;
+        }
+
+        private void AddedInAnYear(object sender, RoutedEventArgs e)
+        {
+            s_bl.AddedInAnYear();
+            Date = s_bl.Clock;
+        }
+
+        private void InitADate(object sender, RoutedEventArgs e)
+        {
+            s_bl.TimeReset();
+            Date = s_bl.Clock;
         }
     }
 }
