@@ -92,8 +92,6 @@ public class ConverterTimeSpanToDayes : IValueConverter
         {
             return new TimeSpan(days, 0, 0, 0);
         }
-        return new TimeSpan(0, 0, 0, 0); // Default value if conversion fails
-    }
+        return new TimeSpan(0, 0, 0, 0); // Default value if conversion fails
+    }
 }
-
-

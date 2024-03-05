@@ -6,7 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"      
         mc:Ignorable="d"
-        Title="PeakProjectPro" Height="450" Width="800">
+        Title="PeakProjectPro" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid Style="{Binding Source={StaticResource MyGridStyle}}">
         <Grid.RowDefinitions>
@@ -22,5 +23,12 @@
             <Button Content="Manager" Height="45" Width="116" Click="bcManager" Margin="0,0,10,0">
             </Button>
         </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,134,0,0">
+            <Label Content="{Binding Date}" Height="32" Width="auto" />
+            <Button Content="Add Hour" Grid.Row="1"  Click="AddedInAnHour"/>
+            <Button Content="Add Day" Grid.Row="1" Click="AddedInAnDay"/>
+            <Button Content="Add Year" Grid.Row="1"  Click="AddedInAnYear"/>
+            <Button Content="Init Date" Grid.Row="1" Click="InitADate"/>
+        </StackPanel>
     </Grid>
-</Window>
+</Window>  

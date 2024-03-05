@@ -284,6 +284,8 @@ internal class Program
                 Status = findTask.Status
             };
             dependencies.Add(newTaskInLis);
+            Console.WriteLine("Insert another dependent tasks - (click -1 to skip)");
+            Console.WriteLine("Please enter the ID of the dependent task");
             IDOfDependTask = int.Parse(Console.ReadLine()!);
         }
         Console.WriteLine("RequiredEffortTime ");

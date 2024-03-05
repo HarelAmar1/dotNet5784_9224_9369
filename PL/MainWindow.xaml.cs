@@ -20,6 +20,17 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+        public DateTime Date
+        {
+            get { return (DateTime)GetValue(DateProperty); }
+            set { SetValue(DateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Date.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DateProperty =
+            DependencyProperty.Register("Date", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(s_bl.Clock));
 
         public MainWindow()
         {
@@ -34,6 +45,31 @@ namespace PL
         private void bcManager(object sender, RoutedEventArgs e)
         {
             new ManagerWindow().ShowDialog();
+        }
+
+        private void AddedInAnHour(object sender, RoutedEventArgs e)
+        {
+            s_bl.AddedInAnHour();
+            Date = s_bl.Clock;
+        }
+
+
+        private void AddedInAnDay(object sender, RoutedEventArgs e)
+        {
+            s_bl.AddedInAnDay();
+            Date = s_bl.Clock;
+        }
+
+        private void AddedInAnYear(object sender, RoutedEventArgs e)
+        {
+            s_bl.AddedInAnYear();
+            Date = s_bl.Clock;
+        }
+
+        private void InitADate(object sender, RoutedEventArgs e)
+        {
+            s_bl.TimeReset();
+            Date = s_bl.Clock;
         }
     }
 }
