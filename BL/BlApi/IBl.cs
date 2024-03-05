@@ -8,6 +8,7 @@ public interface IBl
     public ITask Task { get; }
     public IMilestone Milestone { get; }
     public ISchedule Schedule { get; }
+    public IUser User{ get; }
     public void InitializeDB();
     public void ResetDB();
 
