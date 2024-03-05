@@ -29,12 +29,13 @@ namespace PL.EngineerForEngineer
 
         // Using a DependencyProperty as the backing store for Id.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IdProperty =
-            DependencyProperty.Register("Id", typeof(BO.User), typeof(EngineerLogInWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("User", typeof(BO.User), typeof(EngineerLogInWindow), new PropertyMetadata(null));
 
 
         public EngineerLogInWindow()
         {
             InitializeComponent();
+            User= new BO.User();
         }
 
 
