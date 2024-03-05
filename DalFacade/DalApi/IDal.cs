@@ -6,4 +6,5 @@ public interface IDal
     IEngineer Engineer { get; }
     ITask Task { get; }
     ISchedule Schedule { get; }
+    IUser User{ get; }
 }

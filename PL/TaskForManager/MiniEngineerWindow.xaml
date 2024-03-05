@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
         Title="MiniEngineerWindow" Height="400" Width="300"
+        WindowStyle="None"
+        Background="Transparent"
         DataContext="{Binding MiniEngineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
 
     <Grid Style="{Binding Source={StaticResource MyGridStyle}}">

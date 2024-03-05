@@ -62,7 +62,7 @@
                 <!--כפתור מיני מהנדס-->
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="Task's Engineer:" VerticalAlignment="Center" Margin="0,0,14,0"/>
-                    <Button Background="{x:Null}" Content="⚙️" Foreground="White" Width="35" Height="35" MouseEnter="OpenNewWindowButton_MouseEnter" MouseLeave="OpenNewWindowButton_MouseLeave" Tag="{Binding Engineer.Id}"/>
+                    <Button Background="{x:Null}" Style="{x:Null}" Content="⚙️" FontSize="25" Foreground="White" Width="35" Height="35" MouseEnter="OpenNewWindowButton_MouseEnter" MouseLeave="OpenNewWindowButton_MouseLeave" Tag="{Binding Engineer.Id}"/>
                 </StackPanel>
                 <ComboBox ItemsSource="{Binding EngineerInTask, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TaskWindow}}}" 
                           DisplayMemberPath="Name" SelectionChanged="ComboBoxEngineer_SelectionChanged" Loaded="ComboBoxEngineer_Loaded"/>
@@ -71,7 +71,6 @@
             </StackPanel>
             <Button Style="{Binding Source={StaticResource MyButtonStyle}}" Grid.Row="1" Content="ADD" Visibility="{Binding Id, Mode=OneWay, Converter={StaticResource ConvertIdToVisibilityAdKey}}"   Padding="5" Click="bcAdd" Height="50" Width="100"/>
             <Button Style="{Binding Source={StaticResource MyButtonStyle}}" Grid.Row="1" Content="UPDATE" Visibility="{Binding Id, Mode=OneWay, Converter={StaticResource ConvertIdToVisibilityUpKey}}"   Padding="5" Click="bcUpdate" Height="50" Width="100"/>
-
         </Grid>
     </ScrollViewer>
 </Window>

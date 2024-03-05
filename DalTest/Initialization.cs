@@ -142,8 +142,12 @@ public static class Initialization
         engineers.Save(@"..\xml\engineers.xml");
 
         //init the XML Dependencies file
-        XElement Dependencies = new XElement("ArrayOfDependency", "");
-        Dependencies.Save(@"..\xml\dependencies.xml");
+        XElement dependencies = new XElement("ArrayOfDependency", "");
+        dependencies.Save(@"..\xml\dependencies.xml");
+
+        //init the XML Users file
+        XElement users = new XElement("ArrayOfUser", "");
+        engineers.Save(@"..\xml\users.xml");
 
         //init the XML config file
         XElement NextTaskId = new XElement("NextTaskId", 1);
