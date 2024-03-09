@@ -5,4 +5,9 @@
     <Password>1</Password>
     <IsAdmin>false</IsAdmin>
   </User>
+  <User>
+    <UserId>664508</UserId>
+    <Password>1</Password>
+    <IsAdmin>false</IsAdmin>
+  </User>
 </ArrayOfUser>

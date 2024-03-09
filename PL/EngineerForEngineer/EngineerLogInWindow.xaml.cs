@@ -49,10 +49,12 @@ namespace PL.EngineerForEngineer
                     if (s_bl.User.Read(User.UserId).IsAdmin)
                     {
                         new ManagerWindow().Show();
+                        Close();
                     }
                     else
                     {
                         new EngineerWindow(User.UserId).Show();
+                        Close();
                     }
                 }
                 else
@@ -73,11 +75,13 @@ namespace PL.EngineerForEngineer
             try
             {
                 s_bl.User.Create(User);
+                MessageBox.Show("Login Successful!");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+            Close();
         }
     }
 }
