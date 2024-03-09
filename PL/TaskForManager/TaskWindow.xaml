@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="TaskWindow" Height="450"  Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    
+
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 
-        <Grid Style="{Binding Source={StaticResource MyGridStyle}}" DataContext="{Binding Task}" >
+        <Grid DataContext="{Binding Task}" Style="{Binding Source={StaticResource MyGridStyle}}" >
             <!--Row of Grid Definitions-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -32,7 +32,7 @@
                 <!--Dependency List-->
                 <Expander Header="Dependency List" IsExpanded="False" Margin="0,8,0,8">
                     <ScrollViewer Height="100" VerticalScrollBarVisibility="Auto">
-                        <ListBox ItemsSource="{Binding TaskInList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TaskWindow}}}">
+                        <ListBox Background="White" ItemsSource="{Binding TaskInList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TaskWindow}}}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">

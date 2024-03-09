@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:PL"      
         mc:Ignorable="d"
         Title="PeakProjectPro" Height="450" Width="800"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        DataContext="{Binding User,RelativeSource={RelativeSource Mode=Self}, Mode=TwoWay}">
 
     <Grid Style="{Binding Source={StaticResource MyGridStyle}}">
         <Grid.RowDefinitions>
@@ -15,20 +15,22 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!-- Text "Peak Project Pro" in the center with styled font -->
-        <TextBlock Grid.Row="1" Text="Peak Project Pro" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" FontSize="34" FontWeight="Bold" FontStyle="Italic" Foreground="White"/>
+        <TextBlock Grid.Row="0" Text="Peak Project Pro" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" FontSize="34" FontWeight="Bold" FontStyle="Italic" Foreground="White"/>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Engineer" Height="45" Width="116" Click="bcEngineer" FontStyle="Italic" Margin="0,0,10,0">
-            </Button>
-            <Button Content="Manager" Height="45" Width="116" Click="bcManager" Margin="0,0,10,0">
-            </Button>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label FontSize="20" Content="System log in:" Margin="0,0,0,15" HorizontalAlignment="Center"/>
+            <TextBox Height="35" Width="140" Margin="0,0,0,15" Text="{Binding UserId}" />
+            <TextBox Height="35" Width="140" Margin="0,0,0,15" Text="{Binding Password}"/>
+
+            <Button Content="Log in" Click="bcLogIn"  Margin="0,0,0,15"/>
+            <Button Content="Sign in" Click="bcSignIn" Margin="0,0,0,15" />
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,134,0,0">
-            <Label Content="{Binding Date}" Height="32" Width="auto" />
-            <Button Content="Add Hour" Click="AddedInAnHour"/>
-            <Button Content="Add Day" Click="AddedInAnDay"/>
-            <Button Content="Add Year" Click="AddedInAnYear"/>
-            <Button Content="Init Date" Click="InitADate"/>
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15,0,0,15">
+            <Label Content="{Binding Date, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" Height="32" Width="auto" />
+            <Button Content="Add Hour" Click="AddedInAnHour" Margin="0,0,0,10"/>
+            <Button Content="Add Day" Click="AddedInAnDay" Margin="0,0,0,10"/>
+            <Button Content="Add Year" Click="AddedInAnYear" Margin="0,0,0,10"/>
+            <Button Content="Init Date" Click="InitADate" Margin="0,0,0,10"/>
         </StackPanel>
     </Grid>
 </Window>  

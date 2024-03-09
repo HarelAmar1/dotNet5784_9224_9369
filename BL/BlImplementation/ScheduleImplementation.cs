@@ -14,12 +14,12 @@ internal class ScheduleImplementation : ISchedule
     private DalApi.IDal _dal = Factory.Get;
     public DateTime? getEndDateOfProject()
     {
-        return _dal.Schedule.getStartDateOfProject();
+        return _dal.Schedule.getEndDateOfProject();
     }
 
     public DateTime? getStartDateOfProject()
     {
-        return _dal.Schedule.getEndDateOfProject();
+        return _dal.Schedule.getStartDateOfProject();
     }
 
     public void setEndDateOfProject(DateTime endDate)

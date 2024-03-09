@@ -38,11 +38,12 @@ namespace PL.Task
         public ScheduleWindow()
         {
             InitializeComponent();
-            Date = DateTime.Now;
+            Date = s_bl.Clock;
         }
 
         private void bcInsetTheSchedule(object sender, RoutedEventArgs e)
         {
+            s_bl.Schedule.setStartDateOfProject(Date);
             s_bl.Task.dateGeneratorOfAllTasks(Date);
             Close();
         }

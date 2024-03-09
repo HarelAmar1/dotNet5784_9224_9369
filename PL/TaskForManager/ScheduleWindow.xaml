@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ScheduleWindow" Height="300" Width="450"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    <Grid>
+    <Grid Style="{Binding Source={StaticResource MyGridStyle}}">
         <!--לסדר ללא מרגיןולהוסיף כפתור ביטול -->
         <DatePicker SelectedDate="{Binding Date}" HorizontalAlignment="Left" Margin="112,128,0,0"  VerticalAlignment="Top" Width="auto" />
         <Label  Content="Enter a start date to start the project:" HorizontalAlignment="Left" Margin="112,97,0,0" VerticalAlignment="Top"/>

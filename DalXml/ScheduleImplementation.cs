@@ -30,7 +30,7 @@ internal class ScheduleImplementation : ISchedule
         XElement startDate = root.Element("startProjectDate");
         if (startDate.Value == "")
             return null;
-        return DateTime.Parse(startDate.ToString());
+        return DateTime.Parse(startDate.Value.ToString());
     }
     public DateTime? getEndDateOfProject()
     {
