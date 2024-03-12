@@ -225,7 +225,7 @@ internal class TaskImplementation : ITask
         if (task.CompleteDate == null)
             return 2;
         if (task.CompleteDate != null)
-            return 3;
+            return 4;
         // check how to check the last status
         return 0;
     }

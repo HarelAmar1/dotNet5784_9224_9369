@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace DO;
 
-public class User
+public record User
+(
+    int UserId,
+    string Password,
+    bool IsAdmin
+)
 {
-    public int UserId { set; get; }
-    public string Password { set; get; }
-    public bool IsAdmin { set; get; }
+    public User() : this(0,"",false)
+    {}
 }

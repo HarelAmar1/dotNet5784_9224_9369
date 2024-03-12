@@ -48,7 +48,7 @@ internal class EngineerImplementation : IEngineer
             error = $"Name: {engineerToAdd.Name}";
         else if (engineerToAdd.Cost < 0)
             error = $"Cost: {engineerToAdd.Cost}";
-        else if ((int)engineerToAdd.Level >= 5) 
+        else if ((int)engineerToAdd.Level >= 5)
             error = $"Level: {engineerToAdd.Level}";
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
@@ -72,7 +72,7 @@ internal class EngineerImplementation : IEngineer
         else
             throw new BlDoesNotExistException($"Engineer with ID: {engineerToAdd.Id} Does Not exists");
 
-        
+
 
         return engineerToAdd.Id;
 
@@ -115,10 +115,21 @@ internal class EngineerImplementation : IEngineer
 
     public void Update(BO.Engineer AnUpdatedEngineer)
     {
+        //We will check that the engineer does not have a Task that he has finished and now needs to be deleted
+        if (AnUpdatedEngineer.Task == null)
+        {
+            //We will look for the engineer in the tasks
+            var taskToUpdate = _dal.Task.ReadAll()
+            .FirstOrDefault(T => T.EngineerId != null && T.EngineerId == AnUpdatedEngineer.Id);
+            if (taskToUpdate != null)
+            {
+                var newTask = taskToUpdate with { EngineerId = null };
+                _dal.Task.Update(newTask);
+            }
 
+        }
 
         //Converts the list of engineers from DO to BO
-
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
                                                let tasks = _dal.Task.ReadAll()
                                                select new BO.Engineer()
@@ -152,7 +163,7 @@ internal class EngineerImplementation : IEngineer
             error = $"Name: {AnUpdatedEngineer.Name}";
         else if (AnUpdatedEngineer.Cost < 0)
             error = $"Cost: {AnUpdatedEngineer.Cost}";
-        else if ((int)AnUpdatedEngineer.Level >= 5) 
+        else if ((int)AnUpdatedEngineer.Level >= 5)
             error = $"Level: {AnUpdatedEngineer.Level}";
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
@@ -176,9 +187,9 @@ internal class EngineerImplementation : IEngineer
             DO.Task taskToremoveInDal = (from task in tasks
                                          where (task.EngineerId == AnUpdatedEngineer.Id)
                                          select (task)).FirstOrDefault();
-            if (taskToremoveInDal != null) 
+            if (taskToremoveInDal != null)
             {
-                taskToremoveInDal = taskToremoveInDal with { EngineerId=null };
+                taskToremoveInDal = taskToremoveInDal with { EngineerId = null };
                 _dal.Task.Update(taskToremoveInDal);
             }
 

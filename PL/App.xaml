@@ -11,7 +11,9 @@
         <local:ConvertIdToIsEnableForId x:Key="ConvertIdToIsEnableForIdKey"/>
         <local:ConverterTimeSpanToDayes x:Key="ConverterTimeSpanToDayesKey"/>
         <local:ConvertIdToIsVisibilityInEngineer x:Key="ConvertIdToIsVisibilityInEngineerKey"/>
+        <local:ConvertIdToIsVisibilityTheOppositeInEngineer x:Key="ConvertIdToIsVisibilityTheOppositeInEngineerKey"/>
 
+        
         <!--Style-->
         <!--Background Style-->
         <Style x:Key="MyGridStyle" TargetType="Grid">

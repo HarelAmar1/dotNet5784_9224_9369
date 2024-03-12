@@ -32,9 +32,10 @@ namespace PL
             //לבדקו שיש תאריך התחלה של פרויקט
             if (s_bl.Schedule.getStartDateOfProject() == null)
                 throw new Exception("PROJECT START DATE REQUIRED.");
-           
-           if(s_bl.Engineer.ReadAll().Count() == 0)
+
+            if (s_bl.Task == null || s_bl.Task.ReadAll().Count() == 0) 
                 throw new Exception("There is no Data");
+
 
             InitializeComponent();
             //ניצור רשימה של המשימות עם התאריך התחלה
@@ -42,13 +43,14 @@ namespace PL
             {
                 var taskFromDal = s_bl.Task.Read(task.Id);
                 //var stringOfDay = taskFromDal.RequiredEffortTime.ToString();
-                BO.Task newTaskForGantt = new BO.Task { Id = taskFromDal.Id, Alias = taskFromDal.Alias, RequiredEffortTime = taskFromDal.RequiredEffortTime, ScheduledDate = taskFromDal.ScheduledDate };
+                BO.Task newTaskForGantt = new BO.Task { Id = taskFromDal.Id, Alias = taskFromDal.Alias, RequiredEffortTime = taskFromDal.RequiredEffortTime, ScheduledDate = taskFromDal.ScheduledDate, CompleteDate = taskFromDal.CompleteDate};
                 ListOfTask.Add(newTaskForGantt);
             }
             //נמיין את הרשימה
             ListOfTask = ListOfTask.OrderBy(task => task.ScheduledDate).ToList();
 
             this.Loaded += Window_Loaded;
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -57,9 +59,9 @@ namespace PL
             if (canvas == null) return;
             DateTime minStartDate = ListOfTask.Min(task => task.ScheduledDate ?? DateTime.MaxValue);
             DateTime maxEndDate = ListOfTask.Max(task => (task.ScheduledDate ?? DateTime.MinValue).AddDays(task.RequiredEffortTime.Value.Days));
-            double maxAliasWidth = GetMaxAliasWidth(); // קביעת הרוחב המקסימלי של הכינויים
+            double maxAliasWidth = GetMaxAliasWidth() + 40; // קביעת הרוחב המקסימלי של הכינויים + שם התעודת זהות
 
-            double maxWidth = ListOfTask.Max(task => ((task.ScheduledDate ?? DateTime.Today) - minStartDate).TotalDays * 10 + task.RequiredEffortTime.Value.Days * 10) + maxAliasWidth + 20; // הוספת רווח קצת בסוף
+            double maxWidth = 40 + ListOfTask.Max(task => ((task.ScheduledDate ?? DateTime.Today) - minStartDate).TotalDays * 10 + task.RequiredEffortTime.Value.Days * 10) + maxAliasWidth + 20; // הוספת רווח קצת בסוף
             canvas.Width = maxWidth;
             canvas.Height = ListOfTask.Count * 30 + 60; // הוספת רווח לסרגל התאריכים ולמשימות
 
@@ -73,16 +75,28 @@ namespace PL
                 // הוספת תווית של שם המשימה
                 TextBlock aliasLabel = new TextBlock
                 {
-                    Text = task.Alias,
+                    Text = $"ID: {task.Id}, {task.Alias}",
                     Foreground = Brushes.White,
                     FontWeight = FontWeights.Bold
                 };
                 canvas.Children.Add(aliasLabel);
                 Canvas.SetLeft(aliasLabel, 5); // קצת רווח מהשוליים השמאליים
                 Canvas.SetTop(aliasLabel, topPosition);
+
+
+                //צבע המלבן תלוי במשימה שמתעכבת או שהסתיימה
+
+                //כחול כהה - משימה שטרם בוצעה
+                SolidColorBrush rectangleColor = new SolidColorBrush(Color.FromArgb(0xFF, 0x3F, 0x5B, 0x77));
+                //ירוק כהה - משימה שבוצעה
+                if (task.CompleteDate != null)
+                    rectangleColor = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0x8B, 0x00));
+                //אדום כהה - משימה שמתעכבת (מהנדס לא דיווח על סיום בזמן) ה
+                if (task.CompleteDate == null && task.ScheduledDate + task.RequiredEffortTime < s_bl.Clock || task.CompleteDate != null && task.CompleteDate > s_bl.Clock) 
+                    rectangleColor = new SolidColorBrush(Color.FromArgb(0xFF, 0x8B, 0x00, 0x00));
                 Rectangle rectangle = new Rectangle
                 {
-                    Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x3F, 0x5B, 0x77)),
+                    Fill = rectangleColor,
                     Width = task.RequiredEffortTime.Value.Days * 10, // כפל המשך המשימה ב-10 לדוגמה
                     Height = 20,
                     Stroke = new SolidColorBrush(Colors.Black),
@@ -98,7 +112,7 @@ namespace PL
                 // הוספת תווית תאריך ומשך זמן למלבן
                 TextBlock dateLabel = new TextBlock
                 {
-                    Text = $"{task.ScheduledDate?.ToString("dd/MM")} + {task.RequiredEffortTime.Value.Days}",
+                    Text = $"ID: {task.Id}, {task.ScheduledDate?.ToString("dd/MM")} + {task.RequiredEffortTime.Value.Days}",
                     Foreground = new SolidColorBrush(Colors.White),
                     FontWeight = FontWeights.Bold,
                     TextAlignment = TextAlignment.Center
@@ -207,12 +221,5 @@ namespace PL
             }
             return null;
         }
-    }
-    public class TaskForGantt
-    {
-        public int Id { get; set; }
-        public string Alias { get; set; }
-        public int RequiredEffortTime { get; set; }
-        public DateTime? ScheduledDate { get; set; }
     }
 }

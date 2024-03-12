@@ -15,9 +15,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid DataContext="{Binding Engineer}" Grid.Row="0" >
-            <!--אם אין מהדנס אז נסתיר את החלון-->
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityInEngineerKey}}">
+        <Grid DataContext="{Binding Engineer}" Grid.Row="0">
+            <!--אם לא הוגדר משימה למהדנס אז לא נציג את המשימה הנוכחית כי אין אחת כזאת-->
+            <StackPanel  Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityInEngineerKey}}">
                 <Label Content="The Current Id Task's" />
                 <TextBox Text="{Binding Task.Id}" IsEnabled="False"/>
                 <Label Content="The Current Task"/>
@@ -26,16 +26,21 @@
                 <DatePicker SelectedDate="{Binding CompleteDate, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:EngineerWindow}} }"/>
             </StackPanel>
         </Grid>
-        <!--תמיד יופיע רשימת המשימות האופציולניות-->
-        <Grid DataContext="{Binding TaskInEngineer}" Grid.Row="2" >
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid DataContext="{Binding Engineer}" Grid.Row="1">
+            <!--נראה את הרשימה רק לאחר סיום או אי בחירת משימה-->
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityTheOppositeInEngineerKey}}" >
                 <Label Content="Task Selection"/>
-                <ComboBox ItemsSource="{Binding}" DisplayMemberPath="Alias" SelectionChanged="ComboBoxTask_SelectionChanged" Loaded="ComboBoxTask_Loaded"/>
-                <Button Content="Done" Click="bcDone" Height="50" Width="100" Margin="0,20,0,0" />
-                <Button Content="Cancel" Click="bcCancel" Height="50" Width="100" Margin="0,20,0,0" />
+                <ComboBox ItemsSource="{Binding TaskInEngineer, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:EngineerWindow}} }" DisplayMemberPath="Alias" SelectionChanged="ComboBoxTask_SelectionChanged" Loaded="ComboBoxTask_Loaded"/>
             </StackPanel>
         </Grid>
-
+        <Grid DataContext="{Binding Engineer}" Grid.Row="2">
+            <!--נציג התחלה משימה או סיום משימה בהתאמה ולפי הצורך-->
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="Cancel" Click="bcCancel" Height="25" Width="100" Margin="0,20,0,0" />
+                <Button Content="Start Task" Click="bcStartTask" Height="50" Width="100" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityTheOppositeInEngineerKey}}"/>
+                <Button Content="Done" Click="bcDoneTask" Height="50" Width="100" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityInEngineerKey}}"/>
+            </StackPanel>
+        </Grid>
 
     </Grid>
 </Window>

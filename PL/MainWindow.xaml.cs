@@ -32,6 +32,7 @@ namespace PL
         public static readonly DependencyProperty DateProperty =
             DependencyProperty.Register("Date", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(null));
 
+        //Ctor
         public MainWindow()
         {
             InitializeComponent();

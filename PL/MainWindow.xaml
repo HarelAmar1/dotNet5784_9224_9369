@@ -5,8 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"      
-        mc:Ignorable="d"
-        Title="PeakProjectPro" Height="450" Width="800"
+        mc:Ignorable="d"    
+        Title="PeakProjectPro" Height="450" Width="800" 
         DataContext="{Binding User,RelativeSource={RelativeSource Mode=Self}, Mode=TwoWay}">
 
     <Grid Style="{Binding Source={StaticResource MyGridStyle}}">
