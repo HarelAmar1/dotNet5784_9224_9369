@@ -8,7 +8,7 @@
         Title="EngineerWindow" Height="450" Width="500"
         DataContext="{Binding RelativeSource={RelativeSource self}}">
 
-    <Grid>
+    <Grid Style="{Binding Source={StaticResource MyGridStyle}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -23,15 +23,17 @@
                 <Label Content="The Current Task"/>
                 <TextBox Text="{Binding Task.Alias}" IsEnabled="False"/>
                 <Label Content="Complete Task"/>
-                <DatePicker SelectedDate="{Binding CompleteDate, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:EngineerWindow}} }" Foreground="White"/>
+                <DatePicker SelectedDate="{Binding CompleteDate, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:EngineerWindow}} }"/>
             </StackPanel>
         </Grid>
-        <!--תמיד יופיע רשימת המשימות האופציולניות-->
+        <!--the list of optional tasks will always appear-->
+
         <Grid DataContext="{Binding TaskInEngineer}" Grid.Row="2" >
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label Content="Task Selection"/>
                 <ComboBox ItemsSource="{Binding}" DisplayMemberPath="Alias" SelectionChanged="ComboBoxTask_SelectionChanged" Loaded="ComboBoxTask_Loaded"/>
-                <Button Content="Done" Click="bcUpdate" Height="50" Width="100" Margin="0,20,0,0" />
+                <Button Content="Done" Click="bcDone" Height="50" Width="100" Margin="0,20,0,0" />
+                <Button Content="Cancel" Click="bcCancel" Height="50" Width="100" Margin="0,20,0,0" />
             </StackPanel>
         </Grid>
 

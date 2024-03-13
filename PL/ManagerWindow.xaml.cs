@@ -42,7 +42,14 @@ namespace PL
 
         private void bcGantt(object sender, RoutedEventArgs e)
         {
-            new GanttWindow().ShowDialog();
+            try
+            {
+                new GanttWindow().ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
 
@@ -67,6 +74,12 @@ namespace PL
                 BlApi.Factory.Get().ResetDB();
                 BlApi.Factory.Get().InitializeDB();
             }
+        }
+
+        private void bcReturnBack(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            Close();
         }
     }
 }

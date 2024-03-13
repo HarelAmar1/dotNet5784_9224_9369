@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
+using PL.Engineer;
 
 namespace PL.EngineerForEngineer
 {
@@ -54,7 +55,7 @@ namespace PL.EngineerForEngineer
 
         // Using a DependencyProperty as the backing store for CompleteDate.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CompleteDateProperty =
-            DependencyProperty.Register("CompleteDate", typeof(DateTime), typeof(EngineerWindow), new PropertyMetadata(DateTime.Now));
+            DependencyProperty.Register("CompleteDate", typeof(DateTime), typeof(EngineerWindow), new PropertyMetadata(s_bl.Clock));
 
         //Ctor
         public EngineerWindow(int id)
@@ -110,10 +111,8 @@ namespace PL.EngineerForEngineer
 
 
 
-
-        private void bcUpdate(object sender, RoutedEventArgs e)
+        private void bcDone(object sender, RoutedEventArgs e)
         {
-
             //לבדוק שהוגדר משימה למהנדס אחרת לא נעדכן את התאריך סיום שלה
             if (Engineer.Task != null)
             {
@@ -142,7 +141,15 @@ namespace PL.EngineerForEngineer
             //נעדכן את המהנדס למשימה החדשה
             s_bl.Engineer.Update(Engineer);
             
-            
+            new MainWindow().Show();
+            Close();
+        }
+
+        private void bcCancel(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            Close();
+
         }
     }
 }

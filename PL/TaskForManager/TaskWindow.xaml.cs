@@ -119,9 +119,9 @@ namespace PL.Task
                     Description = "Description",
                     Alias = "Alias",
                     Status = 0,
-                    CreatedAtDate = DateTime.Now,
+                    CreatedAtDate = s_bl.Clock,
                     RequiredEffortTime = new TimeSpan(0, 0, 0, 0),
-                    StartDate = DateTime.Now,
+                    StartDate = s_bl.Clock,
                     Copmlexity = 0,
                     Deliverables = "Deliverables",
                     Remarks = "Remarks"
