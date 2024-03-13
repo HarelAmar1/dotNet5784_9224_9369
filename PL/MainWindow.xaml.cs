@@ -32,6 +32,7 @@ namespace PL
         public static readonly DependencyProperty DateProperty =
             DependencyProperty.Register("Date", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(null));
 
+        //Ctor
         public MainWindow()
         {
             InitializeComponent();
@@ -62,7 +63,7 @@ namespace PL
         //LogIn and SighInSystem
 
 
-        //יצירת משתמש של המנדס
+        //Creating an engineer user
         public BO.User User
         {
             get { return (BO.User)GetValue(IdProperty); }

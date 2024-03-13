@@ -17,6 +17,12 @@ internal class TaskImplementation : ITask
     private DalApi.IDal _dal = Factory.Get;
 
     //Create
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="task" A task that needs to be added></param>
+    /// <returns newTaskId="int" Returns the ID of the assignment></returns>
+    /// <exception cref="BO.BlAlreadyExistsException" An exception that already exists an assignment with the same ID></exception>
     public int Create(BO.Task task)
     {
         //we will check the correctness of the ID and nickname
@@ -39,7 +45,7 @@ internal class TaskImplementation : ITask
         task.Remarks,
         task.Engineer?.Id
         );
-        
+
         // an attempt will be made to insert it into the data
         try
         {
@@ -63,6 +69,9 @@ internal class TaskImplementation : ITask
 
 
     //Delete
+    /// <param name="idTask" id of a task that needs to be deleted></param>
+    /// <exception cref="BO.BlDoesNotExistException" There is no exception to this type of error></exception>
+    /// <exception cref="BlDeletionImpossible" This task cannot be deleted></exception>
     public void Delete(int idTask)
     {
 
@@ -94,6 +103,9 @@ internal class TaskImplementation : ITask
     }
 
     // Read
+    /// <param name="idTask" Task selection by ID></param>
+    /// <returns Returns the task with the received ID></returns>
+    /// <exception cref="BO.BlDoesNotExistException" There is no exception to this type of error></exception>
     public BO.Task Read(int idTask)
     {
         try
@@ -156,6 +168,9 @@ internal class TaskImplementation : ITask
 
 
     //ReadAll
+
+    /// <param name="func" Task filtering function></param>
+    /// <returns Returns a list of tasks of type TaslInList></returns>
     public IEnumerable<BO.TaskInList> ReadAll(Func<DO.Task?, bool>? func = null)
     {
         IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll(func).ToList();
@@ -174,6 +189,8 @@ internal class TaskImplementation : ITask
 
 
     // Update
+
+    /// <param name="task" A task that needs to be updated in the data layer></param>
     public void Update(BO.Task task)
     {
         // Check the correctness of the ID and nickname
@@ -225,12 +242,13 @@ internal class TaskImplementation : ITask
         if (task.CompleteDate == null)
             return 2;
         if (task.CompleteDate != null)
-            return 3;
+            return 4;
         // check how to check the last status
         return 0;
     }
 
     //startDateTimeManagement
+  
     public void startDateTimeManagement(int idTask, DateTime scheduleDateTime)
     {
         DO.Task taskWithNewDate = _dal.Task.Read(idTask) with { ScheduledDate = scheduleDateTime, DeadlineDate = scheduleDateTime + _dal.Task.Read(idTask).RequiredEffortTime };

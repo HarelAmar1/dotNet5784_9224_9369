@@ -9,6 +9,12 @@ namespace BlImplementation;
 internal class EngineerImplementation : IEngineer
 {
     private DalApi.IDal _dal = Factory.Get;
+
+
+    /// <param name="engineerToAdd">Engineer to add to the DAL layer</param>
+    /// <returns engineerToAdd.Id Returns the id of the added engineer ></returns>
+    /// <exception cref="BlIncorrectInputException" Invalid input exception></exception>
+    /// <exception cref="BlDoesNotExistException"  An exception does not exist></exception>
     public int Create(BO.Engineer engineerToAdd)
     {
         //Converts the list of engineers from DO to BO
@@ -48,7 +54,7 @@ internal class EngineerImplementation : IEngineer
             error = $"Name: {engineerToAdd.Name}";
         else if (engineerToAdd.Cost < 0)
             error = $"Cost: {engineerToAdd.Cost}";
-        else if ((int)engineerToAdd.Level >= 5) 
+        else if ((int)engineerToAdd.Level >= 5)
             error = $"Level: {engineerToAdd.Level}";
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
@@ -72,13 +78,16 @@ internal class EngineerImplementation : IEngineer
         else
             throw new BlDoesNotExistException($"Engineer with ID: {engineerToAdd.Id} Does Not exists");
 
-        
+
 
         return engineerToAdd.Id;
 
     }
 
 
+    /// <param name="id" Get an engineer's id number ></param>
+    /// <returns Returns an engineer according to the received id></returns>
+    /// <exception cref="BlDoesNotExistException" An exception does not exist></exception>
     public BO.Engineer Read(int id)
     {
         //Converts the list of engineers from DO to BO
@@ -113,12 +122,26 @@ internal class EngineerImplementation : IEngineer
 
     }
 
+    /// <param name="AnUpdatedEngineer" Gets an engineer who needs to change in the DAL layer></param>
+    /// <exception cref="BlIncorrectInputException" Invalid input exception ></exception>
+    /// <exception cref="BlDoesNotExistException"  An exception does not exist ></exception>
     public void Update(BO.Engineer AnUpdatedEngineer)
     {
+        //We will check that the engineer does not have a Task that he has finished and now needs to be deleted
+        if (AnUpdatedEngineer.Task == null)
+        {
+            //We will look for the engineer in the tasks
+            var taskToUpdate = _dal.Task.ReadAll()
+            .FirstOrDefault(T => T.EngineerId != null && T.EngineerId == AnUpdatedEngineer.Id);
+            if (taskToUpdate != null)
+            {
+                var newTask = taskToUpdate with { EngineerId = null };
+                _dal.Task.Update(newTask);
+            }
 
+        }
 
         //Converts the list of engineers from DO to BO
-
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
                                                let tasks = _dal.Task.ReadAll()
                                                select new BO.Engineer()
@@ -152,7 +175,7 @@ internal class EngineerImplementation : IEngineer
             error = $"Name: {AnUpdatedEngineer.Name}";
         else if (AnUpdatedEngineer.Cost < 0)
             error = $"Cost: {AnUpdatedEngineer.Cost}";
-        else if ((int)AnUpdatedEngineer.Level >= 5) 
+        else if ((int)AnUpdatedEngineer.Level >= 5)
             error = $"Level: {AnUpdatedEngineer.Level}";
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
@@ -176,9 +199,9 @@ internal class EngineerImplementation : IEngineer
             DO.Task taskToremoveInDal = (from task in tasks
                                          where (task.EngineerId == AnUpdatedEngineer.Id)
                                          select (task)).FirstOrDefault();
-            if (taskToremoveInDal != null) 
+            if (taskToremoveInDal != null)
             {
-                taskToremoveInDal = taskToremoveInDal with { EngineerId=null };
+                taskToremoveInDal = taskToremoveInDal with { EngineerId = null };
                 _dal.Task.Update(taskToremoveInDal);
             }
 
@@ -201,7 +224,11 @@ internal class EngineerImplementation : IEngineer
     }
 
 
-
+   
+    /// <param name="id" Gets an ID that needs to be deleted from the DAL layer></param>
+    /// <exception cref="BlDoesNotExistException" An exception does not exist ></exception>
+    /// <exception cref="BlCanNotBeDeletedException" An engineer's anomaly that cannot be erased ></exception>
+    /// <exception cref="BlIncorrectInputException" Invalid input exception ></exception>
     public void Delete(int id)
     {
         //bring the list of engineers from DO
@@ -268,6 +295,11 @@ internal class EngineerImplementation : IEngineer
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filter" Selection of a list of engineers according to a certain filter></param>
+    /// <returns Returns a list of engineers according to the filter></returns>
     public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? filter = null)
     {
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll(filter).ToList()

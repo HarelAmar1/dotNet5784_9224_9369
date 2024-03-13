@@ -24,31 +24,33 @@ namespace PL
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-        //רשימת המשימות עם תאריכי התחלה ומשך זמן
+        //List of tasks with start dates and duration
         public List<BO.Task> ListOfTask = new List<BO.Task>();
 
         public GanttWindow()
         {
-            //לבדקו שיש תאריך התחלה של פרויקט
+            // check that there is a project start date
             if (s_bl.Schedule.getStartDateOfProject() == null)
                 throw new Exception("PROJECT START DATE REQUIRED.");
-           
-           if(s_bl.Engineer.ReadAll().Count() == 0)
+
+            if (s_bl.Task == null || s_bl.Task.ReadAll().Count() == 0)
                 throw new Exception("There is no Data");
 
+
             InitializeComponent();
-            //ניצור רשימה של המשימות עם התאריך התחלה
+            //Create a list of tasks with a start date
             foreach (var task in s_bl.Task.ReadAll())
             {
                 var taskFromDal = s_bl.Task.Read(task.Id);
                 //var stringOfDay = taskFromDal.RequiredEffortTime.ToString();
-                BO.Task newTaskForGantt = new BO.Task { Id = taskFromDal.Id, Alias = taskFromDal.Alias, RequiredEffortTime = taskFromDal.RequiredEffortTime, ScheduledDate = taskFromDal.ScheduledDate };
+                BO.Task newTaskForGantt = new BO.Task { Id = taskFromDal.Id, Alias = taskFromDal.Alias, RequiredEffortTime = taskFromDal.RequiredEffortTime, ScheduledDate = taskFromDal.ScheduledDate, CompleteDate = taskFromDal.CompleteDate };
                 ListOfTask.Add(newTaskForGantt);
             }
-            //נמיין את הרשימה
+            //sort the list
             ListOfTask = ListOfTask.OrderBy(task => task.ScheduledDate).ToList();
 
             this.Loaded += Window_Loaded;
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -57,60 +59,71 @@ namespace PL
             if (canvas == null) return;
             DateTime minStartDate = ListOfTask.Min(task => task.ScheduledDate ?? DateTime.MaxValue);
             DateTime maxEndDate = ListOfTask.Max(task => (task.ScheduledDate ?? DateTime.MinValue).AddDays(task.RequiredEffortTime.Value.Days));
-            double maxAliasWidth = GetMaxAliasWidth(); // קביעת הרוחב המקסימלי של הכינויים
+            double maxAliasWidth = GetMaxAliasWidth() + 40; // Determining the maximum width of the aliases + name of the identity certificate
 
-            double maxWidth = ListOfTask.Max(task => ((task.ScheduledDate ?? DateTime.Today) - minStartDate).TotalDays * 10 + task.RequiredEffortTime.Value.Days * 10) + maxAliasWidth + 20; // הוספת רווח קצת בסוף
+            double maxWidth = 40 + ListOfTask.Max(task => ((task.ScheduledDate ?? DateTime.Today) - minStartDate).TotalDays * 10 + task.RequiredEffortTime.Value.Days * 10) + maxAliasWidth + 20; // Added a little space at the end
             canvas.Width = maxWidth;
-            canvas.Height = ListOfTask.Count * 30 + 60; // הוספת רווח לסרגל התאריכים ולמשימות
+            canvas.Height = ListOfTask.Count * 30 + 60; // Adding a space to the date bar and tasks
 
-            double topPosition = 40; // מתחילים מ-40 פיקסלים למעלה כדי לתת מקום לסרגל התאריכים
+            double topPosition = 40; // start from 40px up to make room for the date bar
 
             foreach (var task in ListOfTask)
             {
                 double offsetDays = ((task.ScheduledDate ?? DateTime.Today) - minStartDate).TotalDays;
-                double leftPosition = offsetDays * 10 + maxAliasWidth; // המלבנים מתחילים לאחר הטקסט הארוך ביותר
+                double leftPosition = offsetDays * 10 + maxAliasWidth; // The rectangles start after the longest text
 
-                // הוספת תווית של שם המשימה
+                // Adding a label of the task name
                 TextBlock aliasLabel = new TextBlock
                 {
-                    Text = task.Alias,
+                    Text = $"ID: {task.Id}, {task.Alias}",
                     Foreground = Brushes.White,
                     FontWeight = FontWeights.Bold
                 };
                 canvas.Children.Add(aliasLabel);
-                Canvas.SetLeft(aliasLabel, 5); // קצת רווח מהשוליים השמאליים
+                Canvas.SetLeft(aliasLabel, 5); // some space from the left margin
                 Canvas.SetTop(aliasLabel, topPosition);
+
+
+                //The color of the rectangle depends on the task that is delayed or completed
+
+                //dark blue - task not yet done
+                SolidColorBrush rectangleColor = new SolidColorBrush(Color.FromArgb(0xFF, 0x3F, 0x5B, 0x77));
+                //dark green - task done
+                if (task.CompleteDate != null)
+                    rectangleColor = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0x8B, 0x00));
+                //dark red - a task that is delayed (the engineer did not report completion on time)
+                if (task.CompleteDate == null && task.ScheduledDate + task.RequiredEffortTime < s_bl.Clock || task.CompleteDate != null && task.CompleteDate > s_bl.Clock)
+                    rectangleColor = new SolidColorBrush(Color.FromArgb(0xFF, 0x8B, 0x00, 0x00));
                 Rectangle rectangle = new Rectangle
                 {
-                    Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x3F, 0x5B, 0x77)),
-                    Width = task.RequiredEffortTime.Value.Days * 10, // כפל המשך המשימה ב-10 לדוגמה
+                    Fill = rectangleColor,
+                    Width = task.RequiredEffortTime.Value.Days * 10, // Multiply the continuation of the task by 10 for example
                     Height = 20,
                     Stroke = new SolidColorBrush(Colors.Black),
                     StrokeThickness = 1,
-                    RadiusX = 5, // רדיוס העיגול של הקצוות בציר X
-                    RadiusY = 5 // רדיוס העיגול של הקצוות בציר Y
+                    RadiusX = 5,// The circle radius of the edges in the X axis
+                    RadiusY = 5 // The circle radius of the edges in the Y axis
                 };
 
                 canvas.Children.Add(rectangle);
                 Canvas.SetLeft(rectangle, leftPosition);
                 Canvas.SetTop(rectangle, topPosition);
 
-                // הוספת תווית תאריך ומשך זמן למלבן
+                // Adding a date and duration label to the rectangle
                 TextBlock dateLabel = new TextBlock
                 {
-                    Text = $"{task.ScheduledDate?.ToString("dd/MM")} + {task.RequiredEffortTime.Value.Days}",
+                    Text = $"ID: {task.Id}, {task.ScheduledDate?.ToString("dd/MM")} + {task.RequiredEffortTime.Value.Days}",
                     Foreground = new SolidColorBrush(Colors.White),
                     FontWeight = FontWeights.Bold,
                     TextAlignment = TextAlignment.Center
                 };
                 canvas.Children.Add(dateLabel);
-                Canvas.SetLeft(dateLabel, leftPosition + 2); // כוונון עדין למיקום התווית
-                Canvas.SetTop(dateLabel, topPosition + 2); // כוונון עדין למיקום התווית
-
-                topPosition += 30; // עדכון המיקום האנכי למשימה הבאה
+                Canvas.SetLeft(dateLabel, leftPosition + 2);// fine-tuning for label position
+                Canvas.SetTop(dateLabel, topPosition + 2);  // fine-tuning for label position 
+                topPosition += 30; // Update the vertical position for the next task
             }
 
-            // הוספת סרגל התאריכים
+            // Adding the date bar
             AddMonthLabels(canvas, minStartDate, maxEndDate);
         }
 
@@ -131,15 +144,15 @@ namespace PL
                     maxAliasWidth = width;
                 }
             }
-            return maxAliasWidth + 10; // נוסף רווח של 10 פיקסלים
+            return maxAliasWidth + 10; // Added 10px margin
         }
 
 
         private void AddMonthLabels(Canvas canvas, DateTime minStartDate, DateTime maxEndDate)
         {
-            double pixelsPerDay = 10; // נניח שכל יום מיוצג על ידי 10 פיקסלים
+            double pixelsPerDay = 10; // Assume each day is represented by 10 pixels
 
-            // חישוב הרוחב המקסימלי של הכינויים
+            // Calculation of the maximum width of the aliases
             double maxAliasWidth = GetMaxAliasWidth();
 
             DateTime currentMonth = new DateTime(minStartDate.Year, minStartDate.Month, 1);
@@ -151,24 +164,24 @@ namespace PL
                 double leftPosition;
                 if (isMonthStartVisible)
                 {
-                    // אם יש מלבן שמתחיל בחודש זה, בדוק את המיקום המדויק של התחלת המלבן
+                    // If there is a rectangle starting in this month, check the exact location of the start of the rectangle
                     DateTime firstTaskStart = ListOfTask.Where(task => task.ScheduledDate.HasValue && task.ScheduledDate.Value.Month == currentMonth.Month && task.ScheduledDate.Value.Year == currentMonth.Year)
                                                          .Min(task => task.ScheduledDate.Value);
 
                     if (firstTaskStart.Day > 1)
                     {
-                        // אם המלבן הראשון מתחיל אחרי ה-1 בחודש, מקם את תווית החודש משמאל למלבן
+                        // If the first rectangle starts after the 1st of the month, place the month label to the left of the rectangle
                         leftPosition = ((firstTaskStart - minStartDate).TotalDays - firstTaskStart.Day + 1) * pixelsPerDay + maxAliasWidth;
                     }
                     else
                     {
-                        // אם המלבן מתחיל ב-1 בחודש, מקם את תווית החודש בהתאם למיקום הסטנדרטי
+                        // If the rectangle starts with the 1st of the month, position the month label according to the standard position
                         leftPosition = ((currentMonth - minStartDate).TotalDays) * pixelsPerDay + maxAliasWidth;
                     }
                 }
                 else
                 {
-                    // אם אין מלבן שמתחיל בחודש זה, מקם את תווית החודש בהתאם למיקום הסטנדרטי
+                    // If there is no rectangle starting with this month, position the month label according to the standard position
                     leftPosition = ((currentMonth - minStartDate).TotalDays) * pixelsPerDay + maxAliasWidth;
                 }
 
@@ -181,7 +194,7 @@ namespace PL
                 };
 
                 Canvas.SetLeft(monthLabel, leftPosition);
-                Canvas.SetTop(monthLabel, 0); // אתה יכול להתאים את הגובה כמו שאתה רוצה
+                Canvas.SetTop(monthLabel, 0); // You can adjust the height as you want
 
                 canvas.Children.Add(monthLabel);
 
@@ -190,7 +203,7 @@ namespace PL
         }
 
 
-        // מתודה עזר לחיפוש רכיב בעץ הוויזואלי לפי סוג
+        // A helper method to search for a component in the visual tree by type
         private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
@@ -207,12 +220,5 @@ namespace PL
             }
             return null;
         }
-    }
-    public class TaskForGantt
-    {
-        public int Id { get; set; }
-        public string Alias { get; set; }
-        public int RequiredEffortTime { get; set; }
-        public DateTime? ScheduledDate { get; set; }
     }
 }
