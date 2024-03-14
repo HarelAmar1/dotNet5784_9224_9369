@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <!-- Text "Peak Project Pro" in the center with styled font  -->
+        <!-- Text "Peak Project Pro" in the center with styled font -->
         <TextBlock Grid.Row="0" Text="Peak Project Pro" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" FontSize="34" FontWeight="Bold" FontStyle="Italic" Foreground="White"/>
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
