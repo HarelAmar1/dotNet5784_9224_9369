@@ -25,7 +25,7 @@ namespace PL.Task
         public TaskForListWindow()
         {
             InitializeComponent();
-            TaskForList = s_bl?.Task.ReadAll()!;
+            TaskForList = s_bl?.Task.ReadAllNew(0)!;
         }
 
         public IEnumerable<BO.TaskInList> TaskForList
@@ -37,12 +37,12 @@ namespace PL.Task
         DependencyProperty.Register("TaskForList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskForListWindow), new PropertyMetadata(null));
 
 
-        public BO.EngineerExperience Copmlexity { get; set; } = BO.EngineerExperience.All;
+        public BO.Status StatuS { get; set; } = BO.Status.All;
 
         private void cbTaskDataFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TaskForList = (Copmlexity == BO.EngineerExperience.All) ?
-            s_bl?.Task.ReadAll()! : s_bl?.Task.ReadAll(item => (int)item.Copmlexity == (int)Copmlexity)!;
+            TaskForList = (StatuS == BO.Status.All) ?
+            s_bl?.Task.ReadAllNew(0)! : s_bl?.Task.ReadAllNew(StatuS);
         }
 
         private void bcPreesToUpdate(object sender, MouseButtonEventArgs e)
@@ -56,6 +56,11 @@ namespace PL.Task
         {
             new TaskWindow(0).Show();
             Close();
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -2,7 +2,10 @@
 using BO;
 using DO;
 using System;
+using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics.Metrics;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -17,9 +20,6 @@ internal class TaskImplementation : ITask
     private DalApi.IDal _dal = Factory.Get;
 
     //Create
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="task" A task that needs to be added></param>
     /// <returns newTaskId="int" Returns the ID of the assignment></returns>
     /// <exception cref="BO.BlAlreadyExistsException" An exception that already exists an assignment with the same ID></exception>
@@ -45,6 +45,7 @@ internal class TaskImplementation : ITask
         task.Remarks,
         task.Engineer?.Id
         );
+
 
         // an attempt will be made to insert it into the data
         try
@@ -210,6 +211,7 @@ internal class TaskImplementation : ITask
             _dal.Dependency.Create(insertUpdate);
         }
 
+
         //Fill in the rest of the fields for the DAL task and return updated
         DO.Task newTask = new DO.Task
         (task.Id,
@@ -248,7 +250,7 @@ internal class TaskImplementation : ITask
     }
 
     //startDateTimeManagement
-  
+
     public void startDateTimeManagement(int idTask, DateTime scheduleDateTime)
     {
         DO.Task taskWithNewDate = _dal.Task.Read(idTask) with { ScheduledDate = scheduleDateTime, DeadlineDate = scheduleDateTime + _dal.Task.Read(idTask).RequiredEffortTime };
@@ -333,5 +335,36 @@ internal class TaskImplementation : ITask
             }
         }
         return null;
+    }
+    public List<BO.TaskInList>? ReadAllNew(BO.Status status)
+    {
+        IEnumerable<BO.TaskInList> tasks = ReadAll();
+
+        List<BO.TaskInList> tasks1 = new List<TaskInList>();
+        List<BO.TaskInList> tasks2 = new List<TaskInList>();
+        foreach (BO.TaskInList item in tasks)
+        {
+            item.Status = (BO.Status)(Status(Read(item.Id)));
+            tasks2.Add(item);
+            if (item.Status == status)
+                tasks1.Add(item);
+
+        }
+        if (status == 0)
+            return tasks2;
+        return tasks1;
+    }
+    public int Status(BO.Task task)
+    {
+        if (task.StartDate == null)
+            return 1;
+        if (task.CompleteDate == null)
+            return 2;
+        if (task.CompleteDate != null)
+            return 4;
+        if (task.ScheduledDate == null)
+            return 0;
+        // check how to check the last status
+        return 5;
     }
 }

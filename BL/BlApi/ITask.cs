@@ -25,4 +25,6 @@ public interface ITask
 
     //A date generator for all tasks, activated in the transition phase
     public void dateGeneratorOfAllTasks(DateTime startOfProject);
+
+    public List<BO.TaskInList>? ReadAllNew(BO.Status status);
 }

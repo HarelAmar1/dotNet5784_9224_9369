@@ -84,7 +84,8 @@ internal class EngineerImplementation : IEngineer
 
     }
 
-
+    ///Read
+    /// 
     /// <param name="id" Get an engineer's id number ></param>
     /// <returns Returns an engineer according to the received id></returns>
     /// <exception cref="BlDoesNotExistException" An exception does not exist></exception>
@@ -121,7 +122,8 @@ internal class EngineerImplementation : IEngineer
         return EngineerToGet;
 
     }
-
+    ///Update
+    /// 
     /// <param name="AnUpdatedEngineer" Gets an engineer who needs to change in the DAL layer></param>
     /// <exception cref="BlIncorrectInputException" Invalid input exception ></exception>
     /// <exception cref="BlDoesNotExistException"  An exception does not exist ></exception>
@@ -224,7 +226,8 @@ internal class EngineerImplementation : IEngineer
     }
 
 
-   
+    /// Delete
+    /// 
     /// <param name="id" Gets an ID that needs to be deleted from the DAL layer></param>
     /// <exception cref="BlDoesNotExistException" An exception does not exist ></exception>
     /// <exception cref="BlCanNotBeDeletedException" An engineer's anomaly that cannot be erased ></exception>
@@ -295,9 +298,8 @@ internal class EngineerImplementation : IEngineer
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
-    /// <summary>
+    /// <ReadAll>
     /// 
-    /// </summary>
     /// <param name="filter" Selection of a list of engineers according to a certain filter></param>
     /// <returns Returns a list of engineers according to the filter></returns>
     public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? filter = null)

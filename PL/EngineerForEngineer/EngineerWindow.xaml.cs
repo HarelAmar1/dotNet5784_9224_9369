@@ -46,7 +46,7 @@ namespace PL.EngineerForEngineer
 
 
         //Date Property
-        public DateTime CompleteDate
+        public DateTime? CompleteDate
         {
             get { return (DateTime)GetValue(CompleteDateProperty); }
             set { SetValue(CompleteDateProperty, value); }
@@ -57,13 +57,16 @@ namespace PL.EngineerForEngineer
         //Ctor
         public EngineerWindow(int id)
         {
+
             InitializeComponent();
+            CompleteDate=s_bl.Clock;
             Engineer = s_bl.Engineer.Read(id);//initialize the engineer
             if (Engineer.Task == null)
                 Engineer.Task = new BO.TaskInEngineer(-1, "");//If there is no task we will insert a temporary value so that we know there is no task
 
             TaskInEngineer = new List<TaskInEngineer>();//Initialize the list
-                                                        //Initialize the list of possible tasks for the engineer
+
+            //Initialize the list of possible tasks for the engineer
             foreach (var task in s_bl.Task.ReadAll())
             {
                 BO.Task fullTask = s_bl.Task.Read(task.Id);
@@ -81,6 +84,7 @@ namespace PL.EngineerForEngineer
                 if (fullTask.Engineer == null && done == true && fullTask.Status != (Status)4 && fullTask.Copmlexity <= s_bl.Engineer.Read(id).Level)
                     TaskInEngineer.Add(new BO.TaskInEngineer(task.Id, task.Alias));
             }
+
         }
 
         private void ComboBoxTask_Loaded(object sender, RoutedEventArgs e)
@@ -147,7 +151,7 @@ namespace PL.EngineerForEngineer
                 Description = oldTask.Description,
                 Alias = oldTask.Alias,
                 CreatedAtDate = oldTask.CreatedAtDate,
-                Status = oldTask.Status,
+                Status = BO.Status.Done,
                 Dependencies = oldTask.Dependencies,
                 RequiredEffortTime = oldTask.RequiredEffortTime,
                 StartDate = oldTask.StartDate,
