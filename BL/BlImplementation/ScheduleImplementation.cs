@@ -7,28 +7,46 @@ using System.Threading.Tasks;
 using BO;
 using BlApi;
 
-namespace BlImplementation;
-
-internal class ScheduleImplementation : ISchedule
+namespace BlImplementation
 {
-    private DalApi.IDal _dal = Factory.Get;
-    public DateTime? getEndDateOfProject()
+    internal class ScheduleImplementation : ISchedule
     {
-        return _dal.Schedule.getEndDateOfProject();
-    }
+        private DalApi.IDal _dal = Factory.Get;
 
-    public DateTime? getStartDateOfProject()
-    {
-        return _dal.Schedule.getStartDateOfProject();
-    }
+        /// <summary>
+        /// Retrieves the end date of the project.
+        /// </summary>
+        /// <returns>The end date of the project.</returns>
+        public DateTime? getEndDateOfProject()
+        {
+            return _dal.Schedule.getEndDateOfProject();
+        }
 
-    public void setEndDateOfProject(DateTime endDate)
-    {
-        _dal.Schedule.setEndDateOfProject(endDate);
-    }
+        /// <summary>
+        /// Retrieves the start date of the project.
+        /// </summary>
+        /// <returns>The start date of the project.</returns>
+        public DateTime? getStartDateOfProject()
+        {
+            return _dal.Schedule.getStartDateOfProject();
+        }
 
-    public void setStartDateOfProject(DateTime startDate)
-    {
-        _dal.Schedule.setStartDateOfProject(startDate);
+        /// <summary>
+        /// Sets the end date of the project.
+        /// </summary>
+        /// <param name="endDate">The end date to set for the project.</param>
+        public void setEndDateOfProject(DateTime endDate)
+        {
+            _dal.Schedule.setEndDateOfProject(endDate);
+        }
+
+        /// <summary>
+        /// Sets the start date of the project.
+        /// </summary>
+        /// <param name="startDate">The start date to set for the project.</param>
+        public void setStartDateOfProject(DateTime startDate)
+        {
+            _dal.Schedule.setStartDateOfProject(startDate);
+        }
     }
 }

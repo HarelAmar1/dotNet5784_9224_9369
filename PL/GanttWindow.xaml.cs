@@ -29,27 +29,33 @@ namespace PL
 
         public GanttWindow()
         {
-            // check that there is a project start date
-            if (s_bl.Schedule.getStartDateOfProject() == null)
-                throw new Exception("PROJECT START DATE REQUIRED.");
-
-            if (s_bl.Task == null || s_bl.Task.ReadAll().Count() == 0)
-                throw new Exception("There is no Data");
-
-
             InitializeComponent();
-            //Create a list of tasks with a start date
-            foreach (var task in s_bl.Task.ReadAll())
-            {
-                var taskFromDal = s_bl.Task.Read(task.Id);
-                //var stringOfDay = taskFromDal.RequiredEffortTime.ToString();
-                BO.Task newTaskForGantt = new BO.Task { Id = taskFromDal.Id, Alias = taskFromDal.Alias, RequiredEffortTime = taskFromDal.RequiredEffortTime, ScheduledDate = taskFromDal.ScheduledDate, CompleteDate = taskFromDal.CompleteDate };
-                ListOfTask.Add(newTaskForGantt);
-            }
-            //sort the list
-            ListOfTask = ListOfTask.OrderBy(task => task.ScheduledDate).ToList();
 
-            this.Loaded += Window_Loaded;
+            try
+            {
+
+
+
+                // Create a list of tasks with a start date
+                foreach (var task in s_bl.Task.ReadAll())
+                {
+                    var taskFromDal = s_bl.Task.Read(task.Id);
+                    //var stringOfDay = taskFromDal.RequiredEffortTime.ToString();
+                    BO.Task newTaskForGantt = new BO.Task { Id = taskFromDal.Id, Alias = taskFromDal.Alias, RequiredEffortTime = taskFromDal.RequiredEffortTime, ScheduledDate = taskFromDal.ScheduledDate, CompleteDate = taskFromDal.CompleteDate };
+                    ListOfTask.Add(newTaskForGantt);
+                }
+                //sort the list
+                ListOfTask = ListOfTask.OrderBy(task => task.ScheduledDate).ToList();
+
+                this.Loaded += Window_Loaded;
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
 
         }
 

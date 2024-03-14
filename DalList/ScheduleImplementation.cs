@@ -1,42 +1,44 @@
-﻿using DalApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dal;
-
-internal class ScheduleImplementation : ISchedule
+﻿namespace Dal
 {
-    /// setStartDateOfProject
-    /// 
-    /// <param name="startDate" Getting a start date for the project></param>
-    public void setStartDateOfProject(DateTime startDate)
-    {
-        DataSource.Config.startProjectDate = startDate;
-    }
+    using DalApi;
+    using System;
 
-    /// setEndDateOfProject
-    /// 
-    /// <param name="endDate" Receiving the end date of the project></param>
-    public void setEndDateOfProject(DateTime endDate)
+    internal class ScheduleImplementation : ISchedule
     {
-        DataSource.Config.endProjectDate = endDate;
-    }
-    /// getStartDateOfProject
-    /// 
-    /// <returns Returns the end date of the project></returns>
-    public DateTime? getStartDateOfProject()
-    {
-        return DataSource.Config.startProjectDate;
-    }
+        /// <summary>
+        /// Sets the start date of the project.
+        /// </summary>
+        /// <param name="startDate">The start date of the project.</param>
+        public void setStartDateOfProject(DateTime startDate)
+        {
+            DataSource.Config.startProjectDate = startDate;
+        }
 
-    /// getEndDateOfProject
-    /// 
-    /// <returns Returns the start date of the project></returns>
-    public DateTime? getEndDateOfProject()
-    {
-        return DataSource.Config.endProjectDate;
+        /// <summary>
+        /// Sets the end date of the project.
+        /// </summary>
+        /// <param name="endDate">The end date of the project.</param>
+        public void setEndDateOfProject(DateTime endDate)
+        {
+            DataSource.Config.endProjectDate = endDate;
+        }
+
+        /// <summary>
+        /// Gets the start date of the project.
+        /// </summary>
+        /// <returns>The start date of the project.</returns>
+        public DateTime? getStartDateOfProject()
+        {
+            return DataSource.Config.startProjectDate;
+        }
+
+        /// <summary>
+        /// Gets the end date of the project.
+        /// </summary>
+        /// <returns>The end date of the project.</returns>
+        public DateTime? getEndDateOfProject()
+        {
+            return DataSource.Config.endProjectDate;
+        }
     }
 }

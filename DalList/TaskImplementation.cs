@@ -1,87 +1,91 @@
-﻿namespace Dal;
-using DalApi;
-using DO;
-using System.Collections.Generic;
-
-internal class TaskImplementation : ITask
+﻿namespace Dal
 {
-    /// Create
-    /// 
-    /// <param name="item" Create a new task for the data layer></param>
-    /// <returns></returns>
-    public int Create(Task item)
-    {
-        Task newItem = item with { Id = DataSource.Config.NextStartTaskId };
-        DataSource.Tasks.Add(newItem);
-        return newItem.Id;
-    }
-    /// Delete
-    /// 
-    /// <param name="id" Deletes a task according to the code you receive></param>
-    /// <exception cref="DalDoesNotExistException" There is no exception to this type of exception></exception>
-    public void Delete(int id)
-    {
-        if (DataSource.Tasks.Any(task => task.Id == id))//if exist in the list
-        {   //delete it
-            DataSource.Tasks.RemoveAll(T => T.Id == id);
-        }
-        else
-            throw new DalDoesNotExistException($"ID: {id}, not exist");
-    }
-    /// Read
-    /// 
-    /// <param name="id" Returns a task according to the code you received></param>
-    /// <returns> Task </returns>
-    public Task? Read(int id)
-    {
-        return DataSource.Tasks.FirstOrDefault(T => T.Id == id);
-    }
+    using DalApi;
+    using DO;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
-    /// Read
-    /// 
-    /// <param name="filter" Returns a task according to a certain filter ></param>
-    /// <returns>Task</returns>
-    public Task? Read(Func<Task, bool> filter)
+    internal class TaskImplementation : ITask
     {
-        if (filter != null)
+        /// <summary>
+        /// Creates a new task in the data layer.
+        /// </summary>
+        /// <param name="item">The task to create.</param>
+        /// <returns>The ID of the newly created task.</returns>
+        public int Create(Task item)
         {
-            return (Task?)(from item in DataSource.Tasks
-                           where filter(item)
-                           select item);
+            Task newItem = item with { Id = DataSource.Config.NextStartTaskId };
+            DataSource.Tasks.Add(newItem);
+            return newItem.Id;
         }
 
-        return null;
-    }
-    /// ReadAll
-    /// 
-    /// <param name="filter" certain filter></param>
-    /// <returns>Returns a list of tasks according to a certain filter</returns>
-    public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null)
-    {
-        if (filter != null)
+        /// <summary>
+        /// Deletes a task by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the task to delete.</param>
+        /// <exception cref="DalDoesNotExistException">Thrown when the task with the specified ID does not exist.</exception>
+        public void Delete(int id)
         {
-            return from item in DataSource.Tasks
-                   where filter(item)
-                   select item;
+            var task = DataSource.Tasks.FirstOrDefault(t => t.Id == id);
+            if (task == null)
+                throw new DalDoesNotExistException($"ID: {id}, does not exist");
+
+            DataSource.Tasks.RemoveAll(t => t.Id == id);
         }
-        return from item in DataSource.Tasks
-               select item;
-    }
-    /// Update
-    /// 
-    /// <param name="item" Receives Task </param>
-    /// <exception cref="DalDoesNotExistException" There is no exception to this type of exception ></exception>
-    public void Update(Task item)
-    {
-        //if exist in the list
-        if (DataSource.Tasks.Any(task => task.Id == item.Id))
+
+        /// <summary>
+        /// Reads a task by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the task to read.</param>
+        /// <returns>The task with the specified ID, or null if not found.</returns>
+        public Task? Read(int id)
         {
+            return DataSource.Tasks.FirstOrDefault(t => t.Id == id);
+        }
+
+        /// <summary>
+        /// Reads a task based on a provided filter.
+        /// </summary>
+        /// <param name="filter">The filter to apply.</param>
+        /// <returns>The task that matches the filter.</returns>
+        public Task? Read(Func<Task, bool> filter)
+        {
+            if (filter != null)
+            {
+                return DataSource.Tasks.FirstOrDefault(filter);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Reads all tasks based on a provided filter.
+        /// </summary>
+        /// <param name="filter">The filter to apply.</param>
+        /// <returns>A list of tasks that match the filter.</returns>
+        public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null)
+        {
+            if (filter != null)
+            {
+                return DataSource.Tasks.Where(filter);
+            }
+            return DataSource.Tasks;
+        }
+
+        /// <summary>
+        /// Updates a task in the data layer.
+        /// </summary>
+        /// <param name="item">The task to update.</param>
+        /// <exception cref="DalDoesNotExistException">Thrown when the task with the specified ID does not exist.</exception>
+        public void Update(Task item)
+        {
+            var existingTask = DataSource.Tasks.FirstOrDefault(t => t.Id == item.Id);
+            if (existingTask == null)
+                throw new DalDoesNotExistException($"Task with ID={item.Id} does not exist");
+
             Delete(item.Id);
             DataSource.Tasks.Add(item);
         }
-        else
-            throw new DalDoesNotExistException($"Task with ID={item.Id} is not exists");
-
     }
-
 }

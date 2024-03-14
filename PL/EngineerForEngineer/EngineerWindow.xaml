@@ -18,27 +18,27 @@
         <Grid DataContext="{Binding Engineer}" Grid.Row="0">
             <!--If no task has been defined for Mahdens then we will not present the current task because there is none-->
             <StackPanel  Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityInEngineerKey}}">
-                <Label Content="The Current Id Task's" />
+                <Label Content="The Current Id Task's:" />
                 <TextBox Text="{Binding Task.Id}" IsEnabled="False"/>
-                <Label Content="The Current Task"/>
+                <Label Content="The Current Task:"/>
                 <TextBox Text="{Binding Task.Alias}" IsEnabled="False"/>
-                <Label Content="Complete Task"/>
+                <Label Content="Insert Complete Task:"/>
                 <DatePicker SelectedDate="{Binding CompleteDate, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:EngineerWindow}} }"/>
             </StackPanel>
         </Grid>
         <Grid DataContext="{Binding Engineer}" Grid.Row="1">
             <!--We will see the list only after finishing or not selecting a task-->
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityTheOppositeInEngineerKey}}" >
-                <Label Content="Task Selection"/>
-                <ComboBox ItemsSource="{Binding TaskInEngineer, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:EngineerWindow}} }" DisplayMemberPath="Alias" SelectionChanged="ComboBoxTask_SelectionChanged" Loaded="ComboBoxTask_Loaded"/>
+                <Label Content="Task Selection:"/>
+                <ComboBox Width="150" ItemsSource="{Binding TaskInEngineer, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:EngineerWindow}} }" DisplayMemberPath="Alias" SelectionChanged="ComboBoxTask_SelectionChanged" Loaded="ComboBoxTask_Loaded"/>
             </StackPanel>
         </Grid>
         <Grid DataContext="{Binding Engineer}" Grid.Row="2">
             <!--Represent the start of a task or the end of a task respectively and as needed-->
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Content="Cancel" Click="bcCancel" Height="25" Width="100" Margin="0,20,0,0" />
-                <Button Content="Start Task" Click="bcStartTask" Height="50" Width="100" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityTheOppositeInEngineerKey}}"/>
-                <Button Content="Done" Click="bcDoneTask" Height="50" Width="100" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityInEngineerKey}}"/>
+                <Button Content="Cancel" Click="bcCancel" Height="25" Width="150" Margin="0,20,0,0" />
+                <Button Content="Press Start Task Now" Click="bcStartTask" Height="50" Width="150" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityTheOppositeInEngineerKey}}"/>
+                <Button Content="Press To Complete Task" Click="bcDoneTask" Height="50" Width="150" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityInEngineerKey}}"/>
             </StackPanel>
         </Grid>
 

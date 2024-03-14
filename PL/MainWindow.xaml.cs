@@ -44,6 +44,7 @@ namespace PL
             s_bl.AddedInAnHour();
             Date = s_bl.Clock;
         }
+        
         private void AddedInAnDay(object sender, RoutedEventArgs e)
         {
             s_bl.AddedInAnDay();
@@ -82,7 +83,6 @@ namespace PL
                     if (s_bl.User.Read(User.UserId).IsAdmin)
                     {
                         new ManagerWindow().Show();
-                        Close();
                     }
                     else
                     {
@@ -99,6 +99,7 @@ namespace PL
                 MessageBox.Show(ex.Message);
             }
         }
+
         private void bcSignIn(object sender, RoutedEventArgs e)
         {
             try

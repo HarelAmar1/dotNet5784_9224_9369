@@ -20,38 +20,38 @@ internal class TaskImplementation : ITask
     private DalApi.IDal _dal = Factory.Get;
 
     //Create
-    /// <param name="task" A task that needs to be added></param>
-    /// <returns newTaskId="int" Returns the ID of the assignment></returns>
-    /// <exception cref="BO.BlAlreadyExistsException" An exception that already exists an assignment with the same ID></exception>
+    /// <param name="task">A task that needs to be added.</param>
+    /// <returns>Returns the ID of the assignment.</returns>
+    /// <exception cref="BO.BlAlreadyExistsException">An exception that indicates an assignment with the same ID already exists.</exception>
     public int Create(BO.Task task)
     {
-        //we will check the correctness of the ID and nickname
+        // Check the correctness of the ID and nickname
         checkData(task);
 
-        //We will create the task and transfer it to Dal
+        // Create the task and transfer it to Dal
         DO.Task newTask = new DO.Task
-        (task.Id,
-        task.Description,
-        task.Alias,
-        false,
-        _bl.Clock,
-        task.RequiredEffortTime,
-        (DO.EngineerExperience)task.Copmlexity!,
-        task.StartDate,
-        task.ScheduledDate,
-        task.DeadlineDate,
-        task.CompleteDate,
-        task.Deliverables,
-        task.Remarks,
-        task.Engineer?.Id
+        (
+            task.Id,
+            task.Description,
+            task.Alias,
+            false,
+            _bl.Clock,
+            task.RequiredEffortTime,
+            (DO.EngineerExperience)task.Copmlexity!,
+            task.StartDate,
+            task.ScheduledDate,
+            task.DeadlineDate,
+            task.CompleteDate,
+            task.Deliverables,
+            task.Remarks,
+            task.Engineer?.Id
         );
 
-
-        // an attempt will be made to insert it into the data
+        // Attempt to insert it into the data
         try
         {
             int newTaskId = _dal.Task.Create(newTask);
-            //add dependencies
+            // Add dependencies
             IEnumerable<DO.Dependency> dependencies = from item in task.Dependencies
                                                       let depend = new Dependency(0, newTaskId, item.Id)
                                                       select depend;
@@ -64,15 +64,15 @@ internal class TaskImplementation : ITask
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Task with ID: {task.Id} already exist", ex);
+            throw new BO.BlAlreadyExistsException($"Task with ID: {task.Id} already exists", ex);
         }
     }
 
 
     //Delete
-    /// <param name="idTask" id of a task that needs to be deleted></param>
-    /// <exception cref="BO.BlDoesNotExistException" There is no exception to this type of error></exception>
-    /// <exception cref="BlDeletionImpossible" This task cannot be deleted></exception>
+    /// <param name="idTask">ID of a task that needs to be deleted.</param>
+    /// <exception cref="BO.BlDoesNotExistException">Thrown when the task to be deleted does not exist.</exception>
+    /// <exception cref="BlDeletionImpossible">Thrown when the task cannot be deleted.</exception>
     public void Delete(int idTask)
     {
 
@@ -104,9 +104,9 @@ internal class TaskImplementation : ITask
     }
 
     // Read
-    /// <param name="idTask" Task selection by ID></param>
-    /// <returns Returns the task with the received ID></returns>
-    /// <exception cref="BO.BlDoesNotExistException" There is no exception to this type of error></exception>
+    /// <param name="idTask">Task selection by ID.</param>
+    /// <returns>Returns the task with the received ID.</returns>
+    /// <exception cref="BO.BlDoesNotExistException">Thrown when the requested task does not exist.</exception>
     public BO.Task Read(int idTask)
     {
         try
@@ -170,8 +170,8 @@ internal class TaskImplementation : ITask
 
     //ReadAll
 
-    /// <param name="func" Task filtering function></param>
-    /// <returns Returns a list of tasks of type TaslInList></returns>
+    /// <param name="func">Task filtering function.</param>
+    /// <returns>Returns a list of tasks of type TaskInList.</returns>
     public IEnumerable<BO.TaskInList> ReadAll(Func<DO.Task?, bool>? func = null)
     {
         IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll(func).ToList();
@@ -191,7 +191,7 @@ internal class TaskImplementation : ITask
 
     // Update
 
-    /// <param name="task" A task that needs to be updated in the data layer></param>
+    /// <param name="task">A task that needs to be updated in the data layer.</param>
     public void Update(BO.Task task)
     {
         // Check the correctness of the ID and nickname
@@ -212,7 +212,7 @@ internal class TaskImplementation : ITask
         }
 
 
-        //Fill in the rest of the fields for the DAL task and return updated
+        // Fill in the rest of the fields for the DAL task and return updated
         DO.Task newTask = new DO.Task
         (task.Id,
         task.Description,
@@ -234,7 +234,13 @@ internal class TaskImplementation : ITask
     }
 
 
+
     //Helper function to find the status of the task from DAL
+    /// <summary>
+    /// Determines the status of the task based on its properties.
+    /// </summary>
+    /// <param name="task">The task to evaluate.</param>
+    /// <returns>The status code representing the task's status.</returns>
     private int status(DO.Task task)
     {
         if (task.ScheduledDate == null)
@@ -245,12 +251,16 @@ internal class TaskImplementation : ITask
             return 2;
         if (task.CompleteDate != null)
             return 4;
-        // check how to check the last status
+        // If no condition is met, consider it in some unknown status
         return 0;
     }
 
     //startDateTimeManagement
-
+    /// <summary>
+    /// Updates the scheduled date of a task and its deadline based on provided data.
+    /// </summary>
+    /// <param name="idTask">The ID of the task.</param>
+    /// <param name="scheduleDateTime">The new scheduled date for the task.</param>
     public void startDateTimeManagement(int idTask, DateTime scheduleDateTime)
     {
         DO.Task taskWithNewDate = _dal.Task.Read(idTask) with { ScheduledDate = scheduleDateTime, DeadlineDate = scheduleDateTime + _dal.Task.Read(idTask).RequiredEffortTime };
@@ -259,6 +269,11 @@ internal class TaskImplementation : ITask
     }
 
     //validity check
+    /// <summary>
+    /// Checks the validity of task data and throws an exception if invalid.
+    /// </summary>
+    /// <param name="task">The task data to check.</param>
+    /// <exception cref="BlIncorrectInputException">Thrown when the input data is incorrect.</exception>
     private void checkData(BO.Task task)
     {
         string error = "";
@@ -275,7 +290,10 @@ internal class TaskImplementation : ITask
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
 
-
+    /// <summary>
+    /// Generates scheduled dates for all tasks in the project.
+    /// </summary>
+    /// <param name="startOfProject">The start date of the project.</param>
     public void dateGeneratorOfAllTasks(DateTime startOfProject)
     {
         IEnumerable<BO.TaskInList> tasksBO = ReadAll();
@@ -288,15 +306,14 @@ internal class TaskImplementation : ITask
                 tasksWithOutDependency.Add(Read(task.Id));
             }
         }
-        //    Enter a start and end date
+        // Enter a start and end date
         foreach (var task in tasksWithOutDependency)
         {
             //put the dates in dal
             startDateTimeManagement(task.Id, startOfProject);
-
         }
 
-        //Finds everyone who has an addiction
+        //Finds everyone who has a dependency
         List<BO.Task> tasksWithDependency = new List<BO.Task>();
         foreach (var task in tasksBO)
         {
@@ -310,9 +327,14 @@ internal class TaskImplementation : ITask
         {
             initScheduledDateRecursive(task);
         }
-
     }
+
     //recursive supporting function
+    /// <summary>
+    /// Initializes scheduled dates recursively for tasks with dependencies.
+    /// </summary>
+    /// <param name="task">The task to process.</param>
+    /// <returns>The deadline date of the task.</returns>
     private DateTime? initScheduledDateRecursive(BO.Task task)
     {
         if (task.DeadlineDate != null)
@@ -336,6 +358,12 @@ internal class TaskImplementation : ITask
         }
         return null;
     }
+
+    /// <summary>
+    /// Reads all tasks with a specific status.
+    /// </summary>
+    /// <param name="status">The status to filter tasks by.</param>
+    /// <returns>A list of tasks with the specified status.</returns>
     public List<BO.TaskInList>? ReadAllNew(BO.Status status)
     {
         IEnumerable<BO.TaskInList> tasks = ReadAll();
@@ -348,12 +376,17 @@ internal class TaskImplementation : ITask
             tasks2.Add(item);
             if (item.Status == status)
                 tasks1.Add(item);
-
         }
         if (status == 0)
             return tasks2;
         return tasks1;
     }
+
+    /// <summary>
+    /// Determines the status of a task.
+    /// </summary>
+    /// <param name="task">The task to evaluate.</param>
+    /// <returns>The status code representing the task's status.</returns>
     public int Status(BO.Task task)
     {
         if (task.StartDate == null)
@@ -364,7 +397,8 @@ internal class TaskImplementation : ITask
             return 4;
         if (task.ScheduledDate == null)
             return 0;
-        // check how to check the last status
+        // If no condition is met, consider it in some unknown status
         return 5;
     }
+
 }

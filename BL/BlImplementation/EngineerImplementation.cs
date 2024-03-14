@@ -3,70 +3,66 @@ using BO;
 using DO;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace BlImplementation;
-internal class EngineerImplementation : IEngineer
+namespace BlImplementation
 {
-    private DalApi.IDal _dal = Factory.Get;
-
-
-    /// <param name="engineerToAdd">Engineer to add to the DAL layer</param>
-    /// <returns engineerToAdd.Id Returns the id of the added engineer ></returns>
-    /// <exception cref="BlIncorrectInputException" Invalid input exception></exception>
-    /// <exception cref="BlDoesNotExistException"  An exception does not exist></exception>
-    public int Create(BO.Engineer engineerToAdd)
+    internal class EngineerImplementation : IEngineer
     {
-        //Converts the list of engineers from DO to BO
+        private DalApi.IDal _dal = Factory.Get;
 
-
-        IEnumerable<BO.Engineer> engineers = (from item in _dal.Engineer.ReadAll().ToList()
-                                              let tasks = _dal.Task.ReadAll()
-                                              select new BO.Engineer()
-                                              {
-                                                  Id = item.Id,
-                                                  Name = item.Name,
-                                                  Cost = item.Cost,
-                                                  Email = item.Email,
-                                                  Level = (BO.EngineerExperience)(int)item.level,
-                                                  Task = (from task in tasks
-                                                          where (task.EngineerId == item.Id)
-                                                          select new TaskInEngineer(task.Id, task.Alias)
-                                                           ).FirstOrDefault()
-                                              });
-
-        //Validity checks that ID is a positive number and that NAME is a non-empty string and that COST is a positive number
-        IEnumerable<DO.Task?> tasks1 = _dal.Task.ReadAll();
-
-        //Correct email check
-        try
+        /// <summary>
+        /// Adds an engineer to the DAL layer.
+        /// </summary>
+        /// <param name="engineerToAdd">The engineer to add.</param>
+        /// <returns>Returns the ID of the added engineer.</returns>
+        /// <exception cref="BlIncorrectInputException">Thrown when the input is incorrect.</exception>
+        /// <exception cref="BlDoesNotExistException">Thrown when the engineer does not exist.</exception>
+        public int Create(BO.Engineer engineerToAdd)
         {
-            var mailAddress = new MailAddress(engineerToAdd.Email);
-        }
-        catch (FormatException)
-        {
-            throw new BlIncorrectInputException($"Email={engineerToAdd.Email}, is incorrect input");
-        }
-        string error = "";
-        if (engineerToAdd.Id < 0)
-            error = $"Id: {engineerToAdd.Id}";
-        else if (engineerToAdd.Name == "")
-            error = $"Name: {engineerToAdd.Name}";
-        else if (engineerToAdd.Cost < 0)
-            error = $"Cost: {engineerToAdd.Cost}";
-        else if ((int)engineerToAdd.Level >= 5)
-            error = $"Level: {engineerToAdd.Level}";
-        if (error != "")
-            throw new BlIncorrectInputException($"{error}, is incorrect input");
+            IEnumerable<BO.Engineer> engineers = (from item in _dal.Engineer.ReadAll().ToList()
+                                                  let tasks = _dal.Task.ReadAll()
+                                                  select new BO.Engineer()
+                                                  {
+                                                      Id = item.Id,
+                                                      Name = item.Name,
+                                                      Cost = item.Cost,
+                                                      Email = item.Email,
+                                                      Level = (BO.EngineerExperience)(int)item.level,
+                                                      Task = (from task in tasks
+                                                              where (task.EngineerId == item.Id)
+                                                              select new TaskInEngineer(task.Id, task.Alias)
+                                                              ).FirstOrDefault()
+                                                  });
 
-        if (engineers.Any(engineer => engineer?.Id == engineerToAdd.Id) != null)
-        {
-            //convert the engineerToAdd from BO to DO
+            try
+            {
+                var mailAddress = new MailAddress(engineerToAdd.Email);
+            }
+            catch (FormatException)
+            {
+                throw new BlIncorrectInputException($"Email={engineerToAdd.Email}, is incorrect input");
+            }
+
+            string error = "";
+            if (engineerToAdd.Id < 0)
+                error = $"Id: {engineerToAdd.Id}";
+            else if (engineerToAdd.Name == "")
+                error = $"Name: {engineerToAdd.Name}";
+            else if (engineerToAdd.Cost < 0)
+                error = $"Cost: {engineerToAdd.Cost}";
+            else if ((int)engineerToAdd.Level >= 5)
+                error = $"Level: {engineerToAdd.Level}";
+            if (error != "")
+                throw new BlIncorrectInputException($"{error}, is incorrect input");
+
+            if (!engineers.Any(engineer => engineer?.Id == engineerToAdd.Id))
+                throw new BlDoesNotExistException($"Engineer with ID: {engineerToAdd.Id} Does Not exist");
+
             if (engineerToAdd.Task != null)
             {
-                DO.Task? taskToChangeInDal = (from task in tasks1
-                                              where (task.Id == engineerToAdd.Task.Id)
-                                              select (task)).FirstOrDefault();
+                DO.Task? taskToChangeInDal = (from task in _dal.Task.ReadAll()
+                                              where task.Id == engineerToAdd.Task.Id
+                                              select task).FirstOrDefault();
 
                 DO.Task taskToChangeInDalrecord = taskToChangeInDal with { EngineerId = engineerToAdd.Id };
                 _dal.Task.Update(taskToChangeInDalrecord);
@@ -74,249 +70,199 @@ internal class EngineerImplementation : IEngineer
 
             DO.Engineer becomeDO = new DO.Engineer(engineerToAdd.Id, engineerToAdd.Email, engineerToAdd.Cost, engineerToAdd.Name, (DO.EngineerExperience)(int)engineerToAdd.Level);
             _dal.Engineer.Create(becomeDO);
+
+            return engineerToAdd.Id;
         }
-        else
-            throw new BlDoesNotExistException($"Engineer with ID: {engineerToAdd.Id} Does Not exists");
 
-
-
-        return engineerToAdd.Id;
-
-    }
-
-    ///Read
-    /// 
-    /// <param name="id" Get an engineer's id number ></param>
-    /// <returns Returns an engineer according to the received id></returns>
-    /// <exception cref="BlDoesNotExistException" An exception does not exist></exception>
-    public BO.Engineer Read(int id)
-    {
-        //Converts the list of engineers from DO to BO
-
-
-        List<DO.Task> tasks = _dal.Task.ReadAll().ToList();
-        IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
-                                               select new BO.Engineer()
-                                               {
-                                                   Id = item.Id,
-                                                   Name = item.Name,
-                                                   Cost = item.Cost,
-                                                   Email = item.Email,
-                                                   Level = (BO.EngineerExperience)(int)item.level,
-                                                   Task = (from task in tasks
-                                                           where (task.EngineerId == item.Id)
-                                                           select new TaskInEngineer(task.Id, task.Alias)
-                                                           ).FirstOrDefault()
-                                               });
-
-        // Brings the engineer with the matching ID
-        BO.Engineer? EngineerToGet = (from item in engineers
-                                      where (item.Id == id)
-                                      select item).FirstOrDefault();
-
-        // Checks that the engineer is not empty
-
-
-        if (EngineerToGet == null)
-            throw new BlDoesNotExistException($"Engineer with ID: {id} Does Not exists");
-        return EngineerToGet;
-
-    }
-    ///Update
-    /// 
-    /// <param name="AnUpdatedEngineer" Gets an engineer who needs to change in the DAL layer></param>
-    /// <exception cref="BlIncorrectInputException" Invalid input exception ></exception>
-    /// <exception cref="BlDoesNotExistException"  An exception does not exist ></exception>
-    public void Update(BO.Engineer AnUpdatedEngineer)
-    {
-        //We will check that the engineer does not have a Task that he has finished and now needs to be deleted
-        if (AnUpdatedEngineer.Task == null)
+        /// <summary>
+        /// Retrieves an engineer based on the provided ID.
+        /// </summary>
+        /// <param name="id">The ID of the engineer to retrieve.</param>
+        /// <returns>Returns the engineer with the specified ID.</returns>
+        /// <exception cref="BlDoesNotExistException">Thrown when the engineer does not exist.</exception>
+        public BO.Engineer Read(int id)
         {
-            //We will look for the engineer in the tasks
-            var taskToUpdate = _dal.Task.ReadAll()
-            .FirstOrDefault(T => T.EngineerId != null && T.EngineerId == AnUpdatedEngineer.Id);
-            if (taskToUpdate != null)
+            IEnumerable<DO.Task> tasks = _dal.Task.ReadAll().ToList();
+            IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
+                                                   select new BO.Engineer()
+                                                   {
+                                                       Id = item.Id,
+                                                       Name = item.Name,
+                                                       Cost = item.Cost,
+                                                       Email = item.Email,
+                                                       Level = (BO.EngineerExperience)(int)item.level,
+                                                       Task = (from task in tasks
+                                                               where task.EngineerId == item.Id
+                                                               select new TaskInEngineer(task.Id, task.Alias)
+                                                               ).FirstOrDefault()
+                                                   });
+
+            BO.Engineer? EngineerToGet = engineers.FirstOrDefault(item => item.Id == id);
+
+            if (EngineerToGet == null)
+                throw new BlDoesNotExistException($"Engineer with ID: {id} Does Not exist");
+
+            return EngineerToGet;
+        }
+
+        /// <summary>
+        /// Updates the specified engineer.
+        /// </summary>
+        /// <param name="AnUpdatedEngineer">The engineer to update.</param>
+        /// <exception cref="BlIncorrectInputException">Thrown when the input is incorrect.</exception>
+        /// <exception cref="BlDoesNotExistException">Thrown when the engineer does not exist.</exception>
+        public void Update(BO.Engineer AnUpdatedEngineer)
+        {
+            if (AnUpdatedEngineer.Task == null)
             {
-                var newTask = taskToUpdate with { EngineerId = null };
-                _dal.Task.Update(newTask);
+                var taskToUpdate = _dal.Task.ReadAll().FirstOrDefault(T => T.EngineerId != null && T.EngineerId == AnUpdatedEngineer.Id);
+                if (taskToUpdate != null)
+                {
+                    var newTask = taskToUpdate with { EngineerId = null };
+                    _dal.Task.Update(newTask);
+                }
             }
 
-        }
+            IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
+                                                   let tasks = _dal.Task.ReadAll()
+                                                   select new BO.Engineer()
+                                                   {
+                                                       Id = item.Id,
+                                                       Name = item.Name,
+                                                       Cost = item.Cost,
+                                                       Email = item.Email,
+                                                       Level = (BO.EngineerExperience)(int)item.level,
+                                                       Task = (from task in tasks
+                                                               where task.EngineerId == item.Id
+                                                               select new TaskInEngineer(task.Id, task.Alias)).FirstOrDefault()
+                                                   });
 
-        //Converts the list of engineers from DO to BO
-        IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
-                                               let tasks = _dal.Task.ReadAll()
-                                               select new BO.Engineer()
-                                               {
-                                                   Id = item.Id,
-                                                   Name = item.Name,
-                                                   Cost = item.Cost,
-                                                   Email = item.Email,
-                                                   Level = (BO.EngineerExperience)(int)item.level,
-                                                   Task = (from task in tasks
-                                                           where (task.EngineerId == item.Id)
-                                                           select new TaskInEngineer(task.Id, task.Alias)).FirstOrDefault()
-                                               });
+            BO.Engineer? EngineerToUp = engineers.FirstOrDefault(item => item.Id == AnUpdatedEngineer.Id);
 
-        BO.Engineer? EngineerToUp = (from item in engineers
-                                     where (item.Id == AnUpdatedEngineer.Id)
-                                     select item).FirstOrDefault();
-
-        try
-        {
-            var mailAddress = new MailAddress(AnUpdatedEngineer.Email);
-        }
-        catch (FormatException)
-        {
-            throw new BlIncorrectInputException($"Email={AnUpdatedEngineer.Email}, is incorrect input");
-        }
-        string error = "";
-        if (AnUpdatedEngineer.Id < 0)
-            error = $"Id: {AnUpdatedEngineer.Id}";
-        else if (AnUpdatedEngineer.Name == "")
-            error = $"Name: {AnUpdatedEngineer.Name}";
-        else if (AnUpdatedEngineer.Cost < 0)
-            error = $"Cost: {AnUpdatedEngineer.Cost}";
-        else if ((int)AnUpdatedEngineer.Level >= 5)
-            error = $"Level: {AnUpdatedEngineer.Level}";
-        if (error != "")
-            throw new BlIncorrectInputException($"{error}, is incorrect input");
-
-        if (AnUpdatedEngineer.Task != null)
-        {
-
-            // Brings the engineer with the matching ID
-
-
-            if (EngineerToUp == null)
+            try
             {
+                var mailAddress = new MailAddress(AnUpdatedEngineer.Email);
+            }
+            catch (FormatException)
+            {
+                throw new BlIncorrectInputException($"Email={AnUpdatedEngineer.Email}, is incorrect input");
+            }
+
+            string error = "";
+            if (AnUpdatedEngineer.Id < 0)
                 error = $"Id: {AnUpdatedEngineer.Id}";
-                throw new BlDoesNotExistException($"{error} Does Not Exist");
-            }
+            else if (AnUpdatedEngineer.Name == "")
+                error = $"Name: {AnUpdatedEngineer.Name}";
+            else if (AnUpdatedEngineer.Cost < 0)
+                error = $"Cost: {AnUpdatedEngineer.Cost}";
+            else if ((int)AnUpdatedEngineer.Level >= 5)
+                error = $"Level: {AnUpdatedEngineer.Level}";
+            if (error != "")
+                throw new BlIncorrectInputException($"{error}, is incorrect input");
 
-            //Uses the TaskImplementation instance to update the task in Dal
-
-            IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
-
-            DO.Task taskToremoveInDal = (from task in tasks
-                                         where (task.EngineerId == AnUpdatedEngineer.Id)
-                                         select (task)).FirstOrDefault();
-            if (taskToremoveInDal != null)
+            if (AnUpdatedEngineer.Task != null)
             {
-                taskToremoveInDal = taskToremoveInDal with { EngineerId = null };
-                _dal.Task.Update(taskToremoveInDal);
-            }
+                if (EngineerToUp == null)
+                {
+                    error = $"Id: {AnUpdatedEngineer.Id}";
+                    throw new BlDoesNotExistException($"{error} Does Not Exist");
+                }
 
-            DO.Task taskToChangeInDal = (from task in tasks
-                                         where (task.Id == AnUpdatedEngineer.Task.Id)
-                                         select (task)).FirstOrDefault() with
-            { EngineerId = AnUpdatedEngineer.Id };
-
-            _dal.Task.Update(taskToChangeInDal);
-        }
-        //Checks whether the level of the existing engineer is greater than the updated one
-
-        BO.EngineerExperience changeUpTheLevel = (int)EngineerToUp.Level > (int)AnUpdatedEngineer.Level ? EngineerToUp.Level : AnUpdatedEngineer.Level;
-
-        DO.Engineer becomeDO = new DO.Engineer(AnUpdatedEngineer.Id, AnUpdatedEngineer.Email, AnUpdatedEngineer.Cost, AnUpdatedEngineer.Name, (DO.EngineerExperience)(int)changeUpTheLevel);
-
-        //Save the updated engineer and task in the DAL layer
-
-        _dal.Engineer.Update(becomeDO);
-    }
-
-
-    /// Delete
-    /// 
-    /// <param name="id" Gets an ID that needs to be deleted from the DAL layer></param>
-    /// <exception cref="BlDoesNotExistException" An exception does not exist ></exception>
-    /// <exception cref="BlCanNotBeDeletedException" An engineer's anomaly that cannot be erased ></exception>
-    /// <exception cref="BlIncorrectInputException" Invalid input exception ></exception>
-    public void Delete(int id)
-    {
-        //bring the list of engineers from DO
-
-        IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
-                                               let tasks = _dal.Task.ReadAll()
-                                               select new BO.Engineer()
-                                               {
-                                                   Id = item.Id,
-                                                   Name = item.Name,
-                                                   Cost = item.Cost,
-                                                   Email = item.Email,
-                                                   Level = (BO.EngineerExperience)(int)item.level,
-                                                   Task = (from task in tasks
-                                                           where (task.EngineerId == item.Id)
-                                                           select new TaskInEngineer(task.Id, task.Alias)
-                                                           ).FirstOrDefault()
-                                               });
-
-        string error = "";
-
-
-        //Checks if the ID is positive
-
-        if (id >= 0)
-        {
-            //Checks if the engineer with the ID exists
-
-            if (engineers.Any(engineer => engineer?.Id == id) == false)
-                throw new BlDoesNotExistException($"Engineer with ID: {id} Does Not Exist");
-            else
-            {
-                //Brings the engineer with the same ID that I need to delete
-
-                BO.Engineer? toDelete = (from item in engineers
-                                         where (item.Id == id)
-                                         select item).FirstOrDefault();
-
-                IBl temp = new Bl();
-                TaskImplementation toCheckStatus = new TaskImplementation(temp);
-
-                //Checks if the engineer has already finished performing a task or is actively performing a task
                 IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
 
-                if ((BO.Status)(toCheckStatus.Read(toDelete.Task.Id).Status) != BO.Status.Done && (BO.Status)(toCheckStatus.Read(toDelete.Task.Id).Status) != BO.Status.OnTrack)
+                DO.Task taskToremoveInDal = tasks.FirstOrDefault(task => task.EngineerId == AnUpdatedEngineer.Id);
+                if (taskToremoveInDal != null)
                 {
-
-                    //delete from The Dal layer
-
-                    DO.Task taskToremoveInDal = (from task in tasks
-                                                 where (task.EngineerId == id)
-                                                 select (task)).FirstOrDefault() with
-                    { EngineerId = null };
-
+                    taskToremoveInDal = taskToremoveInDal with { EngineerId = null };
                     _dal.Task.Update(taskToremoveInDal);
-                    _dal.Engineer.Delete(toDelete.Id);
                 }
-                else
-                    throw new BlCanNotBeDeletedException($"Id: {toDelete.Id} Can Not Be Deleted");
+
+                DO.Task taskToChangeInDal = tasks.FirstOrDefault(task => task.Id == AnUpdatedEngineer.Task.Id) with { EngineerId = AnUpdatedEngineer.Id };
+                _dal.Task.Update(taskToChangeInDal);
             }
+
+            BO.EngineerExperience changeUpTheLevel = (int)EngineerToUp.Level > (int)AnUpdatedEngineer.Level ? EngineerToUp.Level : AnUpdatedEngineer.Level;
+
+            DO.Engineer becomeDO = new DO.Engineer(AnUpdatedEngineer.Id, AnUpdatedEngineer.Email, AnUpdatedEngineer.Cost, AnUpdatedEngineer.Name, (DO.EngineerExperience)(int)changeUpTheLevel);
+
+            _dal.Engineer.Update(becomeDO);
         }
-        else
-            error = $"Id: {id}";
-        if (error != "")
-            throw new BlIncorrectInputException($"{error}, is incorrect input");
-    }
-    /// <ReadAll>
-    /// 
-    /// <param name="filter" Selection of a list of engineers according to a certain filter></param>
-    /// <returns Returns a list of engineers according to the filter></returns>
-    public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? filter = null)
-    {
-        IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll(filter).ToList()
-                                               let tasks = _dal.Task.ReadAll()
-                                               select new BO.Engineer()
-                                               {
-                                                   Id = item.Id,
-                                                   Name = item.Name,
-                                                   Cost = item.Cost,
-                                                   Email = item.Email,
-                                                   Level = (BO.EngineerExperience)(int)item.level,
-                                                   Task = (from task in tasks
-                                                           where (task.EngineerId == item.Id)
-                                                           select new TaskInEngineer(task.Id, task.Alias)).FirstOrDefault()
-                                               });
-        return engineers;
+
+        /// <summary>
+        /// Deletes the engineer with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the engineer to delete.</param>
+        /// <exception cref="BlDoesNotExistException">Thrown when the engineer does not exist.</exception>
+        /// <exception cref="BlCanNotBeDeletedException">Thrown when the engineer cannot be deleted.</exception>
+        /// <exception cref="BlIncorrectInputException">Thrown when the input is incorrect.</exception>
+        public void Delete(int id)
+        {
+            IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll().ToList()
+                                                   let tasks = _dal.Task.ReadAll()
+                                                   select new BO.Engineer()
+                                                   {
+                                                       Id = item.Id,
+                                                       Name = item.Name,
+                                                       Cost = item.Cost,
+                                                       Email = item.Email,
+                                                       Level = (BO.EngineerExperience)(int)item.level,
+                                                       Task = (from task in tasks
+                                                               where task.EngineerId == item.Id
+                                                               select new TaskInEngineer(task.Id, task.Alias)
+                                                               ).FirstOrDefault()
+                                                   });
+
+            string error = "";
+
+            if (id < 0)
+                error = $"Id: {id}";
+            else
+            {
+                if (!engineers.Any(engineer => engineer?.Id == id))
+                    throw new BlDoesNotExistException($"Engineer with ID: {id} Does Not Exist");
+                else
+                {
+                    BO.Engineer? toDelete = engineers.FirstOrDefault(item => item.Id == id);
+
+                    TaskImplementation toCheckStatus = new TaskImplementation(new Bl());
+                    IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
+
+                    if ((BO.Status)(toCheckStatus.Read(toDelete.Task.Id).Status) != BO.Status.Done && (BO.Status)(toCheckStatus.Read(toDelete.Task.Id).Status) != BO.Status.OnTrack)
+                    {
+                        DO.Task taskToremoveInDal = tasks.FirstOrDefault(task => task.EngineerId == id) with { EngineerId = null };
+                        _dal.Task.Update(taskToremoveInDal);
+                        _dal.Engineer.Delete(toDelete.Id);
+                    }
+                    else
+                        throw new BlCanNotBeDeletedException($"Id: {toDelete.Id} Can Not Be Deleted");
+                }
+            }
+
+            if (error != "")
+                throw new BlIncorrectInputException($"{error}, is incorrect input");
+        }
+
+        /// <summary>
+        /// Retrieves a list of engineers based on the provided filter.
+        /// </summary>
+        /// <param name="filter">The filter to apply.</param>
+        /// <returns>Returns a list of engineers according to the filter.</returns>
+        public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? filter = null)
+        {
+            IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll(filter).ToList()
+                                                   let tasks = _dal.Task.ReadAll()
+                                                   select new BO.Engineer()
+                                                   {
+                                                       Id = item.Id,
+                                                       Name = item.Name,
+                                                       Cost = item.Cost,
+                                                       Email = item.Email,
+                                                       Level = (BO.EngineerExperience)(int)item.level,
+                                                       Task = (from task in tasks
+                                                               where task.EngineerId == item.Id
+                                                               select new TaskInEngineer(task.Id, task.Alias)).FirstOrDefault()
+                                                   });
+            return engineers;
+        }
     }
 }

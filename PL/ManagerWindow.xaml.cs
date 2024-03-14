@@ -21,6 +21,8 @@ namespace PL
     /// </summary>
     public partial class ManagerWindow : Window
     {
+
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public ManagerWindow()
         {
             InitializeComponent();
@@ -44,6 +46,14 @@ namespace PL
         {
             try
             {
+                // check that there is  a project start date
+                if (s_bl.Schedule.getStartDateOfProject() == null)
+                    throw new Exception("PROJECT START DATE REQUIRED.");
+
+
+                if (s_bl.Task == null || s_bl.Task.ReadAll().Count() == 0)
+                    throw new Exception("There is no Data");
+
                 new GanttWindow().ShowDialog();
             }
             catch (Exception ex)
@@ -56,23 +66,38 @@ namespace PL
         //Reset DB func
         private void bcResetDB(object sender, RoutedEventArgs e)
         {
-            MessageBoxButton buttons = MessageBoxButton.OKCancel;
-            MessageBoxResult a = MessageBox.Show("Would you like to Reset the DB?", "Data Reset", buttons);
-            if (a == MessageBoxResult.OK)
+            try
             {
-                BlApi.Factory.Get().ResetDB();
+                MessageBoxButton buttons = MessageBoxButton.OKCancel;
+                MessageBoxResult a = MessageBox.Show("Would you like to Reset the DB?", "Data Reset", buttons);
+                if (a == MessageBoxResult.OK)
+                {
+                    BlApi.Factory.Get().ResetDB();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         //Init DB func
         private void bcInitDB(object sender, RoutedEventArgs e)
         {
-            MessageBoxButton buttons = MessageBoxButton.OKCancel;
-            MessageBoxResult a = MessageBox.Show("Would you like to create Initial data?", "Data Initial", buttons);
-            if (a == MessageBoxResult.OK)
+
+            try
             {
-                BlApi.Factory.Get().ResetDB();
-                BlApi.Factory.Get().InitializeDB();
+                MessageBoxButton buttons = MessageBoxButton.OKCancel;
+                MessageBoxResult a = MessageBox.Show("Would you like to create Initial data?", "Data Initial", buttons);
+                if (a == MessageBoxResult.OK)
+                {
+                    BlApi.Factory.Get().ResetDB();
+                    BlApi.Factory.Get().InitializeDB();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

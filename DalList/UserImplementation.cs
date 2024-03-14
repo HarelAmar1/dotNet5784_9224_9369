@@ -1,55 +1,53 @@
-﻿
-using DalApi;
-using Dal;
+﻿using DalApi;
 using DO;
+using System.Linq;
 
-namespace Dal;
-
-internal class UserImplementation : IUser
+namespace Dal
 {
-    /// Create
-    /// 
-    /// <param name="user" Creates a new user only if he is an engineer></param>
-    /// <exception cref="DalDoesNotExistException" There is no exception to this type of exception></exception>
-    /// <exception cref="DalAlreadyExistsException" Exception of such a user already exists></exception>
-    public void Create(User user)
+    internal class UserImplementation : IUser
     {
-        //if the user is not Engineer throw exception
-        EngineerImplementation engineer = new EngineerImplementation();
-        if (engineer.Read(user.UserId) == null)
-            throw new DalDoesNotExistException($"ID: {user.UserId}, Not Engineer");
-
-        //check if exist in the List
-        if (Read(user.UserId) == null) 
-            throw new DalAlreadyExistsException($"User with UserName: {user.UserId} already exists");
-        DataSource.Users.Add(user);
-    }
-
-    /// Delete
-    /// 
-    /// <param name="id" Deletes a user according to his code></param>
-    /// <exception cref="DalDoesNotExistException" There is no exception to this type of exception></exception>
-    public void Delete(int id)
-    {
-        bool exist = false;
-        foreach (var obj in DataSource.Users)
+        /// <summary>
+        /// Creates a new user if they are an engineer.
+        /// </summary>
+        /// <param name="user">The user to create.</param>
+        /// <exception cref="DalDoesNotExistException">Thrown when the user is not an engineer.</exception>
+        /// <exception cref="DalAlreadyExistsException">Thrown when a user with the same ID already exists.</exception>
+        public void Create(User user)
         {
-            if (obj.UserId == id)
-            {
-                exist = true;
-                DataSource.Users.Remove(obj);
-            }
-        }
-        if (exist == false)
-            throw new DalDoesNotExistException($"ID: {id}, not exist");
-    }
+            // Check if the user is an engineer
+            EngineerImplementation engineer = new EngineerImplementation();
+            if (engineer.Read(user.UserId) == null)
+                throw new DalDoesNotExistException($"ID: {user.UserId}, Not an Engineer");
 
-    /// Read
-    /// 
-    /// <param name="id" Returns a user according to his code></param>
-    /// <returns> User </returns>
-    public User? Read(int id)
-    {
-        return DataSource.Users.FirstOrDefault(U => U.UserId == id);
+            // Check if the user already exists
+            if (Read(user.UserId) != null)
+                throw new DalAlreadyExistsException($"User with UserName: {user.UserId} already exists");
+
+            DataSource.Users.Add(user);
+        }
+
+        /// <summary>
+        /// Deletes a user by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the user to delete.</param>
+        /// <exception cref="DalDoesNotExistException">Thrown when the user with the specified ID does not exist.</exception>
+        public void Delete(int id)
+        {
+            var user = DataSource.Users.FirstOrDefault(u => u.UserId == id);
+            if (user == null)
+                throw new DalDoesNotExistException($"ID: {id}, does not exist");
+
+            DataSource.Users.Remove(user);
+        }
+
+        /// <summary>
+        /// Reads a user by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the user to read.</param>
+        /// <returns>The user with the specified ID, or null if not found.</returns>
+        public User? Read(int id)
+        {
+            return DataSource.Users.FirstOrDefault(u => u.UserId == id);
+        }
     }
 }
