@@ -19,4 +19,7 @@ public interface IBl
     public void AddedInAnDay();
     public void TimeReset();
     #endregion
+    public void ChangeACompleteDate(DateTime clock);
+    public void ChangeACompleteDateToInit(DateTime clock);
+
 }

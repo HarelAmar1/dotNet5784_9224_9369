@@ -49,17 +49,17 @@
                 <TextBox Text="{Binding RequiredEffortTime, Converter={StaticResource ConverterTimeSpanToDayesKey}, Mode=TwoWay}"/>
                 <Label Content="Task's Start Date:"/>
                 <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}" IsEnabled="False"/>
-                <!--ניתן לראות את הזמן ההתחלתי המשוער רק בעריכת משימה ולא בהוספת משימה-->
+                <!--The estimated starting time can only be seen when editing a task and not when adding a task-->
                 <Label Content="The Task's Scheduled Date:" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
                 <DatePicker SelectedDate="{Binding ScheduledDate}" IsEnabled="False" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
-                <!--ניתן לבחור בתאריך סיום רק בעריכת המשימה ולא בהוספת משימה-->
+                <!--You can choose an end date only when editing the task and not when adding a task-->
                 <Label Content="Task's Complete Date:" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
                 <DatePicker SelectedDate="{Binding CompleteDate, Mode=TwoWay}" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityUpKey}}"/>
                 <Label Content="Task's Deliverables:"/>
                 <TextBox Text="{Binding Deliverables, Mode=TwoWay}"/>
                 <Label Content="Task's Remarks:"/>
                 <TextBox Text="{Binding Remarks, Mode=TwoWay}"/>
-                <!--כפתור מיני מהנדס-->
+                <!--Mini Engineer button-->
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="Task's Engineer:" VerticalAlignment="Center" Margin="0,0,14,0"/>
                     <Button Background="{x:Null}" Style="{x:Null}" Content="⚙️" FontSize="25" Foreground="White" Width="35" Height="35" MouseEnter="OpenNewWindowButton_MouseEnter" MouseLeave="OpenNewWindowButton_MouseLeave" Tag="{Binding Engineer.Id}"/>

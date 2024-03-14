@@ -2,7 +2,10 @@
 using BO;
 using DO;
 using System;
+using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics.Metrics;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -17,6 +20,9 @@ internal class TaskImplementation : ITask
     private DalApi.IDal _dal = Factory.Get;
 
     //Create
+    /// <param name="task" A task that needs to be added></param>
+    /// <returns newTaskId="int" Returns the ID of the assignment></returns>
+    /// <exception cref="BO.BlAlreadyExistsException" An exception that already exists an assignment with the same ID></exception>
     public int Create(BO.Task task)
     {
         //we will check the correctness of the ID and nickname
@@ -39,7 +45,8 @@ internal class TaskImplementation : ITask
         task.Remarks,
         task.Engineer?.Id
         );
-        
+
+
         // an attempt will be made to insert it into the data
         try
         {
@@ -63,6 +70,9 @@ internal class TaskImplementation : ITask
 
 
     //Delete
+    /// <param name="idTask" id of a task that needs to be deleted></param>
+    /// <exception cref="BO.BlDoesNotExistException" There is no exception to this type of error></exception>
+    /// <exception cref="BlDeletionImpossible" This task cannot be deleted></exception>
     public void Delete(int idTask)
     {
 
@@ -94,6 +104,9 @@ internal class TaskImplementation : ITask
     }
 
     // Read
+    /// <param name="idTask" Task selection by ID></param>
+    /// <returns Returns the task with the received ID></returns>
+    /// <exception cref="BO.BlDoesNotExistException" There is no exception to this type of error></exception>
     public BO.Task Read(int idTask)
     {
         try
@@ -156,6 +169,9 @@ internal class TaskImplementation : ITask
 
 
     //ReadAll
+
+    /// <param name="func" Task filtering function></param>
+    /// <returns Returns a list of tasks of type TaslInList></returns>
     public IEnumerable<BO.TaskInList> ReadAll(Func<DO.Task?, bool>? func = null)
     {
         IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll(func).ToList();
@@ -174,6 +190,8 @@ internal class TaskImplementation : ITask
 
 
     // Update
+
+    /// <param name="task" A task that needs to be updated in the data layer></param>
     public void Update(BO.Task task)
     {
         // Check the correctness of the ID and nickname
@@ -192,6 +210,7 @@ internal class TaskImplementation : ITask
         {
             _dal.Dependency.Create(insertUpdate);
         }
+
 
         //Fill in the rest of the fields for the DAL task and return updated
         DO.Task newTask = new DO.Task
@@ -231,6 +250,7 @@ internal class TaskImplementation : ITask
     }
 
     //startDateTimeManagement
+
     public void startDateTimeManagement(int idTask, DateTime scheduleDateTime)
     {
         DO.Task taskWithNewDate = _dal.Task.Read(idTask) with { ScheduledDate = scheduleDateTime, DeadlineDate = scheduleDateTime + _dal.Task.Read(idTask).RequiredEffortTime };
@@ -315,5 +335,36 @@ internal class TaskImplementation : ITask
             }
         }
         return null;
+    }
+    public List<BO.TaskInList>? ReadAllNew(BO.Status status)
+    {
+        IEnumerable<BO.TaskInList> tasks = ReadAll();
+
+        List<BO.TaskInList> tasks1 = new List<TaskInList>();
+        List<BO.TaskInList> tasks2 = new List<TaskInList>();
+        foreach (BO.TaskInList item in tasks)
+        {
+            item.Status = (BO.Status)(Status(Read(item.Id)));
+            tasks2.Add(item);
+            if (item.Status == status)
+                tasks1.Add(item);
+
+        }
+        if (status == 0)
+            return tasks2;
+        return tasks1;
+    }
+    public int Status(BO.Task task)
+    {
+        if (task.StartDate == null)
+            return 1;
+        if (task.CompleteDate == null)
+            return 2;
+        if (task.CompleteDate != null)
+            return 4;
+        if (task.ScheduledDate == null)
+            return 0;
+        // check how to check the last status
+        return 5;
     }
 }

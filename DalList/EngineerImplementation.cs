@@ -5,6 +5,12 @@ using System.Collections.Generic;
 
 internal class EngineerImplementation : IEngineer
 {
+    /// <summary>
+    /// Create
+    /// </summary>
+    /// <param name="item " Engineer to add to the DAL layer></param>
+    /// <returns engineerToAdd.Id Returns the id of the added engineer></returns>
+    /// <exception cref="DalAlreadyExistsException" Exception of already existing engineer with ID></exception>
     public int Create(Engineer item)
     {
         //We will check if there is an engineer
@@ -15,7 +21,10 @@ internal class EngineerImplementation : IEngineer
             DataSource.Engineers.Add(item);
         return item.Id;
     }
-
+    /// Delete
+    /// 
+    /// <param name="id" Deletes an engineer by ID></param>
+    /// <exception cref="DalDoesNotExistException" Exception of already existing engineer with ID></exception>
     public void Delete(int id)
     {
         if (DataSource.Engineers.Any(engineer => engineer.Id == id))//if exist in the list
@@ -27,11 +36,20 @@ internal class EngineerImplementation : IEngineer
         
     }
 
+    /// <Read>
+    /// 
+    /// </summary>
+    /// <param name="id" From the ID of an engineer  ></param>
+    /// <returns Returns an engineer></returns>
     public Engineer? Read(int id)
     {
         return DataSource.Engineers.FirstOrDefault(E => E.Id == id);
     }
 
+    /// <Read>
+    /// 
+    /// <param name="filter" filtering by which></param>
+    /// <returns Returns an engineer by filter></returns>
     public Engineer? Read(Func<Engineer, bool> filter)
     {
         if (filter != null)
@@ -43,6 +61,10 @@ internal class EngineerImplementation : IEngineer
         return null;
     }
 
+    /// ReadAll
+    ///
+    /// <param name="filter" filtering by which></param>
+    /// <returns Returns an engineer List by filter></returns>
     public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null)
     {
         if (filter != null)
@@ -55,6 +77,10 @@ internal class EngineerImplementation : IEngineer
                select item;
     }
 
+    /// <Update>
+    /// 
+    /// <param name="item" Getting an engineer to update></param>
+    /// <exception cref="DalDoesNotExistException" An exception does not exist></exception>
     public void Update(Engineer item)
     {
         //if exist in the list

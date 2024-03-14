@@ -9,6 +9,12 @@ namespace BlImplementation;
 internal class EngineerImplementation : IEngineer
 {
     private DalApi.IDal _dal = Factory.Get;
+
+
+    /// <param name="engineerToAdd">Engineer to add to the DAL layer</param>
+    /// <returns engineerToAdd.Id Returns the id of the added engineer ></returns>
+    /// <exception cref="BlIncorrectInputException" Invalid input exception></exception>
+    /// <exception cref="BlDoesNotExistException"  An exception does not exist></exception>
     public int Create(BO.Engineer engineerToAdd)
     {
         //Converts the list of engineers from DO to BO
@@ -78,7 +84,11 @@ internal class EngineerImplementation : IEngineer
 
     }
 
-
+    ///Read
+    /// 
+    /// <param name="id" Get an engineer's id number ></param>
+    /// <returns Returns an engineer according to the received id></returns>
+    /// <exception cref="BlDoesNotExistException" An exception does not exist></exception>
     public BO.Engineer Read(int id)
     {
         //Converts the list of engineers from DO to BO
@@ -112,7 +122,11 @@ internal class EngineerImplementation : IEngineer
         return EngineerToGet;
 
     }
-
+    ///Update
+    /// 
+    /// <param name="AnUpdatedEngineer" Gets an engineer who needs to change in the DAL layer></param>
+    /// <exception cref="BlIncorrectInputException" Invalid input exception ></exception>
+    /// <exception cref="BlDoesNotExistException"  An exception does not exist ></exception>
     public void Update(BO.Engineer AnUpdatedEngineer)
     {
         //We will check that the engineer does not have a Task that he has finished and now needs to be deleted
@@ -212,7 +226,12 @@ internal class EngineerImplementation : IEngineer
     }
 
 
-
+    /// Delete
+    /// 
+    /// <param name="id" Gets an ID that needs to be deleted from the DAL layer></param>
+    /// <exception cref="BlDoesNotExistException" An exception does not exist ></exception>
+    /// <exception cref="BlCanNotBeDeletedException" An engineer's anomaly that cannot be erased ></exception>
+    /// <exception cref="BlIncorrectInputException" Invalid input exception ></exception>
     public void Delete(int id)
     {
         //bring the list of engineers from DO
@@ -279,6 +298,10 @@ internal class EngineerImplementation : IEngineer
         if (error != "")
             throw new BlIncorrectInputException($"{error}, is incorrect input");
     }
+    /// <ReadAll>
+    /// 
+    /// <param name="filter" Selection of a list of engineers according to a certain filter></param>
+    /// <returns Returns a list of engineers according to the filter></returns>
     public IEnumerable<BO.Engineer> ReadAll(Func<DO.Engineer?, bool>? filter = null)
     {
         IEnumerable<BO.Engineer?> engineers = (from item in _dal.Engineer.ReadAll(filter).ToList()

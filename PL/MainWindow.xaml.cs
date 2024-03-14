@@ -41,7 +41,7 @@ namespace PL
         }
         private void AddedInAnHour(object sender, RoutedEventArgs e)
         {
-            s_bl.AddedInAnHour();   
+            s_bl.AddedInAnHour();
             Date = s_bl.Clock;
         }
         private void AddedInAnDay(object sender, RoutedEventArgs e)
@@ -63,7 +63,7 @@ namespace PL
         //LogIn and SighInSystem
 
 
-        //יצירת משתמש של המנדס
+        //Creating an engineer user
         public BO.User User
         {
             get { return (BO.User)GetValue(IdProperty); }

@@ -46,7 +46,7 @@ namespace PL.EngineerForEngineer
 
 
         //Date Property
-        public DateTime CompleteDate
+        public DateTime? CompleteDate
         {
             get { return (DateTime)GetValue(CompleteDateProperty); }
             set { SetValue(CompleteDateProperty, value); }
@@ -57,18 +57,21 @@ namespace PL.EngineerForEngineer
         //Ctor
         public EngineerWindow(int id)
         {
-            InitializeComponent();
-            Engineer = s_bl.Engineer.Read(id);//אתחול המהנדס
-            if (Engineer.Task == null)
-                Engineer.Task = new BO.TaskInEngineer(-1, "");//אם אין משימה נכניס ערך זמני כך שנדע שאין משימה
 
-            TaskInEngineer = new List<TaskInEngineer>();//אתחול הרשימה
-            //אתחול רשימת המשימות האפשריות למהנדס
+            InitializeComponent();
+            CompleteDate=s_bl.Clock;
+            Engineer = s_bl.Engineer.Read(id);//initialize the engineer
+            if (Engineer.Task == null)
+                Engineer.Task = new BO.TaskInEngineer(-1, "");//If there is no task we will insert a temporary value so that we know there is no task
+
+            TaskInEngineer = new List<TaskInEngineer>();//Initialize the list
+
+            //Initialize the list of possible tasks for the engineer
             foreach (var task in s_bl.Task.ReadAll())
             {
                 BO.Task fullTask = s_bl.Task.Read(task.Id);
                 bool done = true;
-                //נבדוק שהמשימות התלויות לא הסתיימו
+                //we will check that the dependent tasks have not finished
                 foreach (var depend in fullTask.Dependencies)
                 {
                     if (depend.Status != Status.Done)
@@ -77,38 +80,39 @@ namespace PL.EngineerForEngineer
                         break;
                     }
                 }
-                //בדיקת כל התנאים שהמשימה צריכה לקיים
+                //Checking all the conditions that the task needs to meet
                 if (fullTask.Engineer == null && done == true && fullTask.Status != (Status)4 && fullTask.Copmlexity <= s_bl.Engineer.Read(id).Level)
                     TaskInEngineer.Add(new BO.TaskInEngineer(task.Id, task.Alias));
             }
+
         }
 
         private void ComboBoxTask_Loaded(object sender, RoutedEventArgs e)
         {
             var comboBox = sender as ComboBox;
-            if (Engineer.Task.Id != -1)//אם הוגדר משימה למהנדס ולא קיים שם הערך הזמני ששמנו שם
+            if (Engineer.Task.Id != -1) //If a task was defined for an engineer and the name of the temporary value we put there does not exist
             {
-                //נציב בתצוגה את המשימה הנוכחית שהמשתמש עובד עליה
+                //Display the current task the user is working on
                 TaskInEngineer.Add(Engineer.Task);
                 comboBox.SelectedItem = TaskInEngineer.FirstOrDefault(e => e.Id == Engineer.Task.Id);
             }
         }
         private void ComboBoxTask_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //המשתמש הגדיר משימה למהנדס ולכן נציב אותה במהנדס את המשימה
+            //The user defined a task for the engineer so we will place it in the engineer the task
             var selectedTask = (sender as ComboBox).SelectedItem as TaskInEngineer;
             Engineer.Task = selectedTask;
         }
 
         private void bcStartTask(object sender, RoutedEventArgs e)
         {
-            //במידה ולא הוגדר משימה נודיע למשתמש
+            //If no task has been defined, we will notify the user
             if (Engineer.Task.Id == -1)
             {
                 MessageBox.Show("Select a task or click Cancel");
                 return;
             }
-            //המהנדס התחיל את המשימה לכן נכניס תאריך התחלה למשימה בשכבת הנתונים
+            //The engineer started the task so we will enter a start date for the task in the data layer
             BO.Task oldTask = s_bl.Task.Read(Engineer.Task.Id);
             BO.Task newTask = new BO.Task()
             {
@@ -129,17 +133,17 @@ namespace PL.EngineerForEngineer
                 Engineer = oldTask?.Engineer,
                 Copmlexity = oldTask?.Copmlexity
             };
-            s_bl.Task.Update(newTask);//מעדכנים את התאריך סיום
+            s_bl.Task.Update(newTask);//Update the end date
 
-            //נעדכן את המהנדס לשכבת נתונים כי המשימה שלו היא משימה חדשה
+            //We will update the data layer engineer because his task is a new task
             s_bl.Engineer.Update(Engineer);
-            
+
             Close();
         }
 
         private void bcDoneTask(object sender, RoutedEventArgs e)
         {
-            //המהנדס סיים את המשימה לכן נכניס תאריך סיום למשימה בשכבת הנתונים
+            //The engineer finished the task so we will enter an end date for the task in the data layer
             BO.Task oldTask = s_bl.Task.Read(Engineer.Task.Id);
             BO.Task newTask = new BO.Task()
             {
@@ -147,7 +151,7 @@ namespace PL.EngineerForEngineer
                 Description = oldTask.Description,
                 Alias = oldTask.Alias,
                 CreatedAtDate = oldTask.CreatedAtDate,
-                Status = oldTask.Status,
+                Status = BO.Status.Done,
                 Dependencies = oldTask.Dependencies,
                 RequiredEffortTime = oldTask.RequiredEffortTime,
                 StartDate = oldTask.StartDate,
@@ -160,14 +164,14 @@ namespace PL.EngineerForEngineer
                 Engineer = oldTask?.Engineer,
                 Copmlexity = oldTask?.Copmlexity
             };
-            s_bl.Task.Update(newTask);//מעדכנים את התאריך סיום
+            s_bl.Task.Update(newTask);//Update the end date
 
-            //המהנדס סיים עם המשימה לכן נגדיר לו שאין לו משימה לבצע
+            //The engineer is done with the task so we will define that he has no task to perform
             Engineer.Task = null;
-            s_bl.Engineer.Update(Engineer);//לבדוק למה לא מתעדכן המשימה
+            s_bl.Engineer.Update(Engineer);//Check why the task is not updated
             var a = s_bl.Engineer.Read(Engineer.Id);
 
-            
+
             Close();
         }
 

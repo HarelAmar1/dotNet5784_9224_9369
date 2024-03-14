@@ -47,7 +47,7 @@ namespace PL.Task
         // Using a DependencyProperty as the backing store for taskInList.  and init with TaskInList from BL
         public static readonly DependencyProperty TaskInListProperty =
             DependencyProperty.Register("TaskInList", typeof(IEnumerable<TaskInList>), typeof(TaskWindow), new PropertyMetadata(s_bl.Task.ReadAll()));
-        //פונקציות שמכניסות לרשימה את המשימות התליות
+        //Functions that list the pending tasks
         private void CheckBox_Loaded(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
@@ -92,7 +92,7 @@ namespace PL.Task
         public TaskWindow(int id = 0)
         {
             InitializeComponent();
-            //אתחול המהנדס
+            //initialize the engineer
             EngineerInTask = s_bl.Engineer.ReadAll().Select(engineer => new EngineerInTask { Id = engineer.Id, Name = engineer.Name });
             var engineersInTask = EngineerInTask.ToList();
             engineersInTask.Insert(0, new EngineerInTask { Id = -1, Name = "None" });
@@ -100,12 +100,12 @@ namespace PL.Task
 
 
 
-            //אתחול הרשימה של התלויות
+            //Initialize the list of dependencies
             SelectedIds = new ObservableCollection<int>();
 
-            if (id != 0)//for update 
+            if (id != 0) //for update 
             {
-                //אתחול רשימת התלויות
+                //Initialize the list of dependencies
                 Task = s_bl.Task.Read(id);
                 if (Task.Dependencies.Count != 0)
                     SelectedIds = new ObservableCollection<int>(Task.Dependencies.Select(d => d.Id));
@@ -127,14 +127,14 @@ namespace PL.Task
                     Remarks = "Remarks"
                 };
             }
-            if (Task.Engineer == null)//אם המהנדס נאל אז נאתחל אותו בערך ברירת מחדל שהוספנו
+            if (Task.Engineer == null)//If the engineer fails then we will initialize it with a default value that we added
                 Task.Engineer = EngineerInTask.ToList().FirstOrDefault();
 
         }
 
         private void bcAdd(object sender, RoutedEventArgs e)
         {
-            //אתחול הרשימה של התלויות
+            //Initialize the list of dependencies
             List<TaskInList> tempDepend = new List<TaskInList>();
             foreach (var id in SelectedIds)
             {
@@ -148,7 +148,7 @@ namespace PL.Task
                 });
             }//End Init
 
-            //אתחול מהנדס
+            //initialize engineer
             if (Task.Engineer.Id == -1)
                 Task.Engineer = null;
 
@@ -180,7 +180,7 @@ namespace PL.Task
 
         private void bcUpdate(object sender, RoutedEventArgs e)
         {
-            //אתחול הרשימה של התלויות
+            //Initialize the list of dependencies
             List<TaskInList> tempDepend = new List<TaskInList>();
             foreach (var id in SelectedIds)
             {
@@ -220,7 +220,7 @@ namespace PL.Task
             new TaskForListWindow().Show();
         }
 
-        //לבדוק איזה מהנדס המשתמש בחר
+        //check which engineer the user selected
         private void ComboBoxEngineer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedEngineer = (sender as ComboBox).SelectedItem as EngineerInTask;
@@ -238,23 +238,23 @@ namespace PL.Task
                 comboBox.SelectedItem = Task.Engineer;
         }
 
-        private MiniEngineerWindow miniEngineerWindow; // שדה לשמירת החלון החדש
+        private MiniEngineerWindow miniEngineerWindow; // Field to save the new window
         private void OpenNewWindowButton_MouseEnter(object sender, MouseEventArgs e)
         {
             if (sender is Button button)
             {
                 if (button.Tag is int engineerId)
                 {
-                    miniEngineerWindow = new MiniEngineerWindow(engineerId); // יצירת חלון חדש אם אינו קיים או סגור
-                    miniEngineerWindow.Show(); // הצגת החלון
+                    miniEngineerWindow = new MiniEngineerWindow(engineerId); //Create a new window if it doesn't exist or is closed
+                    miniEngineerWindow.Show(); //window display
                 }
             }
         }
 
         private void OpenNewWindowButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            miniEngineerWindow.Close(); // סגירת החלון
-            miniEngineerWindow = null; // איפוס ההפניה לחלון
+            miniEngineerWindow.Close(); // closing the window
+            miniEngineerWindow = null; // Resetting the window reference
         }
     }
 }

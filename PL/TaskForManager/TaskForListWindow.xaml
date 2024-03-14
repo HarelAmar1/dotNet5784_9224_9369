@@ -21,11 +21,11 @@
             </Grid.ColumnDefinitions>
             <Label Content="Task" HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
             <!--Task list data-->
-            <ComboBox ItemsSource="{Binding Source={StaticResource ExperienceCollectionKey}}"
+            <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}"
             Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbTaskDataFilter_SelectionChanged" 
-            SelectedValue="{Binding Copmlexity, Mode=TwoWay}"/>
+            SelectedValue="{Binding StatuS, Mode=TwoWay}"/>
         </Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding TaskForList}" MouseDoubleClick="bcPreesToUpdate">
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding TaskForList}" MouseDoubleClick="bcPreesToUpdate" SelectionChanged="ListView_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">

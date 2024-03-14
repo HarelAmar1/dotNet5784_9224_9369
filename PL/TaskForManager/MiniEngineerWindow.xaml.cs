@@ -25,7 +25,7 @@ namespace PL.Task
         public MiniEngineerWindow(int id)
         {
             InitializeComponent();
-            if (id != -1)//אם קיים מהנדס אז תכניס אותו
+            if (id != -1) //If there is an engineer, then put him in
                 MiniEngineer = s_bl.Engineer.Read(id);
             else
                 MiniEngineer = new BO.Engineer() { Id = 0 };
