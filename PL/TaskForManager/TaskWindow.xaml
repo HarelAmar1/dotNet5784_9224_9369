@@ -25,7 +25,7 @@
                 <Label Content="Task's Description:"/>
                 <TextBox Text="{Binding Description, Mode=TwoWay}"/>
                 <Label Content="Task's Status:"/>
-                <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" SelectedValue="{Binding Status, Mode=TwoWay}"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" IsEnabled="False" SelectedValue="{Binding Status, Mode=TwoWay}"/>
                 <Label Content="The Task Creation Date:"/>
                 <DatePicker SelectedDate="{Binding CreatedAtDate}" IsEnabled="False"/>
 

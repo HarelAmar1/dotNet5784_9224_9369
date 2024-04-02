@@ -103,7 +103,6 @@ namespace PL
 
         private void bcReturnBack(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Show();
             Close();
         }
     }

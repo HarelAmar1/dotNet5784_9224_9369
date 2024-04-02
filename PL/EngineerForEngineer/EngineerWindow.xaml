@@ -37,7 +37,7 @@
             <!--Represent the start of a task or the end of a task respectively and as needed-->
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="Cancel" Click="bcCancel" Height="25" Width="150" Margin="0,20,0,0" />
-                <Button Content="Press Start Task Now" Click="bcStartTask" Height="50" Width="150" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityTheOppositeInEngineerKey}}"/>
+                <Button Content="Press To Start Task" Click="bcStartTask" Height="50" Width="150" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityTheOppositeInEngineerKey}}"/>
                 <Button Content="Press To Complete Task" Click="bcDoneTask" Height="50" Width="150" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityInEngineerKey}}"/>
             </StackPanel>
         </Grid>

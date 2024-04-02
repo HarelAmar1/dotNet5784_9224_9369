@@ -88,7 +88,7 @@ namespace PL.Task
 
 
 
-
+        //Ctor
         public TaskWindow(int id = 0)
         {
             InitializeComponent();
@@ -109,7 +109,6 @@ namespace PL.Task
                 Task = s_bl.Task.Read(id);
                 if (Task.Dependencies.Count != 0)
                     SelectedIds = new ObservableCollection<int>(Task.Dependencies.Select(d => d.Id));
-
             }
             else//for add
             {

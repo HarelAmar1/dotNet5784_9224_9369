@@ -84,7 +84,6 @@ namespace PL.EngineerForEngineer
                 if (fullTask.Engineer == null && done == true && fullTask.Status != (Status)4 && fullTask.Copmlexity <= s_bl.Engineer.Read(id).Level)
                     TaskInEngineer.Add(new BO.TaskInEngineer(task.Id, task.Alias));
             }
-
         }
 
         private void ComboBoxTask_Loaded(object sender, RoutedEventArgs e)
