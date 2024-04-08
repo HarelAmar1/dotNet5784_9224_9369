@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:PL"      
         mc:Ignorable="d"    
         Title="PeakProjectPro" Height="450" Width="800" 
+        Icon="PLFootage/logo.ico"
         DataContext="{Binding User,RelativeSource={RelativeSource Mode=Self}, Mode=TwoWay}">
 
     <Grid Style="{Binding Source={StaticResource MyGridStyle}}">
@@ -19,7 +20,8 @@
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label FontSize="20" Content="System log in:" Margin="0,0,0,15" HorizontalAlignment="Center"/>
-            <TextBox Height="35" Width="140" Margin="0,0,0,15" Text="{Binding UserId}" />
+            <TextBox Height="35" Width="140" Margin="0,0,0,15" Text="{Binding UserId}" />   
+
             <TextBox Height="35" Width="140" Margin="0,0,0,15" Text="{Binding Password}"/>
 
             <Button Content="Log in" Click="bcLogIn"  Margin="0,0,0,15"/>

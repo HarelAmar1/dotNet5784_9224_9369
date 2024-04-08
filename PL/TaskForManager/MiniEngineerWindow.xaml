@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
+        Icon="../PLFootage/logo.ico"
         Title="MiniEngineerWindow" Height="400" Width="300"
         WindowStyle="None"
         Background="Transparent"

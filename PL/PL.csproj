@@ -15,13 +15,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="PLFootage\logo.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\BL\BL.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="PLFootage\logo.ico">
+	  <Resource Include="PLFootage\logo.ico">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
+	  </Resource>
 	</ItemGroup>
 
 </Project>

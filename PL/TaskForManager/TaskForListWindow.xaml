@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
+        Icon="../PLFootage/logo.ico"
         Title="TaskForListWindow" Height="660" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid Height="624" VerticalAlignment="Top" Style="{Binding Source={StaticResource MyGridStyle}}">

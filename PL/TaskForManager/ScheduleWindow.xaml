@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
+        Icon="../PLFootage/logo.ico"
         Title="ScheduleWindow" Height="300" Width="450"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid Style="{Binding Source={StaticResource MyGridStyle}}">

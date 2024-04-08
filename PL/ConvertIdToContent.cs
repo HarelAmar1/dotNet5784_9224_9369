@@ -47,7 +47,7 @@ class ConvertIdToIsVisibilityTheOppositeInEngineer : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (int)value == -1 ? Visibility.Visible: Visibility.Collapsed;
+        return (int)value == -1 ? Visibility.Visible : Visibility.Collapsed;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -108,3 +108,4 @@ public class ConverterTimeSpanToDayes : IValueConverter
         return new TimeSpan(0, 0, 0, 0); // Default value if conversion fails
     }
 }
+

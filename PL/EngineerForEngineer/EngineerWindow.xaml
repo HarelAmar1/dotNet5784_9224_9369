@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.EngineerForEngineer"
         mc:Ignorable="d"
+        Icon="../PLFootage/logo.ico"
         Title="EngineerWindow" Height="450" Width="500"
         DataContext="{Binding RelativeSource={RelativeSource self}}">
 
@@ -38,7 +39,7 @@
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="Cancel" Click="bcCancel" Height="25" Width="150" Margin="0,20,0,0" />
                 <Button Content="Press To Start Task" Click="bcStartTask" Height="50" Width="150" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityTheOppositeInEngineerKey}}"/>
-                <Button Content="Press To Complete Task" Click="bcDoneTask" Height="50" Width="150" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityInEngineerKey}}"/>
+                <Button Content="     Press To &#x0a; Complete Task" Click="bcDoneTask" Height="50" Width="150" Margin="0,20,0,0" Visibility="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToIsVisibilityInEngineerKey}}" />
             </StackPanel>
         </Grid>
 

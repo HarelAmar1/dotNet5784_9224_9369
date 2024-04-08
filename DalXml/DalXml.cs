@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Dal;
 
-sealed internal class DalXml : IDal
+internal class DalXml : IDal
 {
     public static IDal Instance { get; } = new DalXml();
     private DalXml() { }

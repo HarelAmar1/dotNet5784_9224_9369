@@ -34,13 +34,10 @@ namespace PL
             try
             {
 
-
-
                 // Create a list of tasks with a start date
                 foreach (var task in s_bl.Task.ReadAll())
                 {
                     var taskFromDal = s_bl.Task.Read(task.Id);
-                    //var stringOfDay = taskFromDal.RequiredEffortTime.ToString();
                     BO.Task newTaskForGantt = new BO.Task { Id = taskFromDal.Id, Alias = taskFromDal.Alias, RequiredEffortTime = taskFromDal.RequiredEffortTime, ScheduledDate = taskFromDal.ScheduledDate, CompleteDate = taskFromDal.CompleteDate };
                     ListOfTask.Add(newTaskForGantt);
                 }
@@ -61,7 +58,7 @@ namespace PL
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Canvas canvas = FindVisualChild<Canvas>(this);
+            Canvas canvas = FindVisualChild(this);
             if (canvas == null) return;
             DateTime minStartDate = ListOfTask.Min(task => task.ScheduledDate ?? DateTime.MaxValue);
             DateTime maxEndDate = ListOfTask.Max(task => (task.ScheduledDate ?? DateTime.MinValue).AddDays(task.RequiredEffortTime.Value.Days));
@@ -73,8 +70,20 @@ namespace PL
 
             double topPosition = 40; // start from 40px up to make room for the date bar
 
+          
+
             foreach (var task in ListOfTask)
             {
+                //Finding the dependent tasks
+                string dependTask = "dependent tasks: ";
+                foreach (var DTask in s_bl.Task.Read(task.Id).Dependencies) 
+                {
+                    dependTask += $"{DTask.Id},";
+                }
+                dependTask = dependTask.Substring(0, dependTask.Length - 1);//We will delete the last character because of the comma
+
+
+
                 double offsetDays = ((task.ScheduledDate ?? DateTime.Today) - minStartDate).TotalDays;
                 double leftPosition = offsetDays * 10 + maxAliasWidth; // The rectangles start after the longest text
 
@@ -111,6 +120,21 @@ namespace PL
                     RadiusY = 5 // The circle radius of the edges in the Y axis
                 };
 
+
+                // Adding Tooltip
+                ToolTip tooltip = new ToolTip();
+                tooltip.Content = dependTask; // The content of the tooltip
+                tooltip.Background = Brushes.LightBlue; // Background
+                tooltip.BorderBrush = Brushes.Black; // Border color
+                tooltip.BorderThickness = new Thickness(1); // Border thickness
+                tooltip.Foreground = Brushes.Black; // Text color
+                tooltip.FontSize = 12; // Font size
+                tooltip.FontFamily = new FontFamily("Arial"); // Font family
+                tooltip.Padding = new Thickness(5); // Padding within the tooltips
+
+                ToolTipService.SetToolTip(rectangle, tooltip); // Linking the tooltip to the shape
+
+
                 canvas.Children.Add(rectangle);
                 Canvas.SetLeft(rectangle, leftPosition);
                 Canvas.SetTop(rectangle, topPosition);
@@ -118,7 +142,7 @@ namespace PL
                 // Adding a date and duration label to the rectangle
                 TextBlock dateLabel = new TextBlock
                 {
-                    Text = $"ID: {task.Id}, {task.ScheduledDate?.ToString("dd/MM")} + {task.RequiredEffortTime.Value.Days}",
+                    Text = $" {task.ScheduledDate?.ToString("dd/MM")} + {task.RequiredEffortTime.Value.Days} D",
                     Foreground = new SolidColorBrush(Colors.White),
                     FontWeight = FontWeights.Bold,
                     TextAlignment = TextAlignment.Center
@@ -209,17 +233,17 @@ namespace PL
         }
 
 
-        // A helper method to search for a component in the visual tree by type
-        private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        // A helper method to search for a component in the visual tree by Canvas type
+        private Canvas FindVisualChild(DependencyObject parent)
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
-                if (child != null && child is T)
-                    return (T)child;
+                if (child != null && child is Canvas)
+                    return (Canvas)child;
                 else
                 {
-                    var childOfChild = FindVisualChild<T>(child);
+                    var childOfChild = FindVisualChild(child);
                     if (childOfChild != null)
                         return childOfChild;
                 }

@@ -4,13 +4,14 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Specialized;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 
 public class Program
 {
-    //static readonly IDal s_dal = new DalXml();
-    //static readonly IDal s_dal = new DalList();
-    static readonly IDal s_dal = Factory.Get; //stage 4
+    //static readonly IDal s_dal = DalXml.Instance;
+    //static readonly IDal s_dal = DalList.Instance;
+    static readonly IDal s_dal = Factory.Get; 
 
     // Main method - the entry point of the application
     private static void Main(string[] args)
