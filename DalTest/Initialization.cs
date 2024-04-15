@@ -146,7 +146,7 @@ public static class Initialization
         dependencies.Save(@"..\xml\dependencies.xml");
 
         //init the XML Users file
-        XElement UserId = new XElement("UserId",0);
+        XElement UserId = new XElement("UserId",111111);
         XElement Password = new XElement("Password","1");
         XElement IsAdmin = new XElement("IsAdmin", "true");
         XElement user = new XElement("User", UserId, Password, IsAdmin);
