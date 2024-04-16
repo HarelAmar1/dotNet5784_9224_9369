@@ -1,13 +1,13 @@
 
 # The list of bonuses
 
-1. **TryParse**
-2. **Automatic schedule**
-3. **Icom**
-4. **Shape**
-5. **User entity**
-6. **Changing colors in Gantt for completed tasks**
-7. **Trigger events**
+1. **TryParse** - BL Test -> Line 111
+2. **Automatic schedule** - BlImplementation -> TaskImplementation -> Line 297
+3. **Icom** - PL -> All xaml file
+4. **Shape** - PL -> GanttWindow.xaml.cs -> Line 112
+5. **User entity** - XML -> users.xml, DalApi -> IUser, DO -> User, DalList -> UserImplementation, DalXml -> UserImplementation, PL -> MainWindow
+6. **Changing colors in Gantt for completed tasks** - PL -> GanttWindow.xaml.cs -> Lines 102-111
+7. **Trigger events** - PL -> TaskForManager -> TaskWindow.xaml -> Line 66
 
 ## Screenshots
 ![logInScreen](https://github.com/HarelAmar1/dotNet5784_9224_9369/assets/89813457/497965b3-3557-4c0c-95e5-cd0d6e71b404)
